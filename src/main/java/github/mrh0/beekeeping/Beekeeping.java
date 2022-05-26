@@ -1,6 +1,7 @@
 package github.mrh0.beekeeping;
 
 import com.mojang.logging.LogUtils;
+import github.mrh0.beekeeping.group.BeesGroup;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
@@ -19,12 +20,14 @@ import java.util.stream.Collectors;
 
 @Mod("beekeeping")
 public class Beekeeping {
-    // Directly reference a slf4j logger
+    public static final String MODID = "beekeeping";
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public Beekeeping() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         MinecraftForge.EVENT_BUS.register(this);
+
+        new BeesGroup();
     }
 
     private void setup(final FMLCommonSetupEvent event) {

@@ -18,6 +18,7 @@ Imperial
 
 Malignant
 Wicked
+Withered
 
 Scorched
 Magmatic
@@ -29,6 +30,12 @@ lifetime
 commonYield
 rareYield
 offspringYield
-heatResistance
-coldResistance
-humidityResistance
+heat
+cold
+humidity
+light
+
+
+Catalysts:
+sugar
+mushroom
