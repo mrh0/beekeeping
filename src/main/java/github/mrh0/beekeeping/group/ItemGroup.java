@@ -5,10 +5,10 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class BeesGroup extends CreativeModeTab {
-    public static BeesGroup BEES;
+public class ItemGroup extends CreativeModeTab {
+    public static ItemGroup BEES;
 
-    public BeesGroup() {
+    public ItemGroup() {
         super(Beekeeping.MODID+":bees");
         BEES = this;
     }

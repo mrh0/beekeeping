@@ -2,6 +2,8 @@ package github.mrh0.beekeeping.datagen;
 
 import com.google.gson.JsonElement;
 import github.mrh0.beekeeping.Beekeeping;
+import github.mrh0.beekeeping.bee.Specie;
+import github.mrh0.beekeeping.bee.SpeciesRegistry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.models.ItemModelGenerators;
 import net.minecraft.resources.ResourceLocation;
@@ -13,14 +15,18 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
-public class BeeDatagen extends ItemModelProvider {
-    public BeeDatagen(DataGenerator generator, ExistingFileHelper existingFileHelper) {
+public class ItemModelGenerator extends ItemModelProvider {
+    public ItemModelGenerator(DataGenerator generator, ExistingFileHelper existingFileHelper) {
         super(generator, Beekeeping.MODID, existingFileHelper);
     }
 
     @Override
     protected void registerModels() {
-
+        for(Specie specie : SpeciesRegistry.instance.getAll()) {
+            simpleItem(specie.droneItem);
+            simpleItem(specie.princessItem);
+            simpleItem(specie.queenItem);
+        }
     }
 
     private ItemModelBuilder simpleItem(Item item) {

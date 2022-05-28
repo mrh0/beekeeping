@@ -1,6 +1,7 @@
 package github.mrh0.beekeeping.bee.item;
 
 import github.mrh0.beekeeping.bee.Specie;
+import github.mrh0.beekeeping.group.ItemGroup;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -10,10 +11,9 @@ public abstract class BeeItem extends Item {
     private final boolean foil;
 
     public BeeItem(Specie specie, Properties props, boolean foil) {
-        super(props);
+        super(props.tab(ItemGroup.BEES));
         this.specie = specie;
         this.foil = foil;
-        this.setRegistryName(getResourceLocation());
     }
 
     public enum BeeType {

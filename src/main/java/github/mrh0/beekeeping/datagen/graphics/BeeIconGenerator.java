@@ -1,10 +1,12 @@
 package github.mrh0.beekeeping.datagen.graphics;
 
 import github.mrh0.beekeeping.Beekeeping;
+import github.mrh0.beekeeping.Index;
+import github.mrh0.beekeeping.bee.Specie;
+import github.mrh0.beekeeping.bee.SpeciesRegistry;
 import github.mrh0.beekeeping.bee.item.BeeItem;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -29,10 +31,16 @@ public class BeeIconGenerator {
         File queen = getResource("/icons/queen.png");
 
         String path = "C:\\generated\\bees\\";
+
         if(args.length > 0)
             path = args[0];
 
-        makeIcon(bee, border, princess, queen, path, "common", BeeItem.BeeType.QUEEN, 0xFFFF0000);
+        Index.species();
+        for(Specie specie : SpeciesRegistry.instance.getAll()) {
+            makeIcon(bee, border, princess, queen, path, specie.getName(), BeeItem.BeeType.DRONE, specie.getColor());
+            makeIcon(bee, border, princess, queen, path, specie.getName(), BeeItem.BeeType.PRINCESS, specie.getColor());
+            makeIcon(bee, border, princess, queen, path, specie.getName(), BeeItem.BeeType.QUEEN, specie.getColor());
+        }
     }
 
     public static void makeIcon(File beeFile, File borderFile, File princessFile, File queenFile, String outpath, String name, BeeItem.BeeType type, int border) throws IOException {

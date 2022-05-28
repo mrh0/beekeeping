@@ -11,19 +11,22 @@ import net.minecraft.world.item.Item;
 public class Specie {
     private final String name;
     private boolean foil;
+    private int color;
     private final ResourceLocation resource;
-    private final DroneBee droneItem;
-    private final PrincessBee princessItem;
-    private final QueenBee queenItem;
+    public DroneBee droneItem;
+    public PrincessBee princessItem;
+    public QueenBee queenItem;
     public static String mod = Beekeeping.MODID;
 
-    public Specie(String name, boolean foil) {
+    public Specie(String name, int color, boolean foil) {
         this.name = name;
         this.foil = foil;
+        this.color = color;
         this.resource = new ResourceLocation(mod, name);
-        this.droneItem = buildDroneItem();
-        this.princessItem = buildPrincessItem();
-        this.queenItem = buildQueenItem();
+    }
+
+    public Specie(String name, int color) {
+        this(name, color, false);
     }
 
     public ResourceLocation getResourceLocation() {
@@ -34,15 +37,22 @@ public class Specie {
         return name;
     }
 
-    protected DroneBee buildDroneItem() {
-        return new DroneBee(this, new Item.Properties().stacksTo(1), foil);
+    public int getColor() {
+        return color;
     }
 
-    protected PrincessBee buildPrincessItem() {
-        return new PrincessBee(this, new Item.Properties().stacksTo(1), foil);
+    public DroneBee buildDroneItem() {
+        this.droneItem = new DroneBee(this, new Item.Properties().stacksTo(1), foil);
+        return this.droneItem;
     }
 
-    protected QueenBee buildQueenItem() {
-        return new QueenBee(this, new Item.Properties().stacksTo(1), foil);
+    public PrincessBee buildPrincessItem() {
+        this.princessItem = new PrincessBee(this, new Item.Properties().stacksTo(1), foil);
+        return this.princessItem;
+    }
+
+    public QueenBee buildQueenItem() {
+        this.queenItem = new QueenBee(this, new Item.Properties().stacksTo(1), foil);
+        return this.queenItem;
     }
 }

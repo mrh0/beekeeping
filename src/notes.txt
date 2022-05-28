@@ -1,14 +1,19 @@
 Species:
-Tempered
 Common
+Tempered
 Forest
 Tropical
+Coco
+
+Upland
+Dune
 
 Snowy
 Frozen
 Glacial
 
 Fungal
+Lush
 Dugout
 Nocturnal
 
