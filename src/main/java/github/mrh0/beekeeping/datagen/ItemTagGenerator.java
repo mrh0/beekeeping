@@ -26,6 +26,9 @@ public class ItemTagGenerator extends ItemTagsProvider {
                 .add(specie.droneItem)
                 .add(specie.princessItem)
                 .add(specie.queenItem);
+            tag(Index.DRONE_BEES_TAG).add(specie.droneItem);
+            tag(Index.PRINCESS_BEES_TAG).add(specie.princessItem);
+            tag(Index.QUEEN_BEES_TAG).add(specie.queenItem);
         }
     }
 }

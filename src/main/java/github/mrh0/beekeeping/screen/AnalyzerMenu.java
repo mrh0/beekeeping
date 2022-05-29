@@ -1,11 +1,8 @@
 package github.mrh0.beekeeping.screen;
 
-import github.mrh0.beekeeping.Beekeeping;
 import github.mrh0.beekeeping.Index;
-import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlockEntity;
-import github.mrh0.beekeeping.screen.slot.BeeSlot;
-import net.minecraft.nbt.CompoundTag;
+import github.mrh0.beekeeping.screen.slot.TagSlot;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -35,20 +32,10 @@ public class AnalyzerMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
 
         this.blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-            this.addSlot(new BeeSlot(handler, 0, 12, 21)); // Index: 36
+            this.addSlot(new TagSlot(handler, 0, 12, 21, Index.BEES_TAG)); // Index: 36
         });
 
         addDataSlots(data);
-
-        addSlotListener(new ContainerListener() {
-            @Override
-            public void slotChanged(AbstractContainerMenu menu, int slot, ItemStack ustack) {
-
-            }
-
-            @Override
-            public void dataChanged(AbstractContainerMenu menu, int slot, int stack) {}
-        });
     }
 
     // CREDITS: diesieben07 https://github.com/diesieben07/SevenCommons

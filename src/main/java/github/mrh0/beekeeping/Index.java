@@ -86,8 +86,14 @@ public class Index {
     }
 
     public static TagKey<Item> BEES_TAG;
+    public static TagKey<Item> DRONE_BEES_TAG;
+    public static TagKey<Item> PRINCESS_BEES_TAG;
+    public static TagKey<Item> QUEEN_BEES_TAG;
 
     public static void tags() {
         BEES_TAG = ItemTags.create(new ResourceLocation("beekeeping", "bees"));
+        DRONE_BEES_TAG = ItemTags.create(new ResourceLocation("beekeeping", "drone_bees"));
+        PRINCESS_BEES_TAG = ItemTags.create(new ResourceLocation("beekeeping", "princess_bees"));
+        QUEEN_BEES_TAG = ItemTags.create(new ResourceLocation("beekeeping", "queen_bees"));
     }
 }
