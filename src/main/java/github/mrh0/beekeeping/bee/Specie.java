@@ -5,8 +5,11 @@ import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.bee.item.DroneBee;
 import github.mrh0.beekeeping.bee.item.PrincessBee;
 import github.mrh0.beekeeping.bee.item.QueenBee;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
 
 public class Specie {
     private final String name;
@@ -54,5 +57,10 @@ public class Specie {
     public QueenBee buildQueenItem() {
         this.queenItem = new QueenBee(this, new Item.Properties().stacksTo(1), foil);
         return this.queenItem;
+    }
+
+    public boolean compatibleWithBiome(Level level, BlockPos pos) {
+        //level.getBiomeManager().getBiome(pos).value().getBaseTemperature();
+        return true;
     }
 }

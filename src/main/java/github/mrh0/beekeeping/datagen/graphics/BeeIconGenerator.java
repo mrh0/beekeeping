@@ -24,18 +24,16 @@ public class BeeIconGenerator {
         return null;
     }
 
-    public static void main(String[] args) throws IOException {
-        File bee = getResource("/icons/bee.png");
-        File border = getResource("/icons/border.png");
-        File princess = getResource("/icons/princess.png");
-        File queen = getResource("/icons/queen.png");
+    public static void makeAll() throws IOException {
+        String rp = Path.of("../src/main/resources/icons").toAbsolutePath().toString();
+        File bee = Path.of(rp, "bee.png").toFile();
+        File border = Path.of(rp, "border.png").toFile();
+        File princess = Path.of(rp, "princess.png").toFile();
+        File queen = Path.of(rp, "queen.png").toFile();
 
-        String path = "C:\\generated\\bees\\";
+        String path = Path.of("../src/main/resources/assets/beekeeping/textures/item/").toAbsolutePath().toString();
+        System.out.println(path);
 
-        if(args.length > 0)
-            path = args[0];
-
-        Index.species();
         for(Specie specie : SpeciesRegistry.instance.getAll()) {
             makeIcon(bee, border, princess, queen, path, specie.getName(), BeeItem.BeeType.DRONE, specie.getColor());
             makeIcon(bee, border, princess, queen, path, specie.getName(), BeeItem.BeeType.PRINCESS, specie.getColor());
@@ -55,7 +53,7 @@ public class BeeIconGenerator {
                 if(borderBI.getRGB(x, y) == 0xFFFF00FF)
                     bee.setRGB(x, y, border);
                 if(type == BeeItem.BeeType.PRINCESS) {
-                    if(princessBI.getRGB(x, y) != 0xFF000000)
+                    if(princessBI.getRGB(x, y) != 0x00000000)
                         bee.setRGB(x, y, princessBI.getRGB(x, y));
                 }
                 else if(type == BeeItem.BeeType.QUEEN) {
@@ -65,6 +63,8 @@ public class BeeIconGenerator {
             }
         }
         File output = Path.of(outpath,  name + "_" + type.name +".png").toFile();
+        if(!output.exists())
+            output.createNewFile();
         ImageIO.write(bee, "png", output);
         System.out.println("GEN: " + name + " " + type.name);
     }

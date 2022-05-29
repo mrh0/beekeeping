@@ -2,6 +2,7 @@ package github.mrh0.beekeeping.datagen;
 
 import com.google.gson.JsonElement;
 import github.mrh0.beekeeping.Beekeeping;
+import github.mrh0.beekeeping.Util;
 import github.mrh0.beekeeping.bee.Specie;
 import github.mrh0.beekeeping.bee.SpeciesRegistry;
 import net.minecraft.data.DataGenerator;
@@ -26,6 +27,9 @@ public class ItemModelGenerator extends ItemModelProvider {
             simpleItem(specie.droneItem);
             simpleItem(specie.princessItem);
             simpleItem(specie.queenItem);
+            System.out.println("\"item.beekeeping." + specie.getName() + "_drone\":\"" + Util.capitalize(specie.getName()) + " Drone\",");
+            System.out.println("\"item.beekeeping." + specie.getName() + "_princess\":\"" + Util.capitalize(specie.getName()) + " Princess\",");
+            System.out.println("\"item.beekeeping." + specie.getName() + "_queen\":\"" + Util.capitalize(specie.getName()) + " Queen\",");
         }
     }
 

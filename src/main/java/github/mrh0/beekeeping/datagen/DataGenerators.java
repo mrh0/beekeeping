@@ -13,11 +13,13 @@ import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
 @Mod.EventBusSubscriber(modid = Beekeeping.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) throws IOException {
+        BeeIconGenerator.makeAll();
         DataGenerator generator = event.getGenerator();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 

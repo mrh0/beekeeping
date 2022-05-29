@@ -36,10 +36,8 @@ commonYield
 rareYield
 offspringYield
 heat
-cold
 humidity
 light
-
 
 Catalysts:
 sugar
