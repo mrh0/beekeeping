@@ -1,6 +1,8 @@
 package github.mrh0.beekeeping.blocks.analyzer;
 
+import github.mrh0.beekeeping.Beekeeping;
 import github.mrh0.beekeeping.Index;
+import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.screen.AnalyzerMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,6 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -39,6 +42,20 @@ public class AnalyzerBlockEntity extends BlockEntity implements MenuProvider {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
+
+            if(slot == 0) {
+                ItemStack stack = getAnalyzed();
+                if(stack.isEmpty())
+                    return;
+                if(!(stack.getItem() instanceof BeeItem))
+                    return;
+                if(BeeItem.isAnalyzed(stack))
+                    return;
+                if(stack.getTag() == null)
+                    BeeItem.init(stack);
+                BeeItem.setAnalyzed(stack.getTag(), true);
+                Beekeeping.LOGGER.debug("Analyzed");
+            }
         }
     };
 
@@ -96,5 +113,9 @@ public class AnalyzerBlockEntity extends BlockEntity implements MenuProvider {
         }
 
         Containers.dropContents(this.level, this.worldPosition, inventory);
+    }
+
+    public ItemStack getAnalyzed() {
+        return itemHandler.getStackInSlot(0);
     }
 }

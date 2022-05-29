@@ -6,6 +6,9 @@ import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlock;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlockEntity;
 import github.mrh0.beekeeping.group.ItemGroup;
 import github.mrh0.beekeeping.screen.AnalyzerMenu;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
@@ -35,6 +38,7 @@ public class Index {
         items();
         blockEntities();
         menus();
+        tags();
     }
 
     public static void register(IEventBus eventBus) {
@@ -79,5 +83,11 @@ public class Index {
 
     public static void menus() {
         ANALYZER_MENU = registerMenuType(AnalyzerMenu::new, "analyzer");
+    }
+
+    public static TagKey<Item> BEES_TAG;
+
+    public static void tags() {
+        BEES_TAG = ItemTags.create(new ResourceLocation("beekeeping", "bees"));
     }
 }

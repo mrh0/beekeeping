@@ -4,10 +4,19 @@ import github.mrh0.beekeeping.bee.Specie;
 import github.mrh0.beekeeping.bee.genes.Gene;
 import github.mrh0.beekeeping.bee.genes.LifetimeGene;
 import github.mrh0.beekeeping.group.ItemGroup;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public abstract class BeeItem extends Item {
     private final Specie specie;
@@ -52,6 +61,16 @@ public abstract class BeeItem extends Item {
         return tag.getBoolean("analyzed");
     }
 
+    public static boolean isAnalyzed(ItemStack stack) {
+        if(stack.isEmpty())
+            return false;
+        if(!(stack.getItem() instanceof BeeItem))
+            return false;
+        if(stack.getTag() == null)
+            return false;
+        return getAnalyzed(stack.getTag());
+    }
+
     public static void setHealth(CompoundTag tag, int health) {
         tag.putInt("health", health);
     }
@@ -61,10 +80,15 @@ public abstract class BeeItem extends Item {
     }
 
     public static void init(ItemStack stack) {
+        if(stack.isEmpty())
+            return;
+        if(!(stack.getItem() instanceof BeeItem))
+            return;
         if(stack.getTag() == null)
             stack.setTag(new CompoundTag());
         CompoundTag tag = stack.getTag();
-        setAnalyzed(tag, true);
+        setAnalyzed(tag, false);
+
         LifetimeGene.set(tag, Gene.randomWide());
         setHealth(tag, LifetimeGene.of(LifetimeGene.get(tag)).getTime());
     }
@@ -78,10 +102,36 @@ public abstract class BeeItem extends Item {
 
     @Override
     public int getBarWidth(ItemStack stack) {
-        return super.getBarWidth(stack);
+        return 100;
     }
 
     public boolean isFoil() {
         return foil;
+    }
+
+    ChatFormatting[] formatting = {
+            ChatFormatting.DARK_AQUA,
+            ChatFormatting.AQUA,
+            ChatFormatting.YELLOW,
+            ChatFormatting.GOLD,
+            ChatFormatting.RED
+    };
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
+        super.appendHoverText(stack, level, list, flag);
+        if(stack.isEmpty())
+            return;
+        if(!(stack.getItem() instanceof BeeItem))
+            return;
+        if(stack.getTag() == null || !isAnalyzed(stack)) {
+            list.add(new TranslatableComponent("tooltip.beekeeping.gene.not_analyzed").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+            return;
+        }
+
+        CompoundTag tag = stack.getTag();
+        list.add(new TranslatableComponent("tooltip.beekeeping.gene.lifetime")
+                .append(": ").append(new TextComponent(LifetimeGene.of(LifetimeGene.get(tag)).getName()).withStyle(formatting[LifetimeGene.get(tag)]))
+        );
     }
 }

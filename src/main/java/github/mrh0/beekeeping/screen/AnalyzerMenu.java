@@ -1,7 +1,11 @@
 package github.mrh0.beekeeping.screen;
 
+import github.mrh0.beekeeping.Beekeeping;
 import github.mrh0.beekeeping.Index;
+import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlockEntity;
+import github.mrh0.beekeeping.screen.slot.BeeSlot;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -20,8 +24,8 @@ public class AnalyzerMenu extends AbstractContainerMenu {
         this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
     }
 
-    public AnalyzerMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
-        super(Index.ANALYZER_MENU.get(), pContainerId);
+    public AnalyzerMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
+        super(Index.ANALYZER_MENU.get(), id);
         checkContainerSize(inv, 1);
         blockEntity = ((AnalyzerBlockEntity) entity);
         this.level = inv.player.level;
@@ -31,12 +35,21 @@ public class AnalyzerMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
 
         this.blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-            //this.addSlot(new ModResultSlot(handler, 3, 80, 60));
+            this.addSlot(new BeeSlot(handler, 0, 12, 21)); // Index: 36
         });
 
         addDataSlots(data);
-    }
 
+        addSlotListener(new ContainerListener() {
+            @Override
+            public void slotChanged(AbstractContainerMenu menu, int slot, ItemStack ustack) {
+
+            }
+
+            @Override
+            public void dataChanged(AbstractContainerMenu menu, int slot, int stack) {}
+        });
+    }
 
     // CREDITS: diesieben07 https://github.com/diesieben07/SevenCommons
     // must assign a slot number to each of the slots used by the GUI.
@@ -56,7 +69,7 @@ public class AnalyzerMenu extends AbstractContainerMenu {
     private static final int TE_INVENTORY_SLOT_COUNT = 1;  // must be the number of slots you have!
 
     @Override
-    public ItemStack quickMoveStack(Player playerIn, int index) {
+    public ItemStack quickMoveStack(Player player, int index) {
         Slot sourceSlot = slots.get(index);
         if (sourceSlot == null || !sourceSlot.hasItem()) return ItemStack.EMPTY;  //EMPTY_ITEM
         ItemStack sourceStack = sourceSlot.getItem();
@@ -75,7 +88,6 @@ public class AnalyzerMenu extends AbstractContainerMenu {
                 return ItemStack.EMPTY;
             }
         } else {
-            System.out.println("Invalid slotIndex:" + index);
             return ItemStack.EMPTY;
         }
         // If stack size == 0 (the entire stack was moved) set slot contents to null
@@ -84,7 +96,7 @@ public class AnalyzerMenu extends AbstractContainerMenu {
         } else {
             sourceSlot.setChanged();
         }
-        sourceSlot.onTake(playerIn, sourceStack);
+        sourceSlot.onTake(player, sourceStack);
         return copyOfSourceStack;
     }
 
@@ -97,14 +109,14 @@ public class AnalyzerMenu extends AbstractContainerMenu {
     private void addPlayerInventory(Inventory playerInventory) {
         for (int i = 0; i < 3; ++i) {
             for (int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 86 + i * 18));
+                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 133 + i * 18));
             }
         }
     }
 
     private void addPlayerHotbar(Inventory playerInventory) {
         for (int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 144));
+            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 191));
         }
     }
 }

@@ -2,6 +2,7 @@ package github.mrh0.beekeeping;
 
 import com.mojang.logging.LogUtils;
 import github.mrh0.beekeeping.group.ItemGroup;
+import github.mrh0.beekeeping.screen.AnalyzerScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -14,7 +15,7 @@ import org.slf4j.Logger;
 @Mod(Beekeeping.MODID)
 public class Beekeeping {
     public static final String MODID = "beekeeping";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public Beekeeping() {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -32,6 +33,6 @@ public class Beekeeping {
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
-        //MenuScreens.register(Index.ANALYZER_MENU.get(), screen);
+        MenuScreens.register(Index.ANALYZER_MENU.get(), AnalyzerScreen::new);
     }
 }
