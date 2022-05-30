@@ -1,6 +1,5 @@
 package github.mrh0.beekeeping.blocks.apiary;
 
-import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -24,7 +23,7 @@ public class ApiaryBlock extends Block implements EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public ApiaryBlock() {
-        super(Properties.of(Material.METAL));
+        super(Properties.of(Material.NETHER_WOOD));
     }
 
     @Override
@@ -48,8 +47,8 @@ public class ApiaryBlock extends Block implements EntityBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
     }
 
     @Override
@@ -61,8 +60,8 @@ public class ApiaryBlock extends Block implements EntityBlock {
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof AnalyzerBlockEntity) {
-                //((AnalyzerBlockEntity) blockEntity).drop();
+            if (blockEntity instanceof ApiaryBlockEntity) {
+                ((ApiaryBlockEntity) blockEntity).drop();
             }
         }
         super.onRemove(state, level, pos, newState, isMoving);
@@ -73,8 +72,8 @@ public class ApiaryBlock extends Block implements EntityBlock {
                                  Player player, InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide()) {
             BlockEntity entity = level.getBlockEntity(pos);
-            if(entity instanceof AnalyzerBlockEntity) {
-                NetworkHooks.openGui(((ServerPlayer)player), (AnalyzerBlockEntity)entity, pos);
+            if(entity instanceof ApiaryBlockEntity) {
+                NetworkHooks.openGui(((ServerPlayer)player), (ApiaryBlockEntity)entity, pos);
             } else {
                 throw new IllegalStateException("Our Container provider is missing!");
             }
@@ -86,6 +85,6 @@ public class ApiaryBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new AnalyzerBlockEntity(pos, state);
+        return new ApiaryBlockEntity(pos, state);
     }
 }

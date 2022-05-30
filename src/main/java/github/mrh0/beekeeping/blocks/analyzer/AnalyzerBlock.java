@@ -48,8 +48,8 @@ public class AnalyzerBlock extends Block implements EntityBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class AnalyzerBlock extends Block implements EntityBlock {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof AnalyzerBlockEntity) {
-                //((AnalyzerBlockEntity) blockEntity).drop();
+                ((AnalyzerBlockEntity) blockEntity).drop();
             }
         }
         super.onRemove(state, level, pos, newState, isMoving);

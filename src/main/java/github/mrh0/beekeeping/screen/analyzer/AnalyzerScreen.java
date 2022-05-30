@@ -1,4 +1,4 @@
-package github.mrh0.beekeeping.screen;
+package github.mrh0.beekeeping.screen.analyzer;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;

@@ -4,5 +4,7 @@
   "item.beekeeping.common_queen":"Common Queen",
 
   "tooltip.beekeeping.gene.not_analyzed": "Analyzed to reveal genes.",
-  "tooltip.beekeeping.gene.lifetime": "Lifetime"
+  "tooltip.beekeeping.gene.lifetime": "Lifetime",
+
+  "tooltip.beekeeping.apiary.continuous": "Continuous operation mode"
 }

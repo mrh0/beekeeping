@@ -2,7 +2,8 @@ package github.mrh0.beekeeping;
 
 import com.mojang.logging.LogUtils;
 import github.mrh0.beekeeping.group.ItemGroup;
-import github.mrh0.beekeeping.screen.AnalyzerScreen;
+import github.mrh0.beekeeping.screen.analyzer.AnalyzerScreen;
+import github.mrh0.beekeeping.screen.apiary.ApiaryScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -34,5 +35,6 @@ public class Beekeeping {
 
     private void clientSetup(final FMLClientSetupEvent event) {
         MenuScreens.register(Index.ANALYZER_MENU.get(), AnalyzerScreen::new);
+        MenuScreens.register(Index.APIARY_MENU.get(), ApiaryScreen::new);
     }
 }

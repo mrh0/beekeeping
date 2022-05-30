@@ -1,7 +1,8 @@
-package github.mrh0.beekeeping.screen;
+package github.mrh0.beekeeping.screen.apiary;
 
 import github.mrh0.beekeeping.Index;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlockEntity;
+import github.mrh0.beekeeping.blocks.apiary.ApiaryBlockEntity;
 import github.mrh0.beekeeping.screen.slot.TagSlot;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -12,19 +13,19 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-public class AnalyzerMenu extends AbstractContainerMenu {
-    private final AnalyzerBlockEntity blockEntity;
+public class ApiaryMenu extends AbstractContainerMenu {
+    private final ApiaryBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
 
-    public AnalyzerMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
+    public ApiaryMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
         this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
     }
 
-    public AnalyzerMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
-        super(Index.ANALYZER_MENU.get(), id);
-        checkContainerSize(inv, 1);
-        blockEntity = ((AnalyzerBlockEntity) entity);
+    public ApiaryMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
+        super(Index.APIARY_MENU.get(), id);
+        checkContainerSize(inv, 9);
+        blockEntity = ((ApiaryBlockEntity) entity);
         this.level = inv.player.level;
         this.data = data;
 
@@ -53,7 +54,7 @@ public class AnalyzerMenu extends AbstractContainerMenu {
     private static final int VANILLA_FIRST_SLOT_INDEX = 0;
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
-    private static final int TE_INVENTORY_SLOT_COUNT = 1;  // must be the number of slots you have!
+    private static final int TE_INVENTORY_SLOT_COUNT = 9;  // must be the number of slots you have!
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
@@ -90,10 +91,10 @@ public class AnalyzerMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player player) {
         return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-                player, Index.ANALYZER_BLOCK.get());
+                player, Index.APIARY_BLOCK.get());
     }
 
-    private void addPlayerInventory(Inventory playerInventory) {
+    private void addPlayerInventory(net.minecraft.world.entity.player.Inventory playerInventory) {
         for (int i = 0; i < 3; ++i) {
             for (int l = 0; l < 9; ++l) {
                 this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 133 + i * 18));
@@ -101,7 +102,7 @@ public class AnalyzerMenu extends AbstractContainerMenu {
         }
     }
 
-    private void addPlayerHotbar(Inventory playerInventory) {
+    private void addPlayerHotbar(net.minecraft.world.entity.player.Inventory playerInventory) {
         for (int i = 0; i < 9; ++i) {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 191));
         }
