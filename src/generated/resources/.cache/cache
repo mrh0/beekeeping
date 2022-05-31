@@ -1,4 +1,8 @@
 99949ce25f0dede7e2d170f8b7a932359e275fec assets/beekeeping/models/item/common_drone.json
 895c585515f28fc106b7d8552976cfd0555a3d64 assets/beekeeping/models/item/common_princess.json
 dc480b926be5801f40c830e3a22b0a18d9b8d420 assets/beekeeping/models/item/common_queen.json
+db3205fe3d549a74789398748f526bf66700d862 data/beekeeping/recipes/bee_breeding/common_drone_with_common_princess.json
 bed67a3d2398f8a971c5ba2da69510c32b38c9d8 data/beekeeping/tags/items/bees.json
+54d85274cf78135ba04b94ba8236b6a2fc781979 data/beekeeping/tags/items/drone_bees.json
+a93c5033705a7cf2027e3bdddb72cf7fa011d51b data/beekeeping/tags/items/princess_bees.json
+3b8070bdfd903a76e2199a2ea48494d4fcc145e9 data/beekeeping/tags/items/queen_bees.json

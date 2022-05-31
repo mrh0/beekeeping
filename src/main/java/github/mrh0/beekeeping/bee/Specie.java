@@ -1,6 +1,7 @@
 package github.mrh0.beekeeping.bee;
 
 import github.mrh0.beekeeping.Beekeeping;
+import github.mrh0.beekeeping.bee.genes.Gene;
 import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.bee.item.DroneBee;
 import github.mrh0.beekeeping.bee.item.PrincessBee;
@@ -20,6 +21,8 @@ public class Specie {
     public PrincessBee princessItem;
     public QueenBee queenItem;
     public static String mod = Beekeeping.MODID;
+
+    public Gene.RandomFunction lifetimeGene = Gene::randomNarrow;
 
     public Specie(String name, int color, boolean foil) {
         this.name = name;
@@ -59,8 +62,21 @@ public class Specie {
         return this.queenItem;
     }
 
+    public Specie setLifetimeGene(Gene.RandomFunction fn) {
+        this.lifetimeGene = fn;
+        return this;
+    }
+
     public boolean compatibleWithBiome(Level level, BlockPos pos) {
         //level.getBiomeManager().getBiome(pos).value().getBaseTemperature();
         return true;
+    }
+
+    public static Specie getByName(String name) {
+        return SpeciesRegistry.instance.get(name);
+    }
+
+    public static Specie getByindex(int id) {
+        return SpeciesRegistry.instance.get(id);
     }
 }

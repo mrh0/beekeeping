@@ -6,7 +6,7 @@ import net.minecraft.nbt.CompoundTag;
 import java.util.Random;
 
 public interface Gene {
-    static Random rand = new Random();
+    static Random random = new Random();
 
     static int get(CompoundTag tag, String key) {
         return tag.getInt(key);
@@ -18,19 +18,31 @@ public interface Gene {
 
     String getName();
 
-    static int randomWide() {
+    interface RandomFunction {
+        int rand(Random rand);
+    }
+
+    static int randomWide(Random rand) {
         return rand.nextInt(5);
     }
 
-    static int randomNarrow() {
+    static int randomNarrow(Random rand) {
         return rand.nextInt(3) + 1;
     }
 
-    static int randomLow() {
+    static int randomLow(Random rand) {
         return rand.nextInt(3);
     }
 
-    static int randomHigh() {
+    static int randomHigh(Random rand) {
         return rand.nextInt(3) + 2;
+    }
+
+    static int normal(Random rand) {
+        return 2;
+    }
+
+    static int eval(RandomFunction fn) {
+        return fn.rand(Gene.random);
     }
 }

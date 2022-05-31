@@ -5,6 +5,7 @@ import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlockEntity;
 import github.mrh0.beekeeping.blocks.apiary.ApiaryBlockEntity;
 import github.mrh0.beekeeping.screen.slot.TagSlot;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
@@ -12,6 +13,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
 public class ApiaryMenu extends AbstractContainerMenu {
     private final ApiaryBlockEntity blockEntity;
@@ -33,7 +36,11 @@ public class ApiaryMenu extends AbstractContainerMenu {
         addPlayerHotbar(inv);
 
         this.blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
-            this.addSlot(new TagSlot(handler, 0, 12, 21, Index.BEES_TAG)); // Index: 36
+            this.addSlot(new TagSlot(handler, 0, 15, 60, Index.DRONE_BEES_TAG));
+            this.addSlot(new TagSlot(handler, 1, 15, 23, Index.PRINCESS_BEES_TAG));
+            this.addSlot(new TagSlot(handler, 2, 52, 42, Index.QUEEN_BEES_TAG));
+
+            addOutputInventory(handler);
         });
 
         addDataSlots(data);
@@ -94,17 +101,25 @@ public class ApiaryMenu extends AbstractContainerMenu {
                 player, Index.APIARY_BLOCK.get());
     }
 
-    private void addPlayerInventory(net.minecraft.world.entity.player.Inventory playerInventory) {
-        for (int i = 0; i < 3; ++i) {
-            for (int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 133 + i * 18));
+    private void addOutputInventory(IItemHandler handler) {
+        for (int i = 0; i < 2; ++i) {
+            for (int l = 0; l < 3; ++l) {
+                this.addSlot(new SlotItemHandler(handler, l + i * 3 + 3, 116 + l * 18, 33 + i * 18));
             }
         }
     }
 
-    private void addPlayerHotbar(net.minecraft.world.entity.player.Inventory playerInventory) {
+    private void addPlayerInventory(Inventory playerInventory) {
+        for (int i = 0; i < 3; ++i) {
+            for (int l = 0; l < 9; ++l) {
+                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 98 + i * 18));
+            }
+        }
+    }
+
+    private void addPlayerHotbar(Inventory playerInventory) {
         for (int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 191));
+            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 156));
         }
     }
 }

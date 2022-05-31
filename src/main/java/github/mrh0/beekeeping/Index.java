@@ -2,11 +2,13 @@ package github.mrh0.beekeeping;
 
 import github.mrh0.beekeeping.bee.Specie;
 import github.mrh0.beekeeping.bee.SpeciesRegistry;
+import github.mrh0.beekeeping.bee.genes.Gene;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlock;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlockEntity;
 import github.mrh0.beekeeping.blocks.apiary.ApiaryBlock;
 import github.mrh0.beekeeping.blocks.apiary.ApiaryBlockEntity;
 import github.mrh0.beekeeping.group.ItemGroup;
+import github.mrh0.beekeeping.recipe.BeeBreedingRecipe;
 import github.mrh0.beekeeping.screen.analyzer.AnalyzerMenu;
 import github.mrh0.beekeeping.screen.apiary.ApiaryMenu;
 import net.minecraft.resources.ResourceLocation;
@@ -16,6 +18,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
@@ -34,6 +37,8 @@ public class Index {
             DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, Beekeeping.MODID);
     public static final DeferredRegister<MenuType<?>> MENUS =
             DeferredRegister.create(ForgeRegistries.CONTAINERS, Beekeeping.MODID);
+    public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS =
+            DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Beekeeping.MODID);
 
     static {
         species();
@@ -42,6 +47,7 @@ public class Index {
         blockEntities();
         menus();
         tags();
+        recipes();
     }
 
     public static void register(IEventBus eventBus) {
@@ -49,12 +55,13 @@ public class Index {
         ITEMS.register(eventBus);
         BLOCK_ENTITIES.register(eventBus);
         MENUS.register(eventBus);
+        SERIALIZERS.register(eventBus);
     }
 
     //  SPECIE
     public static void species() {
         var r = SpeciesRegistry.instance;
-        r.register(new Specie("common", 0xFFb9c2cf));
+        r.register(new Specie("common", 0xFFb9c2cf).setLifetimeGene(Gene::normal));
     }
 
     //  ITEM
@@ -112,5 +119,12 @@ public class Index {
         DRONE_BEES_TAG = ItemTags.create(new ResourceLocation("beekeeping", "drone_bees"));
         PRINCESS_BEES_TAG = ItemTags.create(new ResourceLocation("beekeeping", "princess_bees"));
         QUEEN_BEES_TAG = ItemTags.create(new ResourceLocation("beekeeping", "queen_bees"));
+    }
+
+    //  RECIPE
+    public static RegistryObject<RecipeSerializer<BeeBreedingRecipe>> BEE_BREEDING_RECIPE;
+
+    public static void recipes() {
+        BEE_BREEDING_RECIPE = SERIALIZERS.register("bee_breeding", () -> BeeBreedingRecipe.Serializer.INSTANCE);
     }
 }

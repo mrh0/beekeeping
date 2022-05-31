@@ -30,6 +30,7 @@ public class ItemModelGenerator extends ItemModelProvider {
             System.out.println("\"item.beekeeping." + specie.getName() + "_drone\":\"" + Util.capitalize(specie.getName()) + " Drone\",");
             System.out.println("\"item.beekeeping." + specie.getName() + "_princess\":\"" + Util.capitalize(specie.getName()) + " Princess\",");
             System.out.println("\"item.beekeeping." + specie.getName() + "_queen\":\"" + Util.capitalize(specie.getName()) + " Queen\",");
+            System.out.println("\"item.beekeeping.species." + specie.getName() + "\":\"" + Util.capitalize(specie.getName()) + "\",");
         }
     }
 

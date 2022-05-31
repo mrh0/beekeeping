@@ -2,9 +2,13 @@
   "item.beekeeping.common_drone":"Common Drone",
   "item.beekeeping.common_princess":"Common Princess",
   "item.beekeeping.common_queen":"Common Queen",
+  "item.beekeeping.species.common":"Common",
+
+  "block.beekeeping.apiary":"Apiary",
+  "block.beekeeping.analyzer":"Bee-Analyzer",
 
   "tooltip.beekeeping.gene.not_analyzed": "Analyzed to reveal genes.",
   "tooltip.beekeeping.gene.lifetime": "Lifetime",
 
-  "tooltip.beekeeping.apiary.continuous": "Continuous operation mode"
+  "tooltip.beekeeping.apiary.continuous": "Continuous operation:"
 }

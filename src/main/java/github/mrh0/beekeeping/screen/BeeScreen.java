@@ -23,18 +23,24 @@ public abstract class BeeScreen<T extends AbstractContainerMenu> extends Abstrac
     }
 
     public class Bounds {
-        public final int x, y, w, h;
+        public final int x, y, w, h, mw, mh;
         public Bounds(int x, int y, int w, int h) {
+            this(x, y, w, h,0, 0);
+        }
+
+        public Bounds(int x, int y, int w, int h, int mw, int mh) {
             this.x = x;
             this.y = y;
             this.w = w;
             this.h = h;
+            this.mw = mw;
+            this.mh = mh;
         }
 
         public boolean in(int mx, int my) {
             int xo = getXOffset();
             int yo = getYOffset();
-            return mx >= x+xo && my >= y+yo && mx < x+w+xo && my < y+h+yo;
+            return mx >= x+xo-mw && my >= y+yo-mh && mx < x+w+xo+mw && my < y+h+yo+mh;
         }
 
         public int getX() {

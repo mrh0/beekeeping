@@ -19,6 +19,7 @@ public class DataGenerators {
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
         var blockTags = new BlockTagGenerator(generator, existingFileHelper);
+        generator.addProvider(new RecipeGenerator(generator));
         generator.addProvider(new ItemModelGenerator(generator, existingFileHelper));
         generator.addProvider(new ItemTagGenerator(generator, blockTags, existingFileHelper));
     }

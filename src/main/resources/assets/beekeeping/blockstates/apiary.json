@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "beekeeping:block/apiary",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "beekeeping:block/apiary"
+    },
+    "facing=south": {
+      "model": "beekeeping:block/apiary",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "beekeeping:block/apiary",
+      "y": 270
+    }
+  }
+}

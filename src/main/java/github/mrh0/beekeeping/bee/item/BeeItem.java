@@ -10,6 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -87,12 +88,17 @@ public abstract class BeeItem extends Item {
         if(stack.getTag() == null)
             stack.setTag(new CompoundTag());
         CompoundTag tag = stack.getTag();
+        if(!(stack.getItem() instanceof BeeItem))
+            return;
+        BeeItem beeItem = (BeeItem) stack.getItem();
+
         setAnalyzed(tag, false);
 
-        LifetimeGene.set(tag, Gene.randomWide());
+        LifetimeGene.set(tag, Gene.eval(beeItem.specie.lifetimeGene));
         setHealth(tag, LifetimeGene.of(LifetimeGene.get(tag)).getTime());
     }
 
+    //  Remove
     @Override
     public boolean isBarVisible(ItemStack stack) {
         if(stack.getTag() == null)
@@ -102,7 +108,11 @@ public abstract class BeeItem extends Item {
 
     @Override
     public int getBarWidth(ItemStack stack) {
-        return 100;
+        if(stack.getTag() == null)
+            return 13;
+        double health = getHealth(stack.getTag());
+        double max = LifetimeGene.of(LifetimeGene.get(stack.getTag())).getTime();
+        return (int)(health/max*13d);
     }
 
     public boolean isFoil() {
@@ -133,5 +143,18 @@ public abstract class BeeItem extends Item {
         list.add(new TranslatableComponent("tooltip.beekeeping.gene.lifetime")
                 .append(": ").append(new TextComponent(LifetimeGene.of(LifetimeGene.get(tag)).getName()).withStyle(formatting[LifetimeGene.get(tag)]))
         );
+        list.add(new TextComponent("health: " + getHealth(stack.getTag())));
+    }
+
+    public static Specie of(ItemStack stack) {
+        if(stack.isEmpty())
+            return null;
+        if(!(stack.getItem() instanceof BeeItem))
+            return null;
+        return ((BeeItem) stack.getItem()).specie;
+    }
+
+    public static boolean is(ItemStack stack, Specie specie) {
+        return of(stack) == specie;
     }
 }
