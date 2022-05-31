@@ -33,6 +33,10 @@ public class BeeBreedingRecipe implements Recipe<SimpleContainer> {
         this.output = new ItemStack(offspring.queenItem);
     }
 
+    public Specie getOffspring() {
+        return this.offspring;
+    }
+
     @Override
     public boolean matches(SimpleContainer container, Level level) {
         return BeeItem.is(container.getItem(0), drone) && BeeItem.is(container.getItem(1), princess);

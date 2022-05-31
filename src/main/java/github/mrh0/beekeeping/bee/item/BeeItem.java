@@ -92,9 +92,16 @@ public abstract class BeeItem extends Item {
             return;
         BeeItem beeItem = (BeeItem) stack.getItem();
 
+        init(tag, beeItem,
+                Gene.eval(beeItem.specie.lifetimeGene)
+        );
+    }
+
+    public static void init(CompoundTag tag, BeeItem beeItem, int lifetimeGene) {
         setAnalyzed(tag, false);
 
-        LifetimeGene.set(tag, Gene.eval(beeItem.specie.lifetimeGene));
+        LifetimeGene.set(tag, lifetimeGene);
+
         setHealth(tag, LifetimeGene.of(LifetimeGene.get(tag)).getTime());
     }
 

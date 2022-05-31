@@ -1,12 +1,14 @@
 package github.mrh0.beekeeping.blocks.apiary;
 
 import github.mrh0.beekeeping.Index;
+import github.mrh0.beekeeping.bee.Specie;
+import github.mrh0.beekeeping.bee.breeding.BeeBreeding;
+import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.screen.apiary.ApiaryMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
@@ -16,6 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -38,6 +41,32 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider {
     private final ItemStackHandler itemHandler = new ItemStackHandler(9) {
         @Override
         protected void onContentsChanged(int slot) {
+            if(slot < 3) {
+                if(getLevel().isClientSide())
+                    return;
+                ItemStack drone = itemHandler.getStackInSlot(0);
+                ItemStack princess = itemHandler.getStackInSlot(1);
+                ItemStack queen = itemHandler.getStackInSlot(2);
+
+                if(drone.isEmpty())
+                    return;
+                if(princess.isEmpty())
+                    return;
+                if(!queen.isEmpty())
+                    return;
+
+                if(drone.getTag() == null)
+                    BeeItem.init(drone);
+                if(princess.getTag() == null)
+                    BeeItem.init(princess);
+
+                Specie offspring = BeeBreeding.getOffspringSpecie(getLevel(), drone, princess);
+                if(offspring == null)
+                    return;
+                itemHandler.setStackInSlot(0, ItemStack.EMPTY);
+                itemHandler.setStackInSlot(1, ItemStack.EMPTY);
+                itemHandler.setStackInSlot(2, BeeBreeding.getOffspringItemStack(drone, princess, offspring));
+            }
             setChanged();
         }
     };
@@ -58,9 +87,8 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider {
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
             return lazyItemHandler.cast();
-        }
 
         return super.getCapability(cap, side);
     }

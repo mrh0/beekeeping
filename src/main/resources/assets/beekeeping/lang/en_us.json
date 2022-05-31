@@ -1,4 +1,6 @@
 {
+  "itemGroup.beekeeping:bees": "Beekeeping",
+
   "item.beekeeping.common_drone":"Common Drone",
   "item.beekeeping.common_princess":"Common Princess",
   "item.beekeeping.common_queen":"Common Queen",

@@ -61,7 +61,7 @@ public class Index {
     //  SPECIE
     public static void species() {
         var r = SpeciesRegistry.instance;
-        r.register(new Specie("common", 0xFFb9c2cf).setLifetimeGene(Gene::normal));
+        r.register(new Specie("common", 0xFFb9c2cf).setLifetimeGene(Gene::randomWide));
     }
 
     //  ITEM

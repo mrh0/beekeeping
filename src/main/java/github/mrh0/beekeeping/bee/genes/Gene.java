@@ -45,4 +45,8 @@ public interface Gene {
     static int eval(RandomFunction fn) {
         return fn.rand(Gene.random);
     }
+
+    static int select(int a, int b) {
+        return Gene.random.nextBoolean() ? a : b;
+    }
 }

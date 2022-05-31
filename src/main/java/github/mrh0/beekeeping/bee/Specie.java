@@ -76,7 +76,7 @@ public class Specie {
         return SpeciesRegistry.instance.get(name);
     }
 
-    public static Specie getByindex(int id) {
-        return SpeciesRegistry.instance.get(id);
+    public static Specie getByIndex(int index) {
+        return SpeciesRegistry.instance.get(index);
     }
 }
