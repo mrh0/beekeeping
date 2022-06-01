@@ -9,6 +9,7 @@ import github.mrh0.beekeeping.blocks.apiary.ApiaryBlock;
 import github.mrh0.beekeeping.blocks.apiary.ApiaryBlockEntity;
 import github.mrh0.beekeeping.group.ItemGroup;
 import github.mrh0.beekeeping.recipe.BeeBreedingRecipe;
+import github.mrh0.beekeeping.recipe.BeeProduceRecipe;
 import github.mrh0.beekeeping.screen.analyzer.AnalyzerMenu;
 import github.mrh0.beekeeping.screen.apiary.ApiaryMenu;
 import net.minecraft.resources.ResourceLocation;
@@ -123,8 +124,10 @@ public class Index {
 
     //  RECIPE
     public static RegistryObject<RecipeSerializer<BeeBreedingRecipe>> BEE_BREEDING_RECIPE;
+    public static RegistryObject<RecipeSerializer<BeeProduceRecipe>> BEE_PRODUCE_RECIPE;
 
     public static void recipes() {
         BEE_BREEDING_RECIPE = SERIALIZERS.register("bee_breeding", () -> BeeBreedingRecipe.Serializer.INSTANCE);
+        BEE_PRODUCE_RECIPE = SERIALIZERS.register("bee_produce", () -> BeeProduceRecipe.Serializer.INSTANCE);
     }
 }

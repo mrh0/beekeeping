@@ -3,6 +3,7 @@ package github.mrh0.beekeeping.screen.apiary;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import github.mrh0.beekeeping.Beekeeping;
+import github.mrh0.beekeeping.blocks.apiary.ApiaryBlockEntity;
 import github.mrh0.beekeeping.screen.BeeScreen;
 import github.mrh0.beekeeping.screen.analyzer.AnalyzerMenu;
 import net.minecraft.ChatFormatting;
@@ -17,7 +18,7 @@ import net.minecraft.world.entity.player.Inventory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApiaryScreen extends BeeScreen<ApiaryMenu> {
+public class ApiaryScreen extends BeeScreen<ApiaryMenu, ApiaryBlockEntity> {
     private static final ResourceLocation TEXTURE =
             new ResourceLocation(Beekeeping.MODID, "textures/gui/apiary.png");
 

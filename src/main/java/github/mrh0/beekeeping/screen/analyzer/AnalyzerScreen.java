@@ -3,13 +3,16 @@ package github.mrh0.beekeeping.screen.analyzer;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import github.mrh0.beekeeping.Beekeeping;
+import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlockEntity;
+import github.mrh0.beekeeping.screen.BeeScreen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class AnalyzerScreen extends AbstractContainerScreen<AnalyzerMenu> {
+public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity> {
     private static final ResourceLocation TEXTURE =
             new ResourceLocation(Beekeeping.MODID, "textures/gui/analyzer.png");
 
@@ -24,10 +27,12 @@ public class AnalyzerScreen extends AbstractContainerScreen<AnalyzerMenu> {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, TEXTURE);
-        int x = (width - imageWidth) / 2;
-        int y = (height - imageHeight) / 2;
+        int x = getXOffset();
+        int y = getYOffset();
 
         this.blit(poseStack, x, y, 0, 0, imageWidth, imageHeight);
+
+        drawText(poseStack, new TranslatableComponent("test text"), 39, 24, 2f);
     }
 
     @Override

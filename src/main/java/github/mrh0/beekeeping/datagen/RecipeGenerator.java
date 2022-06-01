@@ -15,9 +15,18 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
     }
 
     @Override
-    protected void buildCraftingRecipes(Consumer<FinishedRecipe> recipeConsumer) {
+    protected void buildCraftingRecipes(Consumer<FinishedRecipe> rc) {
+        /* Redundant:
         for(Specie specie : SpeciesRegistry.instance.getAll())
             new BeeBreedingRecipeBuilder(specie, specie, specie)
+                .save(rc);*/
+    }
+
+    private void breed(Consumer<FinishedRecipe> recipeConsumer, String drone, String princess, String offspring, boolean mirror) {
+        new BeeBreedingRecipeBuilder(Specie.getByName(drone), Specie.getByName(princess), Specie.getByName(offspring))
                 .save(recipeConsumer);
+        if(mirror)
+            new BeeBreedingRecipeBuilder(Specie.getByName(princess), Specie.getByName(drone), Specie.getByName(offspring))
+                    .save(recipeConsumer);
     }
 }

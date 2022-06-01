@@ -5,12 +5,10 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
-import java.util.List;
-
-public abstract class BeeScreen<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
-    public BeeScreen(T menu, Inventory inv, Component text) {
+public abstract class BeeScreen<M extends AbstractContainerMenu, E extends BlockEntity> extends AbstractContainerScreen<M> {
+    public BeeScreen(M menu, Inventory inv, Component text) {
         super(menu, inv, text);
     }
 
@@ -67,6 +65,17 @@ public abstract class BeeScreen<T extends AbstractContainerMenu> extends Abstrac
 
     public void onLeftClicked(int x, int y) {}
     public void onRightClicked(int x, int y) {}
+
+    public void drawText(PoseStack poseStack, Component text, int x, int y, float scale) {
+        poseStack.pushPose();
+        poseStack.scale(scale, scale, scale);
+        this.font.draw(poseStack, text, (float)(x + getXOffset()) / scale, (float)(y + getYOffset()) / scale, 4210752);
+        poseStack.popPose();
+    }
+
+    public E getBlockEntity() {
+        return null;
+    }
 
     /*public void draw(PoseStack poseStack) {
         blit(poseStack);
