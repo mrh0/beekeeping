@@ -2,14 +2,16 @@ package github.mrh0.beekeeping.blocks.apiary;
 
 import github.mrh0.beekeeping.Index;
 import github.mrh0.beekeeping.bee.Specie;
-import github.mrh0.beekeeping.bee.breeding.BeeBreeding;
+import github.mrh0.beekeeping.bee.breeding.BeeLifecycle;
 import github.mrh0.beekeeping.bee.item.BeeItem;
+import github.mrh0.beekeeping.recipe.BeeProduceRecipe;
 import github.mrh0.beekeeping.screen.apiary.ApiaryMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -19,6 +21,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -38,15 +41,28 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider {
         data = new SimpleContainerData(2);
     }
 
+    private ItemStack getDrone() {
+        return itemHandler.getStackInSlot(0);
+    }
+
+    private ItemStack getPrincess() {
+        return itemHandler.getStackInSlot(1);
+    }
+
+    private ItemStack getQueen() {
+        return itemHandler.getStackInSlot(2);
+    }
+
     private final ItemStackHandler itemHandler = new ItemStackHandler(9) {
         @Override
         protected void onContentsChanged(int slot) {
+            checkLock = false;
             if(slot < 3) {
                 if(getLevel().isClientSide())
                     return;
-                ItemStack drone = itemHandler.getStackInSlot(0);
-                ItemStack princess = itemHandler.getStackInSlot(1);
-                ItemStack queen = itemHandler.getStackInSlot(2);
+                ItemStack drone = getDrone();
+                ItemStack princess = getPrincess();
+                ItemStack queen = getQueen();
 
                 if(drone.isEmpty())
                     return;
@@ -60,12 +76,12 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider {
                 if(princess.getTag() == null)
                     BeeItem.init(princess);
 
-                Specie offspring = BeeBreeding.getOffspringSpecie(getLevel(), drone, princess);
+                Specie offspring = BeeLifecycle.getOffspringSpecie(getLevel(), drone, princess);
                 if(offspring == null)
                     return;
                 itemHandler.setStackInSlot(0, ItemStack.EMPTY);
                 itemHandler.setStackInSlot(1, ItemStack.EMPTY);
-                itemHandler.setStackInSlot(2, BeeBreeding.getOffspringItemStack(drone, princess, offspring));
+                itemHandler.setStackInSlot(2, BeeLifecycle.getOffspringItemStack(drone, princess, offspring));
             }
             setChanged();
         }
@@ -123,5 +139,58 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider {
             inventory.setItem(i, itemHandler.getStackInSlot(i));
         }
         Containers.dropContents(this.level, this.worldPosition, inventory);
+    }
+
+    public int slowTick = 0;
+    public boolean checkLock = false;
+    public static void tick(Level level, BlockPos pos, BlockState state, ApiaryBlockEntity abe) {
+        if(abe.slowTick++ < 20)
+            return;
+        abe.slowTick = 0;
+        ItemStack queen = abe.getQueen();
+        Specie specie = BeeItem.of(queen);
+        if(specie == null)
+            return;
+        if(queen.getTag() == null)
+            return;
+        int hp = BeeItem.getHealth(queen.getTag());
+        if(hp == 0) {
+            if(abe.checkLock)
+                return;
+            if(attemptInsert(level, queen, abe.itemHandler)) {
+                abe.itemHandler.setStackInSlot(2, ItemStack.EMPTY);
+                return;
+            }
+            abe.checkLock = true;
+            return;
+        }
+        BeeItem.setHealth(queen.getTag(), hp-100);
+    }
+
+    public static boolean attemptInsert(Level level, ItemStack queen, ItemStackHandler inv) {
+        var optional = BeeLifecycle.getProduceRecipe(level, queen);
+        if(optional.isEmpty())
+            return true;
+        BeeProduceRecipe bpr = optional.get();
+        ItemStack commonProduce = bpr.getCommonProduce();
+        ItemStack rareProduce = bpr.getRolledRareProduce();
+        if(!insert(commonProduce, inv, true))
+            return false;
+        if(!insert(rareProduce, inv, true))
+            return false;
+        insert(commonProduce, inv, false);
+        insert(rareProduce, inv, false);
+        return true;
+    }
+
+    public static boolean insert(ItemStack stack, ItemStackHandler inv, boolean sim) {
+        if(stack.isEmpty())
+            return true;
+        for(int i = 3; i < inv.getSlots(); i++) {
+            stack = inv.insertItem(i, stack, sim);
+            if(stack.isEmpty())
+                return true;
+        }
+        return stack.isEmpty();
     }
 }

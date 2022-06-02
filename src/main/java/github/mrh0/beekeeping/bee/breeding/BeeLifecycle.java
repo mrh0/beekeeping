@@ -6,6 +6,7 @@ import github.mrh0.beekeeping.bee.genes.Gene;
 import github.mrh0.beekeeping.bee.genes.LifetimeGene;
 import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.recipe.BeeBreedingRecipe;
+import github.mrh0.beekeeping.recipe.BeeProduceRecipe;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
@@ -13,7 +14,7 @@ import net.minecraft.world.level.Level;
 
 import java.util.Optional;
 
-public class BeeBreeding {
+public class BeeLifecycle {
     public static Specie getOffspringSpecie(Level level, ItemStack drone, ItemStack princess) {
         SimpleContainer inv = new SimpleContainer(2);
         inv.setItem(0, drone);
@@ -34,5 +35,13 @@ public class BeeBreeding {
         ItemStack res = new ItemStack(offspring.queenItem);
         res.setTag(tag);
         return res;
+    }
+
+    public static Optional<BeeProduceRecipe> getProduceRecipe(Level level, ItemStack queen) {
+        SimpleContainer inv = new SimpleContainer(1);
+        inv.setItem(0, queen);
+
+        return level.getRecipeManager()
+                .getRecipeFor(BeeProduceRecipe.Type.INSTANCE, inv, level);
     }
 }
