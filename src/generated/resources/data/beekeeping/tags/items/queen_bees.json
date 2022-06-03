@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "beekeeping:common_queen"
+    "beekeeping:common_queen",
+    "beekeeping:forest_queen",
+    "beekeeping:tempered_queen"
   ]
 }

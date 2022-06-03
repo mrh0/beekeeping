@@ -1,6 +1,6 @@
 {
   "type": "beekeeping:bee_breeding",
   "drone": "common",
-  "princess": "common",
-  "offspring": "common"
+  "princess": "forest",
+  "offspring": "tempered"
 }

@@ -32,7 +32,7 @@ public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity>
 
         this.blit(poseStack, x, y, 0, 0, imageWidth, imageHeight);
 
-        drawText(poseStack, new TranslatableComponent("test text"), 39, 24, 2f);
+        drawText(poseStack, new TranslatableComponent("item.beekeeping.species."), 39, 24, 2f);
     }
 
     @Override

@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "beekeeping:common_drone"
+    "beekeeping:common_drone",
+    "beekeeping:forest_drone",
+    "beekeeping:tempered_drone"
   ]
 }

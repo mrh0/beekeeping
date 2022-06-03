@@ -1,8 +1,7 @@
 package github.mrh0.beekeeping.bee.item;
 
 import github.mrh0.beekeeping.bee.Specie;
-import github.mrh0.beekeeping.bee.genes.Gene;
-import github.mrh0.beekeeping.bee.genes.LifetimeGene;
+import github.mrh0.beekeeping.bee.genes.*;
 import github.mrh0.beekeeping.group.ItemGroup;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -93,14 +92,20 @@ public abstract class BeeItem extends Item {
         BeeItem beeItem = (BeeItem) stack.getItem();
 
         init(tag, beeItem,
-                Gene.eval(beeItem.specie.lifetimeGene)
+                Gene.eval(beeItem.specie.lifetimeGene),
+                Gene.eval(beeItem.specie.environmentGene),
+                Gene.eval(beeItem.specie.lightGene),
+                Gene.eval(beeItem.specie.produceGene)
         );
     }
 
-    public static void init(CompoundTag tag, BeeItem beeItem, int lifetimeGene) {
+    public static void init(CompoundTag tag, BeeItem beeItem, int lifetimeGene, int environmentGene, int lightGene, int produceGene) {
         setAnalyzed(tag, false);
 
         LifetimeGene.set(tag, lifetimeGene);
+        EnvironmentToleranceGene.set(tag, environmentGene);
+        LifetimeGene.set(tag, lightGene);
+        ProduceBalanceGene.set(tag, produceGene);
 
         setHealth(tag, LifetimeGene.of(LifetimeGene.get(tag)).getTime());
     }
@@ -148,8 +153,14 @@ public abstract class BeeItem extends Item {
 
         CompoundTag tag = stack.getTag();
         list.add(new TranslatableComponent("tooltip.beekeeping.gene.lifetime")
-                .append(": ").append(new TextComponent(LifetimeGene.of(LifetimeGene.get(tag)).getName()).withStyle(formatting[LifetimeGene.get(tag)]))
-        );
+                        .append(": ").append(new TextComponent(LifetimeGene.of(LifetimeGene.get(tag)).getName()).withStyle(formatting[LifetimeGene.get(tag)])));
+        list.add(new TranslatableComponent("tooltip.beekeeping.gene.environment")
+                        .append(": ").append(new TextComponent(EnvironmentToleranceGene.of(EnvironmentToleranceGene.get(tag)).getName()).withStyle(formatting[EnvironmentToleranceGene.get(tag)])));
+        list.add(new TranslatableComponent("tooltip.beekeeping.gene.light")
+                .append(": ").append(new TextComponent(LightPreferenceGene.of(LightPreferenceGene.get(tag)).getName()).withStyle(formatting[LightPreferenceGene.get(tag)])));
+        list.add(new TranslatableComponent("tooltip.beekeeping.gene.produce")
+                .append(": ").append(new TextComponent(ProduceBalanceGene.of(ProduceBalanceGene.get(tag)).getName()).withStyle(formatting[ProduceBalanceGene.get(tag)])));
+
         list.add(new TextComponent("health: " + getHealth(stack.getTag())));
     }
 

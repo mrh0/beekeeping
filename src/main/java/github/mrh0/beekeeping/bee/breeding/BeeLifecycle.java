@@ -2,8 +2,7 @@ package github.mrh0.beekeeping.bee.breeding;
 
 import github.mrh0.beekeeping.Util;
 import github.mrh0.beekeeping.bee.Specie;
-import github.mrh0.beekeeping.bee.genes.Gene;
-import github.mrh0.beekeeping.bee.genes.LifetimeGene;
+import github.mrh0.beekeeping.bee.genes.*;
 import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.recipe.BeeBreedingRecipe;
 import github.mrh0.beekeeping.recipe.BeeProduceRecipe;
@@ -30,7 +29,10 @@ public class BeeLifecycle {
     public static ItemStack getOffspringItemStack(ItemStack drone, ItemStack princess, Specie offspring) {
         CompoundTag tag = new CompoundTag();
         BeeItem.init(tag, offspring.queenItem,
-                Gene.select(LifetimeGene.get(drone.getTag()), LifetimeGene.get(princess.getTag()))
+                Gene.select(LifetimeGene.get(drone.getTag()), LifetimeGene.get(princess.getTag())),
+                Gene.select(EnvironmentToleranceGene.get(drone.getTag()), EnvironmentToleranceGene.get(princess.getTag())),
+                Gene.select(LightPreferenceGene.get(drone.getTag()), LightPreferenceGene.get(princess.getTag())),
+                Gene.select(ProduceBalanceGene.get(drone.getTag()), ProduceBalanceGene.get(princess.getTag()))
         );
         ItemStack res = new ItemStack(offspring.queenItem);
         res.setTag(tag);

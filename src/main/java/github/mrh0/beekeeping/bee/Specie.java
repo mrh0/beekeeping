@@ -23,6 +23,9 @@ public class Specie {
     public static String mod = Beekeeping.MODID;
 
     public Gene.RandomFunction lifetimeGene = Gene::randomNarrow;
+    public Gene.RandomFunction environmentGene = Gene::normal;
+    public Gene.RandomFunction lightGene = Gene::normal;
+    public Gene.RandomFunction produceGene = Gene::normal;
 
     public Specie(String name, int color, boolean foil) {
         this.name = name;
@@ -60,6 +63,21 @@ public class Specie {
     public QueenBee buildQueenItem() {
         this.queenItem = new QueenBee(this, new Item.Properties().stacksTo(1), foil);
         return this.queenItem;
+    }
+
+    public Specie setEnvironmentGene(Gene.RandomFunction fn) {
+        this.environmentGene = fn;
+        return this;
+    }
+
+    public Specie setLightGene(Gene.RandomFunction fn) {
+        this.lightGene = fn;
+        return this;
+    }
+
+    public Specie setProduceGene(Gene.RandomFunction fn) {
+        this.produceGene = fn;
+        return this;
     }
 
     public Specie setLifetimeGene(Gene.RandomFunction fn) {

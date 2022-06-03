@@ -3,6 +3,12 @@
   "values": [
     "beekeeping:common_drone",
     "beekeeping:common_princess",
-    "beekeeping:common_queen"
+    "beekeeping:common_queen",
+    "beekeeping:forest_drone",
+    "beekeeping:forest_princess",
+    "beekeeping:forest_queen",
+    "beekeeping:tempered_drone",
+    "beekeeping:tempered_princess",
+    "beekeeping:tempered_queen"
   ]
 }

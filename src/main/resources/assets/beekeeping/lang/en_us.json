@@ -5,12 +5,24 @@
   "item.beekeeping.common_princess":"Common Princess",
   "item.beekeeping.common_queen":"Common Queen",
   "item.beekeeping.species.common":"Common",
+  "item.beekeeping.forest_drone":"Forest Drone",
+  "item.beekeeping.forest_princess":"Forest Princess",
+  "item.beekeeping.forest_queen":"Forest Queen",
+  "item.beekeeping.species.forest":"Forest",
+  "item.beekeeping.tempered_drone":"Tempered Drone",
+  "item.beekeeping.tempered_princess":"Tempered Princess",
+  "item.beekeeping.tempered_queen":"Tempered Queen",
+  "item.beekeeping.species.tempered":"Tempered",
 
   "block.beekeeping.apiary":"Apiary",
   "block.beekeeping.analyzer":"Bee-Analyzer",
 
   "tooltip.beekeeping.gene.not_analyzed": "Analyzed to reveal genes.",
   "tooltip.beekeeping.gene.lifetime": "Lifetime",
+  "tooltip.beekeeping.gene.environment": "Preferred Environment",
+  "tooltip.beekeeping.gene.light": "Light Tolerance",
+  "tooltip.beekeeping.gene.produce": "Produce Balance",
+
 
   "tooltip.beekeeping.apiary.continuous": "Continuous operation:"
 }
