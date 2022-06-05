@@ -1,0 +1,26 @@
+{
+  "type": "beekeeping:bee_breeding",
+  "specie": "common",
+  "produce": {
+    "unsatisfied": {
+      "common": {
+        "item": "minecraft:stick",
+        "count": 1
+      },
+      "rare": {
+        "item": "minecraft:stone",
+        "chance": 0.5
+      }
+    },
+    "satisfied": {
+      "common": {
+        "item": "minecraft:stick",
+        "count": 2
+      },
+      "rare": {
+        "item": "minecraft:stone",
+        "chance": 0.75
+      }
+    }
+  }
+}

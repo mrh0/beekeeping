@@ -5,6 +5,9 @@ import github.mrh0.beekeeping.bee.SpeciesRegistry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 
 import java.util.function.Consumer;
@@ -21,6 +24,7 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
             new BeeBreedingRecipeBuilder(specie, specie, specie)
                 .save(rc);*/
         breed(rc,"common", "forest", "tempered", true);
+        produce(rc, "common", Items.STICK, Items.STONE, 1, 0.5, 2, 0.75);
     }
 
     private void breed(Consumer<FinishedRecipe> recipeConsumer, String drone, String princess, String offspring, boolean mirror) {
@@ -29,5 +33,12 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
         if(mirror)
             new BeeBreedingRecipeBuilder(Specie.getByName(princess), Specie.getByName(drone), Specie.getByName(offspring))
                     .save(recipeConsumer);
+    }
+
+    private void produce(Consumer<FinishedRecipe> recipeConsumer, String specie, Item common, Item rare,
+                         int commonCountUnsatisfied, double rareChanceUnsatisfied, int commonCountSatisfied, double rareChanceSatisfied) {
+        new BeeProduceRecipeBuilder(Specie.getByName(specie), new ItemStack(common, commonCountUnsatisfied), rare, rareChanceUnsatisfied,
+                new ItemStack(common, commonCountSatisfied), rare, rareChanceSatisfied)
+                .save(recipeConsumer);
     }
 }
