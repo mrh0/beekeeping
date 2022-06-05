@@ -20,18 +20,31 @@ import javax.annotation.Nullable;
 public class BeeProduceRecipe implements Recipe<SimpleContainer> {
     private final ResourceLocation id;
     private final Specie specie;
-    private final ItemStack commonProduce;
-    private final Item rareProduce;
-    private final double rareChance;
+    private final ItemStack commonProduceUnsatisfied;
+    private final Item rareProduceUnsatisfied;
+    private final double rareChanceUnsatisfied;
+
+    private final ItemStack commonProduceSatisfied;
+    private final Item rareProduceSatisfied;
+    private final double rareChanceSatisfied;
 
     private final NonNullList<Ingredient> recipeItems;
 
-    public BeeProduceRecipe(ResourceLocation id, Specie specie, ItemStack commonProduce, Item rareProduce, double rareChance) {
+    public BeeProduceRecipe(
+            ResourceLocation id, Specie specie,
+            ItemStack commonProduceSatisfied, Item rareProduceSatisfied, double rareChanceSatisfied,
+            ItemStack commonProduceUnsatisfied, Item rareProduceUnsatisfied, double rareChanceUnsatisfied
+    ) {
         this.id = id;
         this.specie = specie;
-        this.commonProduce = commonProduce;
-        this.rareProduce = rareProduce;
-        this.rareChance = rareChance;
+        this.commonProduceUnsatisfied = commonProduceUnsatisfied;
+        this.rareProduceUnsatisfied = rareProduceUnsatisfied;
+        this.rareChanceUnsatisfied = rareChanceUnsatisfied;
+
+        this.commonProduceSatisfied = commonProduceSatisfied ;
+        this.rareProduceSatisfied = rareProduceSatisfied ;
+        this.rareChanceSatisfied = rareChanceSatisfied ;
+
         this.recipeItems = NonNullList.of(
                 Ingredient.of(specie.queenItem)
         );
@@ -41,20 +54,20 @@ public class BeeProduceRecipe implements Recipe<SimpleContainer> {
         return specie;
     }
 
-    public ItemStack getCommonProduce() {
-        return commonProduce.copy();
+    public ItemStack getCommonProduce(boolean satisfied) {
+        return satisfied ? commonProduceSatisfied.copy() : commonProduceUnsatisfied.copy();
     }
 
-    public Item getRareProduce() {
-        return rareProduce;
+    public Item getRareProduce(boolean satisfied) {
+        return satisfied ? rareProduceSatisfied : rareProduceUnsatisfied;
     }
 
-    public double getRareChance() {
-        return rareChance;
+    public double getRareChance(boolean satisfied) {
+        return satisfied ? rareChanceSatisfied : rareChanceUnsatisfied;
     }
 
-    public ItemStack getRolledRareProduce() {
-        return Util.rollChance(new ItemStack(getRareProduce()), getRareChance());
+    public ItemStack getRolledRareProduce(boolean satisfied) {
+        return Util.rollChance(new ItemStack(getRareProduce(satisfied)), getRareChance(satisfied));
     }
 
     @Override
@@ -112,30 +125,49 @@ public class BeeProduceRecipe implements Recipe<SimpleContainer> {
             Specie specie = Specie.getByName(GsonHelper.getAsString(json, "specie"));
 
             JsonObject produce = GsonHelper.getAsJsonObject(json, "produce");
+            JsonObject satisfied = GsonHelper.getAsJsonObject(produce, "satisfied");
+            JsonObject unsatisfied = GsonHelper.getAsJsonObject(produce, "unsatisfied");
 
-            ItemStack commonProduce = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(produce, "common"));
-            //ItemStack rareProduce = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(produce, "rare"));
-            JsonObject rare = GsonHelper.getAsJsonObject(produce, "rare");
-            Item rareProduce = ShapedRecipe.itemFromJson(rare);
-            double rareChance = GsonHelper.getAsDouble(rare, "chance");
-            return new BeeProduceRecipe(id, specie, commonProduce, rareProduce, rareChance);
+            ItemStack commonProduceUnsatisfied = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(produce, "common"));
+            JsonObject rareUnsatisfied = GsonHelper.getAsJsonObject(produce, "rare");
+            Item rareProduceUnsatisfied = ShapedRecipe.itemFromJson(rareUnsatisfied);
+            double rareChanceUnsatisfied = GsonHelper.getAsDouble(rareUnsatisfied, "chance");
+
+            ItemStack commonProduceSatisfied = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(produce, "common"));
+            JsonObject rareSatisfied = GsonHelper.getAsJsonObject(produce, "rare");
+            Item rareProduceSatisfied = ShapedRecipe.itemFromJson(rareUnsatisfied);
+            double rareChanceSatisfied = GsonHelper.getAsDouble(rareUnsatisfied, "chance");
+
+            return new BeeProduceRecipe(id, specie,
+                    commonProduceSatisfied, rareProduceSatisfied, rareChanceSatisfied,
+                    commonProduceUnsatisfied, rareProduceUnsatisfied, rareChanceUnsatisfied);
         }
 
         @Override
         public BeeProduceRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
             Specie specie = Specie.getByName(buf.readUtf());
-            ItemStack commonProduce = buf.readItem();
-            ItemStack rareProduce = buf.readItem();
-            double rareChance = buf.readDouble();
-            return new BeeProduceRecipe(id, specie, commonProduce, rareProduce.getItem(), rareChance);
+            ItemStack commonProduceUnsatisfied = buf.readItem();
+            ItemStack rareProduceUnsatisfied = buf.readItem();
+            double rareChanceUnsatisfied = buf.readDouble();
+
+            ItemStack commonProduceSatisfied = buf.readItem();
+            ItemStack rareProduceSatisfied = buf.readItem();
+            double rareChanceSatisfied = buf.readDouble();
+
+            return new BeeProduceRecipe(id, specie,
+                    commonProduceSatisfied, rareProduceSatisfied.getItem(), rareChanceSatisfied,
+                    commonProduceUnsatisfied, rareProduceUnsatisfied.getItem(), rareChanceUnsatisfied);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buf, BeeProduceRecipe recipe) {
             buf.writeUtf(recipe.specie.getName());
-            buf.writeItemStack(recipe.commonProduce, false);
-            buf.writeItemStack(new ItemStack(recipe.rareProduce), false);
-            buf.writeDouble(recipe.rareChance);
+            buf.writeItemStack(recipe.commonProduceUnsatisfied, false);
+            buf.writeItemStack(new ItemStack(recipe.rareProduceUnsatisfied), false);
+            buf.writeDouble(recipe.rareChanceUnsatisfied);
+            buf.writeItemStack(recipe.commonProduceSatisfied, false);
+            buf.writeItemStack(new ItemStack(recipe.rareProduceSatisfied), false);
+            buf.writeDouble(recipe.rareChanceSatisfied);
         }
 
         @Override

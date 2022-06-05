@@ -157,7 +157,7 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider {
         if(hp <= 0) {
             if(abe.checkLock)
                 return;
-            if(attemptInsert(level, queen, abe.itemHandler)) {
+            if(attemptInsert(level, queen, abe.itemHandler, true)) {
                 abe.itemHandler.setStackInSlot(2, ItemStack.EMPTY);
                 return;
             }
@@ -167,13 +167,13 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider {
         BeeItem.setHealth(queen.getTag(), hp-100);
     }
 
-    public static boolean attemptInsert(Level level, ItemStack queen, ItemStackHandler inv) {
+    public static boolean attemptInsert(Level level, ItemStack queen, ItemStackHandler inv, boolean satisfied) {
         var optional = BeeLifecycle.getProduceRecipe(level, queen);
         if(optional.isEmpty())
             return true;
         BeeProduceRecipe bpr = optional.get();
-        ItemStack commonProduce = bpr.getCommonProduce();
-        ItemStack rareProduce = bpr.getRolledRareProduce();
+        ItemStack commonProduce = bpr.getCommonProduce(satisfied);
+        ItemStack rareProduce = bpr.getRolledRareProduce(satisfied);
         if(!insert(commonProduce, inv, true))
             return false;
         if(!insert(rareProduce, inv, true))
