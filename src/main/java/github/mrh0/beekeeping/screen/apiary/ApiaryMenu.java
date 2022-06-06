@@ -3,6 +3,7 @@ package github.mrh0.beekeeping.screen.apiary;
 import github.mrh0.beekeeping.Index;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlockEntity;
 import github.mrh0.beekeeping.blocks.apiary.ApiaryBlockEntity;
+import github.mrh0.beekeeping.screen.BeeMenu;
 import github.mrh0.beekeeping.screen.slot.TagSlot;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
@@ -16,7 +17,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class ApiaryMenu extends AbstractContainerMenu {
+public class ApiaryMenu extends BeeMenu<ApiaryBlockEntity> {
     private final ApiaryBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
@@ -121,5 +122,10 @@ public class ApiaryMenu extends AbstractContainerMenu {
         for (int i = 0; i < 9; ++i) {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 156));
         }
+    }
+
+    @Override
+    public ApiaryBlockEntity getBlockEntity() {
+        return blockEntity;
     }
 }

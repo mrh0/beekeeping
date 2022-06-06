@@ -4,10 +4,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-public abstract class BeeScreen<M extends AbstractContainerMenu, E extends BlockEntity> extends AbstractContainerScreen<M> {
+public abstract class BeeScreen<M extends BeeMenu<E>, E extends BlockEntity> extends AbstractContainerScreen<M> {
     public BeeScreen(M menu, Inventory inv, Component text) {
         super(menu, inv, text);
     }
@@ -73,8 +72,12 @@ public abstract class BeeScreen<M extends AbstractContainerMenu, E extends Block
         poseStack.popPose();
     }
 
+    public void drawImagePartHorizontal(PoseStack poseStack, Bounds bounds, int x, int y, double part) {
+        blit(poseStack, bounds.getX(), bounds.getY(), x, y, (int)(((double)bounds.w) * part), bounds.h);
+    }
+
     public E getBlockEntity() {
-        return null;
+        return menu.getBlockEntity();
     }
 
     /*public void draw(PoseStack poseStack) {

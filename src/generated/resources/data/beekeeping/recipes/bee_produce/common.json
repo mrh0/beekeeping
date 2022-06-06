@@ -1,5 +1,5 @@
 {
-  "type": "beekeeping:bee_breeding",
+  "type": "beekeeping:bee_produce",
   "specie": "common",
   "produce": {
     "unsatisfied": {

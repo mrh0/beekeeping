@@ -2,6 +2,7 @@ package github.mrh0.beekeeping.screen.analyzer;
 
 import github.mrh0.beekeeping.Index;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlockEntity;
+import github.mrh0.beekeeping.screen.BeeMenu;
 import github.mrh0.beekeeping.screen.slot.TagSlot;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -12,7 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-public class AnalyzerMenu extends AbstractContainerMenu {
+public class AnalyzerMenu extends BeeMenu<AnalyzerBlockEntity> {
     private final AnalyzerBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
@@ -105,5 +106,10 @@ public class AnalyzerMenu extends AbstractContainerMenu {
         for (int i = 0; i < 9; ++i) {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 191));
         }
+    }
+
+    @Override
+    public AnalyzerBlockEntity getBlockEntity() {
+        return blockEntity;
     }
 }

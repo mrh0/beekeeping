@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import github.mrh0.beekeeping.Beekeeping;
 import github.mrh0.beekeeping.bee.Specie;
 import github.mrh0.beekeeping.recipe.BeeBreedingRecipe;
+import github.mrh0.beekeeping.recipe.BeeProduceRecipe;
 import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
@@ -118,7 +119,7 @@ public class BeeProduceRecipeBuilder implements RecipeBuilder {
 
         @Override
         public RecipeSerializer<?> getType() {
-            return BeeBreedingRecipe.Serializer.INSTANCE;
+            return BeeProduceRecipe.Serializer.INSTANCE;
         }
 
         @javax.annotation.Nullable

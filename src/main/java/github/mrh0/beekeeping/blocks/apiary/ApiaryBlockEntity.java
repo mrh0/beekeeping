@@ -152,7 +152,8 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider {
         if(specie == null)
             return;
         if(queen.getTag() == null)
-            return;
+            BeeItem.init(queen);
+
         int hp = BeeItem.getHealth(queen.getTag());
         if(hp <= 0) {
             if(abe.checkLock)
