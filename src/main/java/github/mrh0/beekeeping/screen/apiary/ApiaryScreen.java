@@ -3,6 +3,7 @@ package github.mrh0.beekeeping.screen.apiary;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import github.mrh0.beekeeping.Beekeeping;
+import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.blocks.apiary.ApiaryBlockEntity;
 import github.mrh0.beekeeping.screen.BeeScreen;
 import github.mrh0.beekeeping.screen.analyzer.AnalyzerMenu;
@@ -14,6 +15,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,7 @@ public class ApiaryScreen extends BeeScreen<ApiaryMenu, ApiaryBlockEntity> {
     private Bounds toggle = new Bounds(50, 67, 20, 8);
     private boolean toggleState = false;
     private Bounds warning = new Bounds(66, 36, 8, 8, 4, 4);
+    private Bounds health = new Bounds(76, 37, 4, 26);
 
     @Override
     protected void renderBg(PoseStack poseStack, float partial, int mouseX, int mouseY) {
@@ -43,6 +46,10 @@ public class ApiaryScreen extends BeeScreen<ApiaryMenu, ApiaryBlockEntity> {
         this.blit(poseStack, x, y, 0, 0, imageWidth, imageHeight);
         drawWarning(poseStack);
         drawToggle(poseStack, (toggle.in(mouseX, mouseY) ? 2 : 0) + (toggleState ? 1 : 0));
+
+        if(getQueen() != null) {
+            drawImagePartBottomUp(poseStack, health, imageWidth, 79, BeeItem.getHealthOf(getQueen()));
+        }
     }
 
     private void drawWarning(PoseStack poseStack) {
@@ -89,5 +96,9 @@ public class ApiaryScreen extends BeeScreen<ApiaryMenu, ApiaryBlockEntity> {
         if(warning.in(mouseX, mouseY)) {
             renderComponentTooltip(poseStack, warningTip, mouseX, mouseY);
         }
+    }
+
+    public ItemStack getQueen() {
+        return getBlockEntity().getQueen();
     }
 }

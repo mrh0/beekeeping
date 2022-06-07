@@ -120,15 +120,15 @@ public abstract class BeeItem extends Item {
 
     @Override
     public int getBarWidth(ItemStack stack) {
-        if(stack.getTag() == null)
-            return 13;
-        double health = getHealth(stack.getTag());
-        double max = LifetimeGene.of(LifetimeGene.get(stack.getTag())).getTime();
-        return (int)(health/max*13d);
+        return (int) (getHealthOf(stack) * 13d);
     }
 
-    public boolean isFoil() {
-        return foil;
+    public static double getHealthOf(ItemStack stack) {
+        if(stack.getTag() == null)
+            return 1d;
+        double health = getHealth(stack.getTag());
+        double max = LifetimeGene.of(LifetimeGene.get(stack.getTag())).getTime();
+        return health/max;
     }
 
     ChatFormatting[] formatting = {

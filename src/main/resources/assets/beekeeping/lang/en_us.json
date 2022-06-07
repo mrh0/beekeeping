@@ -24,5 +24,7 @@
   "tooltip.beekeeping.gene.produce": "Produce Balance",
 
 
-  "tooltip.beekeeping.apiary.continuous": "Continuous operation:"
+  "tooltip.beekeeping.apiary.continuous": "Continuous operation:",
+
+  "title.beekeeping.analyzer.insert": "Insert Bee."
 }

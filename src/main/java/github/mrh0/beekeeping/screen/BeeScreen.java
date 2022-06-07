@@ -66,9 +66,13 @@ public abstract class BeeScreen<M extends BeeMenu<E>, E extends BlockEntity> ext
     public void onRightClicked(int x, int y) {}
 
     public void drawText(PoseStack poseStack, Component text, int x, int y, float scale) {
+        drawText(poseStack, text, x, y, scale, 4210752);
+    }
+
+    public void drawText(PoseStack poseStack, Component text, int x, int y, float scale, int color) {
         poseStack.pushPose();
         poseStack.scale(scale, scale, scale);
-        this.font.draw(poseStack, text, (float)(x + getXOffset()) / scale, (float)(y + getYOffset()) / scale, 4210752);
+        this.font.draw(poseStack, text, (float)(x + getXOffset()) / scale, (float)(y + getYOffset()) / scale, color);
         poseStack.popPose();
     }
 
@@ -76,10 +80,19 @@ public abstract class BeeScreen<M extends BeeMenu<E>, E extends BlockEntity> ext
         blit(poseStack, bounds.getX(), bounds.getY(), x, y, (int)(((double)bounds.w) * part), bounds.h);
     }
 
+    public void drawImagePartBottomUp(PoseStack poseStack, Bounds bounds, int x, int y, double part) {
+        int i = (int)((double)bounds.h*part);
+        blit(poseStack, bounds.getX(), bounds.getY() + bounds.h - i, x, y + bounds.h - i, bounds.w, i);
+    }
+
     public E getBlockEntity() {
         return menu.getBlockEntity();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
     /*public void draw(PoseStack poseStack) {
         blit(poseStack);
     }*/

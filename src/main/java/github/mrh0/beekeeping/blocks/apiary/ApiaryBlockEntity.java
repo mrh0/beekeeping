@@ -41,15 +41,15 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider {
         data = new SimpleContainerData(2);
     }
 
-    private ItemStack getDrone() {
+    public ItemStack getDrone() {
         return itemHandler.getStackInSlot(0);
     }
 
-    private ItemStack getPrincess() {
+    public ItemStack getPrincess() {
         return itemHandler.getStackInSlot(1);
     }
 
-    private ItemStack getQueen() {
+    public ItemStack getQueen() {
         return itemHandler.getStackInSlot(2);
     }
 

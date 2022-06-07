@@ -3,6 +3,8 @@ package github.mrh0.beekeeping.screen.analyzer;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import github.mrh0.beekeeping.Beekeeping;
+import github.mrh0.beekeeping.bee.Specie;
+import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlockEntity;
 import github.mrh0.beekeeping.screen.BeeScreen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -11,6 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
 
 public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity> {
     private static final ResourceLocation TEXTURE =
@@ -32,7 +35,11 @@ public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity>
 
         this.blit(poseStack, x, y, 0, 0, imageWidth, imageHeight);
 
-        drawText(poseStack, new TranslatableComponent("item.beekeeping.species."), 39, 24, 2f);
+        if(getAnalyzed() != null) {
+            drawText(poseStack, new TranslatableComponent("item.beekeeping.species." + getSpecie().getName()), 39, 24, 1.75f);
+        }
+        else
+            drawText(poseStack, new TranslatableComponent("title.beekeeping.analyzer.insert"), 39, 24, 1.75f);
     }
 
     @Override
@@ -40,5 +47,13 @@ public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity>
         renderBackground(poseStack);
         super.render(poseStack, mouseX, mouseY, delta);
         renderTooltip(poseStack, mouseX, mouseY);
+    }
+
+    public ItemStack getAnalyzed() {
+        return getBlockEntity().getAnalyzed();
+    }
+
+    public Specie getSpecie() {
+        return BeeItem.of(getAnalyzed());
     }
 }
