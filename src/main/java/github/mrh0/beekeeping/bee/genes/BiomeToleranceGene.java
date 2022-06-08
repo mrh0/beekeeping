@@ -2,14 +2,14 @@ package github.mrh0.beekeeping.bee.genes;
 
 import net.minecraft.nbt.CompoundTag;
 
-public enum EnvironmentToleranceGene implements Gene {
+public enum BiomeToleranceGene implements Gene {
     STRICT("strict"),
     PICKY("picky"),
     ANY("any");
 
     private final String name;
 
-    EnvironmentToleranceGene(String name) {
+    BiomeToleranceGene(String name) {
         this.name = name;
     }
 
@@ -19,14 +19,14 @@ public enum EnvironmentToleranceGene implements Gene {
     }
 
     public static void set(CompoundTag tag, int value) {
-        Gene.set(tag, "temp", value);
+        Gene.set(tag, "biome", value);
     }
 
     public static int get(CompoundTag tag) {
-        return Gene.get(tag, "temp");
+        return Gene.get(tag, "biome");
     }
 
-    public static EnvironmentToleranceGene of(int value) {
+    public static BiomeToleranceGene of(int value) {
         return switch (value) {
             case 1 -> STRICT;
             case 3 -> PICKY;

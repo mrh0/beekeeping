@@ -13,6 +13,7 @@ import github.mrh0.beekeeping.recipe.BeeProduceRecipe;
 import github.mrh0.beekeeping.screen.analyzer.AnalyzerMenu;
 import github.mrh0.beekeeping.screen.apiary.ApiaryMenu;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -63,11 +64,14 @@ public class Index {
     public static void species() {
         var r = SpeciesRegistry.instance;
         r.register(new Specie("common", 0xFFb9c2cf)
-                .setLifetimeGene(Gene::randomWide));
+                .setLifetimeGene(Gene::randomWide))
+                .setPreferredBiome(BiomeTags.IS_FOREST);
         r.register(new Specie("forest", 0xFF93c47d)
-                .setLifetimeGene(Gene::randomWide));
+                .setLifetimeGene(Gene::randomWide))
+                .setPreferredBiome(BiomeTags.IS_FOREST);
         r.register(new Specie("tempered", 0xFFb6d7a8)
-                .setLifetimeGene(Gene::randomWide));
+                .setLifetimeGene(Gene::randomWide))
+                .setPreferredBiome(BiomeTags.IS_FOREST);
     }
 
     //  ITEM

@@ -30,7 +30,7 @@ public class BeeLifecycle {
         CompoundTag tag = new CompoundTag();
         BeeItem.init(tag, offspring.queenItem,
                 Gene.select(LifetimeGene.get(drone.getTag()), LifetimeGene.get(princess.getTag())),
-                Gene.select(EnvironmentToleranceGene.get(drone.getTag()), EnvironmentToleranceGene.get(princess.getTag())),
+                Gene.select(BiomeToleranceGene.get(drone.getTag()), BiomeToleranceGene.get(princess.getTag())),
                 Gene.select(LightPreferenceGene.get(drone.getTag()), LightPreferenceGene.get(princess.getTag())),
                 Gene.select(ProduceBalanceGene.get(drone.getTag()), ProduceBalanceGene.get(princess.getTag()))
         );

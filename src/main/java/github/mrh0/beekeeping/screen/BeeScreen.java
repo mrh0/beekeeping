@@ -2,8 +2,10 @@ package github.mrh0.beekeeping.screen;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 public abstract class BeeScreen<M extends BeeMenu<E>, E extends BlockEntity> extends AbstractContainerScreen<M> {
@@ -87,6 +89,14 @@ public abstract class BeeScreen<M extends BeeMenu<E>, E extends BlockEntity> ext
 
     public E getBlockEntity() {
         return menu.getBlockEntity();
+    }
+
+    public Level getLevel() {
+        return menu.getBlockEntity().getLevel();
+    }
+
+    public BlockPos getBlockPos() {
+        return menu.getBlockEntity().getBlockPos();
     }
 
     @Override

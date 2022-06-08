@@ -7,15 +7,20 @@ import github.mrh0.beekeeping.bee.item.DroneBee;
 import github.mrh0.beekeeping.bee.item.PrincessBee;
 import github.mrh0.beekeeping.bee.item.QueenBee;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
 
 public class Specie {
     private final String name;
     private boolean foil;
     private int color;
+    private TagKey<Biome> preferredBiome = null;
     private final ResourceLocation resource;
     public DroneBee droneItem;
     public PrincessBee princessItem;
@@ -26,6 +31,31 @@ public class Specie {
     public Gene.RandomFunction environmentGene = Gene::normal;
     public Gene.RandomFunction lightGene = Gene::normal;
     public Gene.RandomFunction produceGene = Gene::normal;
+
+    public enum Satisfaction {
+        SATISFIED(0, "tooltip.beekeeping.apiary.satisfied"),
+        UNSATISFIED(1, "tooltip.beekeeping.apiary.unsatisfied"),
+        NOT_WORKING(2, "tooltip.beekeeping.apiary.not_working");
+
+        public final int index;
+        public final TranslatableComponent component;
+
+        Satisfaction(int index, String key) {
+            this.index = index;
+            this.component = new TranslatableComponent(key);
+        }
+
+        public static Satisfaction calc(Satisfaction...list) {
+            Satisfaction satisfaction = SATISFIED;
+            for(Satisfaction s : list) {
+                if(s == NOT_WORKING)
+                    return NOT_WORKING;
+                if(s == UNSATISFIED)
+                    satisfaction = UNSATISFIED;
+            }
+            return satisfaction;
+        }
+    }
 
     public Specie(String name, int color, boolean foil) {
         this.name = name;
@@ -85,9 +115,16 @@ public class Specie {
         return this;
     }
 
-    public boolean compatibleWithBiome(Level level, BlockPos pos) {
+    public Specie setPreferredBiome(TagKey<Biome> biomeTag) {
+        this.preferredBiome = biomeTag;
+        return this;
+    }
+
+    public Satisfaction getBiomeSatisfaction(ItemStack stack, Level level, BlockPos pos) {
         //level.getBiomeManager().getBiome(pos).value().getBaseTemperature();
-        return true;
+        if(preferredBiome == null)
+            return Satisfaction.SATISFIED;
+        return level.getBiomeManager().getBiome(pos).is(preferredBiome) ? Satisfaction.SATISFIED : Satisfaction.NOT_WORKING;
     }
 
     public static Specie getByName(String name) {

@@ -9,7 +9,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -103,7 +102,7 @@ public abstract class BeeItem extends Item {
         setAnalyzed(tag, false);
 
         LifetimeGene.set(tag, lifetimeGene);
-        EnvironmentToleranceGene.set(tag, environmentGene);
+        BiomeToleranceGene.set(tag, environmentGene);
         LifetimeGene.set(tag, lightGene);
         ProduceBalanceGene.set(tag, produceGene);
 
@@ -155,7 +154,7 @@ public abstract class BeeItem extends Item {
         list.add(new TranslatableComponent("tooltip.beekeeping.gene.lifetime")
                         .append(": ").append(new TextComponent(LifetimeGene.of(LifetimeGene.get(tag)).getName()).withStyle(formatting[LifetimeGene.get(tag)])));
         list.add(new TranslatableComponent("tooltip.beekeeping.gene.environment")
-                        .append(": ").append(new TextComponent(EnvironmentToleranceGene.of(EnvironmentToleranceGene.get(tag)).getName()).withStyle(formatting[EnvironmentToleranceGene.get(tag)])));
+                        .append(": ").append(new TextComponent(BiomeToleranceGene.of(BiomeToleranceGene.get(tag)).getName()).withStyle(formatting[BiomeToleranceGene.get(tag)])));
         list.add(new TranslatableComponent("tooltip.beekeeping.gene.light")
                 .append(": ").append(new TextComponent(LightPreferenceGene.of(LightPreferenceGene.get(tag)).getName()).withStyle(formatting[LightPreferenceGene.get(tag)])));
         list.add(new TranslatableComponent("tooltip.beekeeping.gene.produce")
