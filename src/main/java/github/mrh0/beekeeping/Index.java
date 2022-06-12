@@ -29,6 +29,7 @@ import net.minecraftforge.network.IContainerFactory;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.openjdk.nashorn.internal.ir.annotations.Ignore;
 
 public class Index {
     public static final DeferredRegister<Item> ITEMS =
@@ -65,13 +66,13 @@ public class Index {
         var r = SpeciesRegistry.instance;
         r.register(new Specie("common", 0xFFb9c2cf)
                 .setLifetimeGene(Gene::randomWide))
-                .setPreferredBiome(BiomeTags.IS_FOREST);
+                .setPreferredBiomes(BiomeTags.IS_FOREST, BiomeTags.IS_BEACH);
         r.register(new Specie("forest", 0xFF93c47d)
                 .setLifetimeGene(Gene::randomWide))
-                .setPreferredBiome(BiomeTags.IS_FOREST);
+                .setPreferredBiomes(BiomeTags.IS_FOREST);
         r.register(new Specie("tempered", 0xFFb6d7a8)
                 .setLifetimeGene(Gene::randomWide))
-                .setPreferredBiome(BiomeTags.IS_FOREST);
+                .setPreferredBiomes(BiomeTags.IS_FOREST);
     }
 
     //  ITEM

@@ -1,15 +1,15 @@
 package github.mrh0.beekeeping.bee;
 
 import github.mrh0.beekeeping.Beekeeping;
+import github.mrh0.beekeeping.bee.genes.BiomeToleranceGene;
 import github.mrh0.beekeeping.bee.genes.Gene;
-import github.mrh0.beekeeping.bee.item.BeeItem;
+import github.mrh0.beekeeping.bee.genes.LightToleranceGene;
 import github.mrh0.beekeeping.bee.item.DroneBee;
 import github.mrh0.beekeeping.bee.item.PrincessBee;
 import github.mrh0.beekeeping.bee.item.QueenBee;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -20,7 +20,7 @@ public class Specie {
     private final String name;
     private boolean foil;
     private int color;
-    private TagKey<Biome> preferredBiome = null;
+    private TagKey<Biome>[] preferredBiomes = null;
     private final ResourceLocation resource;
     public DroneBee droneItem;
     public PrincessBee princessItem;
@@ -54,6 +54,14 @@ public class Specie {
                     satisfaction = UNSATISFIED;
             }
             return satisfaction;
+        }
+
+        public static Satisfaction map(int value, int satisfied, int unsatisfied) {
+            if(value < unsatisfied)
+                return Satisfaction.NOT_WORKING;
+            else if(value < satisfied)
+                return Satisfaction.UNSATISFIED;
+            return  Satisfaction.SATISFIED;
         }
     }
 
@@ -115,16 +123,34 @@ public class Specie {
         return this;
     }
 
-    public Specie setPreferredBiome(TagKey<Biome> biomeTag) {
-        this.preferredBiome = biomeTag;
+    public Specie setPreferredBiomes(TagKey...biomeTag) {
+        this.preferredBiomes = biomeTag;
         return this;
     }
 
     public Satisfaction getBiomeSatisfaction(ItemStack stack, Level level, BlockPos pos) {
         //level.getBiomeManager().getBiome(pos).value().getBaseTemperature();
-        if(preferredBiome == null)
+        if(preferredBiomes == null || preferredBiomes.length == 0)
             return Satisfaction.SATISFIED;
-        return level.getBiomeManager().getBiome(pos).is(preferredBiome) ? Satisfaction.SATISFIED : Satisfaction.NOT_WORKING;
+        for(TagKey<Biome> tag : preferredBiomes) {
+            if(level.getBiomeManager().getBiome(pos).is(tag))
+                return Satisfaction.SATISFIED;
+        }
+        BiomeToleranceGene tolerance = BiomeToleranceGene.of(BiomeToleranceGene.get(stack.getTag()));
+        return switch(tolerance) {
+            case PICKY -> Satisfaction.UNSATISFIED;
+            case STRICT -> Satisfaction.NOT_WORKING;
+            default -> Satisfaction.SATISFIED;
+        };
+        //return level.getBiomeManager().getBiome(pos).is(preferredBiomes) ? Satisfaction.SATISFIED : Satisfaction.NOT_WORKING;
+    }
+
+    public Satisfaction getLightSatisfaction(ItemStack stack, Level level, BlockPos pos) {
+        LightToleranceGene tolerance = LightToleranceGene.of(LightToleranceGene.get(stack.getTag()));
+        return switch (tolerance) {
+            case PICKY ->
+            default -> Satisfaction.SATISFIED;
+        };
     }
 
     public static Specie getByName(String name) {

@@ -2,16 +2,14 @@ package github.mrh0.beekeeping.bee.genes;
 
 import net.minecraft.nbt.CompoundTag;
 
-public enum LightPreferenceGene implements Gene {
-    NOCTURNAL("nocturnal"),
-    DARK("dark"),
-    ANY("any"),
-    LIGHT("light"),
-    SUNNY("sunny");
+public enum LightToleranceGene implements Gene {
+    STRICT("strict"),
+    PICKY("picky"),
+    ANY("any");
 
     private final String name;
 
-    LightPreferenceGene(String name) {
+    LightToleranceGene(String name) {
         this.name = name;
     }
 
@@ -28,12 +26,10 @@ public enum LightPreferenceGene implements Gene {
         return Gene.get(tag, "light");
     }
 
-    public static LightPreferenceGene of(int value) {
+    public static LightToleranceGene of(int value) {
         return switch (value) {
-            case 0 -> NOCTURNAL;
-            case 1 -> DARK;
-            case 3 -> LIGHT;
-            case 4 -> SUNNY;
+            case 1 -> STRICT;
+            case 3 -> PICKY;
             default -> ANY;
         };
     }

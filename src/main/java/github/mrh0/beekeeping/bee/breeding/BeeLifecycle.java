@@ -31,8 +31,8 @@ public class BeeLifecycle {
         BeeItem.init(tag, offspring.queenItem,
                 Gene.select(LifetimeGene.get(drone.getTag()), LifetimeGene.get(princess.getTag())),
                 Gene.select(BiomeToleranceGene.get(drone.getTag()), BiomeToleranceGene.get(princess.getTag())),
-                Gene.select(LightPreferenceGene.get(drone.getTag()), LightPreferenceGene.get(princess.getTag())),
-                Gene.select(ProduceBalanceGene.get(drone.getTag()), ProduceBalanceGene.get(princess.getTag()))
+                Gene.select(LightToleranceGene.get(drone.getTag()), LightToleranceGene.get(princess.getTag())),
+                Gene.select(RareProduceGene.get(drone.getTag()), RareProduceGene.get(princess.getTag()))
         );
         ItemStack res = new ItemStack(offspring.queenItem);
         res.setTag(tag);

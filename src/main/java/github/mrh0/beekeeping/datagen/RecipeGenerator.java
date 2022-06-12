@@ -24,7 +24,7 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
             new BeeBreedingRecipeBuilder(specie, specie, specie)
                 .save(rc);*/
         breed(rc,"common", "forest", "tempered", true);
-        produce(rc, "common", Items.STICK, Items.STONE, 1, 0.5, 2, 0.75);
+        produce(rc, "common", Items.STICK, 1, 2, Items.STONE, 0.5, 0.75);
     }
 
     private void breed(Consumer<FinishedRecipe> recipeConsumer, String drone, String princess, String offspring, boolean mirror) {
@@ -35,8 +35,8 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                     .save(recipeConsumer);
     }
 
-    private void produce(Consumer<FinishedRecipe> recipeConsumer, String specie, Item common, Item rare,
-                         int commonCountUnsatisfied, double rareChanceUnsatisfied, int commonCountSatisfied, double rareChanceSatisfied) {
+    private void produce(Consumer<FinishedRecipe> recipeConsumer, String specie, Item common, int commonCountUnsatisfied, int commonCountSatisfied, Item rare,
+                          double rareChanceUnsatisfied, double rareChanceSatisfied) {
         new BeeProduceRecipeBuilder(Specie.getByName(specie), new ItemStack(common, commonCountUnsatisfied), rare, rareChanceUnsatisfied,
                 new ItemStack(common, commonCountSatisfied), rare, rareChanceSatisfied)
                 .save(recipeConsumer);

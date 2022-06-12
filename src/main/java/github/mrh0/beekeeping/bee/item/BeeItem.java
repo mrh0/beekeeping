@@ -104,7 +104,7 @@ public abstract class BeeItem extends Item {
         LifetimeGene.set(tag, lifetimeGene);
         BiomeToleranceGene.set(tag, environmentGene);
         LifetimeGene.set(tag, lightGene);
-        ProduceBalanceGene.set(tag, produceGene);
+        RareProduceGene.set(tag, produceGene);
 
         setHealth(tag, LifetimeGene.of(LifetimeGene.get(tag)).getTime());
     }
@@ -156,9 +156,9 @@ public abstract class BeeItem extends Item {
         list.add(new TranslatableComponent("tooltip.beekeeping.gene.environment")
                         .append(": ").append(new TextComponent(BiomeToleranceGene.of(BiomeToleranceGene.get(tag)).getName()).withStyle(formatting[BiomeToleranceGene.get(tag)])));
         list.add(new TranslatableComponent("tooltip.beekeeping.gene.light")
-                .append(": ").append(new TextComponent(LightPreferenceGene.of(LightPreferenceGene.get(tag)).getName()).withStyle(formatting[LightPreferenceGene.get(tag)])));
+                .append(": ").append(new TextComponent(LightToleranceGene.of(LightToleranceGene.get(tag)).getName()).withStyle(formatting[LightToleranceGene.get(tag)])));
         list.add(new TranslatableComponent("tooltip.beekeeping.gene.produce")
-                .append(": ").append(new TextComponent(ProduceBalanceGene.of(ProduceBalanceGene.get(tag)).getName()).withStyle(formatting[ProduceBalanceGene.get(tag)])));
+                .append(": ").append(new TextComponent(RareProduceGene.of(RareProduceGene.get(tag)).getName()).withStyle(formatting[RareProduceGene.get(tag)])));
 
         list.add(new TextComponent("health: " + getHealth(stack.getTag())));
     }
