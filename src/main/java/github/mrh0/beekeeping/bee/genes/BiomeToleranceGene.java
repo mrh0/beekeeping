@@ -28,8 +28,8 @@ public enum BiomeToleranceGene implements Gene {
 
     public static BiomeToleranceGene of(int value) {
         return switch (value) {
-            case 1 -> STRICT;
-            case 3 -> PICKY;
+            case 0 -> STRICT;
+            case 1 -> PICKY;
             default -> ANY;
         };
     }

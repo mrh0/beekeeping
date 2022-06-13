@@ -35,7 +35,7 @@ public class ApiaryBlock extends BaseEntityBlock {
 
     private static VoxelShape shape = Shapes.or(
             Block.box(0,0,0, 16,9,16),
-            Block.box(1,1,1, 14,16,14),
+            Block.box(1,1,1, 15,16,15),
             Block.box(0,13,0, 16,16,16)
     );
 

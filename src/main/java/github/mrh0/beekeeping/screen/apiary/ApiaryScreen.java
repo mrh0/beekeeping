@@ -48,7 +48,7 @@ public class ApiaryScreen extends BeeScreen<ApiaryMenu, ApiaryBlockEntity> {
         this.blit(poseStack, x, y, 0, 0, imageWidth, imageHeight);
         drawToggle(poseStack, (toggle.in(mouseX, mouseY) ? 2 : 0) + (toggleState ? 1 : 0));
 
-        if(getQueen() != null && !getQueen().isEmpty()) {
+        if(getQueen() != null && !getQueen().isEmpty() && getQueen().getTag() != null) {
             drawImagePartBottomUp(poseStack, health, imageWidth, 87, BeeItem.getHealthOf(getQueen()));
 
             drawSatisfaction(poseStack);
@@ -59,10 +59,13 @@ public class ApiaryScreen extends BeeScreen<ApiaryMenu, ApiaryBlockEntity> {
         Specie specie = BeeItem.of(getQueen());
         if(specie == null)
             return;
+        if(getQueen().getTag() == null)
+            return;
 
         Specie.Satisfaction biomeSatisfaction = specie.getBiomeSatisfaction(getQueen(), getLevel(), getBlockPos());
+        Specie.Satisfaction lightSatisfaction = specie.getLightSatisfaction(getQueen(), getLevel(), getBlockPos());
 
-        Specie.Satisfaction s = Specie.Satisfaction.calc(biomeSatisfaction);
+        Specie.Satisfaction s = Specie.Satisfaction.calc(biomeSatisfaction, lightSatisfaction);
         this.blit(poseStack, satisfaction.getX(), satisfaction.getY(), imageWidth, 32 + s.index*satisfaction.h, satisfaction.w, satisfaction.h);
     }
 
@@ -108,11 +111,13 @@ public class ApiaryScreen extends BeeScreen<ApiaryMenu, ApiaryBlockEntity> {
             return tip;
 
         Specie.Satisfaction biomeSatisfaction = specie.getBiomeSatisfaction(queen, level, pos);
+        Specie.Satisfaction lightSatisfaction = specie.getLightSatisfaction(queen, level, pos);
 
-        Specie.Satisfaction satisfaction = Specie.Satisfaction.calc(biomeSatisfaction);
+        Specie.Satisfaction satisfaction = Specie.Satisfaction.calc(biomeSatisfaction, lightSatisfaction);
         tip.add(checkExcCross(satisfaction).append(satisfaction.component).withStyle(ChatFormatting.BOLD));
 
         tip.add(checkExcCross(biomeSatisfaction).append(new TranslatableComponent("tooltip.beekeeping.apiary.biome")));
+        tip.add(checkExcCross(lightSatisfaction).append(new TranslatableComponent("tooltip.beekeeping.apiary.light")));
 
         return tip;
     }

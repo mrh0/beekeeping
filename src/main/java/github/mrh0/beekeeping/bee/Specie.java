@@ -1,6 +1,7 @@
 package github.mrh0.beekeeping.bee;
 
 import github.mrh0.beekeeping.Beekeeping;
+import github.mrh0.beekeeping.Util;
 import github.mrh0.beekeeping.bee.genes.BiomeToleranceGene;
 import github.mrh0.beekeeping.bee.genes.Gene;
 import github.mrh0.beekeeping.bee.genes.LightToleranceGene;
@@ -28,9 +29,11 @@ public class Specie {
     public static String mod = Beekeeping.MODID;
 
     public Gene.RandomFunction lifetimeGene = Gene::randomNarrow;
-    public Gene.RandomFunction environmentGene = Gene::normal;
-    public Gene.RandomFunction lightGene = Gene::normal;
+    public Gene.RandomFunction biomeGene = rand -> BiomeToleranceGene.PICKY.ordinal();
+    public Gene.RandomFunction lightGene = rand -> LightToleranceGene.PICKY.ordinal();
     public Gene.RandomFunction produceGene = Gene::normal;
+
+    private boolean isNocturnal = false;
 
     public enum Satisfaction {
         SATISFIED(0, "tooltip.beekeeping.apiary.satisfied"),
@@ -103,8 +106,8 @@ public class Specie {
         return this.queenItem;
     }
 
-    public Specie setEnvironmentGene(Gene.RandomFunction fn) {
-        this.environmentGene = fn;
+    public Specie setBiomeGene(Gene.RandomFunction fn) {
+        this.biomeGene = fn;
         return this;
     }
 
@@ -128,6 +131,15 @@ public class Specie {
         return this;
     }
 
+    public boolean hasSatisfactoryLightLevel(int sunlight) {
+        return sunlight > 13;
+    }
+
+    public Specie setNocturnal() {
+        isNocturnal = true;
+        return this;
+    }
+
     public Satisfaction getBiomeSatisfaction(ItemStack stack, Level level, BlockPos pos) {
         //level.getBiomeManager().getBiome(pos).value().getBaseTemperature();
         if(preferredBiomes == null || preferredBiomes.length == 0)
@@ -147,8 +159,11 @@ public class Specie {
 
     public Satisfaction getLightSatisfaction(ItemStack stack, Level level, BlockPos pos) {
         LightToleranceGene tolerance = LightToleranceGene.of(LightToleranceGene.get(stack.getTag()));
+        int sunlight = Util.getSunlight(level, pos);
+        System.out.println("LIGHT: " + sunlight);
         return switch (tolerance) {
-            case PICKY ->
+            case PICKY -> hasSatisfactoryLightLevel(sunlight) ? Satisfaction.SATISFIED : Satisfaction.UNSATISFIED;
+            case STRICT -> hasSatisfactoryLightLevel(sunlight) ? Satisfaction.SATISFIED : Satisfaction.NOT_WORKING;
             default -> Satisfaction.SATISFIED;
         };
     }

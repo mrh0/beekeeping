@@ -35,7 +35,7 @@ public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity>
 
         this.blit(poseStack, x, y, 0, 0, imageWidth, imageHeight);
 
-        if(getAnalyzed() != null) {
+        if(getAnalyzed() != null && getSpecie() != null) {
             drawText(poseStack, new TranslatableComponent("item.beekeeping.species." + getSpecie().getName()), 39, 24, 1.75f);
         }
         else

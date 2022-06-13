@@ -19,10 +19,9 @@
 
   "tooltip.beekeeping.gene.not_analyzed": "Analyzed to reveal genes.",
   "tooltip.beekeeping.gene.lifetime": "Lifetime",
-  "tooltip.beekeeping.gene.environment": "Preferred Environment",
+  "tooltip.beekeeping.gene.biome": "Biome Tolerance",
   "tooltip.beekeeping.gene.light": "Light Tolerance",
   "tooltip.beekeeping.gene.produce": "Produce Balance",
-
 
   "tooltip.beekeeping.apiary.continuous": "Continuous operation:",
 
@@ -31,6 +30,9 @@
   "tooltip.beekeeping.apiary.not_working": "Not Working",
 
   "tooltip.beekeeping.apiary.biome": "Biome",
+  "tooltip.beekeeping.apiary.light": "Light",
+  "tooltip.beekeeping.apiary.weather": "Weather",
+  "tooltip.beekeeping.apiary.temperature": "Temperature",
 
   "title.beekeeping.analyzer.insert": "Insert Bee."
 }

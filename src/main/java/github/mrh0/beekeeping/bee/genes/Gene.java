@@ -9,6 +9,8 @@ public interface Gene {
     static Random random = new Random();
 
     static int get(CompoundTag tag, String key) {
+        if(tag == null)
+            return 0;
         return tag.getInt(key);
     }
 
