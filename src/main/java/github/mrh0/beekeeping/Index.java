@@ -66,13 +66,13 @@ public class Index {
         var r = SpeciesRegistry.instance;
         r.register(new Specie("common", 0xFFb9c2cf)
                 .setLifetimeGene(Gene::randomWide))
-                .setPreferredBiomes(BiomeTags.IS_FOREST, BiomeTags.IS_BEACH);
+                .setPreferredBiomes(BiomeTags.IS_FOREST, BiomeTags.IS_BEACH, BiomeTags.IS_TAIGA);
         r.register(new Specie("forest", 0xFF93c47d)
                 .setLifetimeGene(Gene::randomWide))
                 .setPreferredBiomes(BiomeTags.IS_FOREST);
         r.register(new Specie("tempered", 0xFFb6d7a8)
                 .setLifetimeGene(Gene::randomWide))
-                .setPreferredBiomes(BiomeTags.IS_FOREST);
+                .setPreferredBiomes(BiomeTags.IS_FOREST, BiomeTags.IS_TAIGA);
     }
 
     //  ITEM

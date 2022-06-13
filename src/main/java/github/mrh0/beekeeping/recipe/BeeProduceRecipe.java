@@ -183,7 +183,7 @@ public class BeeProduceRecipe implements Recipe<SimpleContainer> {
 
         @Override
         public Class<RecipeSerializer<?>> getRegistryType() {
-            return BeeProduceRecipe.Serializer.castClass(RecipeSerializer.class);
+            return Serializer.castClass(RecipeSerializer.class);
         }
 
         @SuppressWarnings("unchecked")

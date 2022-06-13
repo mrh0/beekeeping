@@ -79,9 +79,12 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider {
                 Specie offspring = BeeLifecycle.getOffspringSpecie(getLevel(), drone, princess);
                 if(offspring == null)
                     return;
+
+                ItemStack offspringQueen = new ItemStack(offspring.queenItem);
+                queen.setTag(BeeLifecycle.getOffspringItemStack(drone, princess, offspring));
                 itemHandler.setStackInSlot(0, ItemStack.EMPTY);
                 itemHandler.setStackInSlot(1, ItemStack.EMPTY);
-                itemHandler.setStackInSlot(2, BeeLifecycle.getOffspringItemStack(drone, princess, offspring));
+                itemHandler.setStackInSlot(2, offspringQueen);
             }
             setChanged();
         }
@@ -165,7 +168,7 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider {
             abe.checkLock = true;
             return;
         }
-        BeeItem.setHealth(queen.getTag(), hp-100);
+        BeeItem.setHealth(queen.getTag(), hp-20);
     }
 
     public static boolean attemptInsert(Level level, ItemStack queen, ItemStackHandler inv, boolean satisfied) {

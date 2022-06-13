@@ -26,7 +26,7 @@ public class BeeLifecycle {
         return match.get().getOffspring();
     }
 
-    public static ItemStack getOffspringItemStack(ItemStack drone, ItemStack princess, Specie offspring) {
+    public static CompoundTag getOffspringItemStack(ItemStack drone, ItemStack princess, Specie offspring) {
         CompoundTag tag = new CompoundTag();
         BeeItem.init(tag, offspring.queenItem,
                 Gene.select(LifetimeGene.get(drone.getTag()), LifetimeGene.get(princess.getTag())),
@@ -34,9 +34,7 @@ public class BeeLifecycle {
                 Gene.select(LightToleranceGene.get(drone.getTag()), LightToleranceGene.get(princess.getTag())),
                 Gene.select(RareProduceGene.get(drone.getTag()), RareProduceGene.get(princess.getTag()))
         );
-        ItemStack res = new ItemStack(offspring.queenItem);
-        res.setTag(tag);
-        return res;
+        return tag;
     }
 
     public static Optional<BeeProduceRecipe> getProduceRecipe(Level level, ItemStack queen) {
