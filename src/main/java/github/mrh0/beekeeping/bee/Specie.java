@@ -5,6 +5,7 @@ import github.mrh0.beekeeping.Util;
 import github.mrh0.beekeeping.bee.genes.BiomeToleranceGene;
 import github.mrh0.beekeeping.bee.genes.Gene;
 import github.mrh0.beekeeping.bee.genes.LightToleranceGene;
+import github.mrh0.beekeeping.bee.genes.WeatherToleranceGene;
 import github.mrh0.beekeeping.bee.item.DroneBee;
 import github.mrh0.beekeeping.bee.item.PrincessBee;
 import github.mrh0.beekeeping.bee.item.QueenBee;
@@ -166,6 +167,18 @@ public class Specie {
         return switch (tolerance) {
             case PICKY -> hasSatisfactoryLightLevel(sunlight, level.isDay()) ? Satisfaction.SATISFIED : Satisfaction.UNSATISFIED;
             case STRICT -> hasSatisfactoryLightLevel(sunlight, level.isDay()) ? Satisfaction.SATISFIED : Satisfaction.NOT_WORKING;
+            default -> Satisfaction.SATISFIED;
+        };
+    }
+
+    public Satisfaction getWeatherSatisfaction(ItemStack stack, Level level, BlockPos pos) {
+        WeatherToleranceGene tolerance = WeatherToleranceGene.of(WeatherToleranceGene.get(stack.getTag()));
+        if(level.isThundering())
+            return Satisfaction.NOT_WORKING;
+
+        return switch (tolerance) {
+            case PICKY -> level.isRainingAt(pos) ? Satisfaction.SATISFIED : Satisfaction.UNSATISFIED;
+            case STRICT -> level.isRainingAt(pos) ? Satisfaction.SATISFIED : Satisfaction.NOT_WORKING;
             default -> Satisfaction.SATISFIED;
         };
     }

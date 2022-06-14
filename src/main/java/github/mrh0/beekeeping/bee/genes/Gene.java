@@ -2,6 +2,7 @@ package github.mrh0.beekeeping.bee.genes;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
 
 import java.util.Random;
 
@@ -50,5 +51,9 @@ public interface Gene {
 
     static int select(int a, int b) {
         return Gene.random.nextBoolean() ? a : b;
+    }
+
+    default TranslatableComponent getComponent() {
+        return new TranslatableComponent("text.beekeeping.gene.type." + getName());
     }
 }

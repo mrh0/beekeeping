@@ -40,6 +40,8 @@ public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity>
         }
         else
             drawText(poseStack, new TranslatableComponent("title.beekeeping.analyzer.insert"), 39, 24, 1.75f);
+        float temp = getLevel().getBiomeManager().getBiome(getBlockPos()).value().getBaseTemperature();
+        drawText(poseStack, new TranslatableComponent("title.beekeeping.analyzer.temp").append(": ").append(temp+""), 14, 44, 1f);
     }
 
     @Override

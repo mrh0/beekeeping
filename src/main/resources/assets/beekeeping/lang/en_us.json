@@ -18,13 +18,25 @@
   "block.beekeeping.analyzer":"Bee-Analyzer",
 
   "tooltip.beekeeping.gene.not_analyzed": "Analyzed to reveal genes.",
+
   "tooltip.beekeeping.gene.lifetime": "Lifetime",
   "tooltip.beekeeping.gene.biome": "Biome Tolerance",
   "tooltip.beekeeping.gene.light": "Light Tolerance",
+  "tooltip.beekeeping.gene.weather": "Weather Tolerance",
+  "tooltip.beekeeping.gene.temperature": "Temperature Tolerance",
   "tooltip.beekeeping.gene.produce": "Produce Balance",
 
-  "tooltip.beekeeping.apiary.continuous": "Continuous operation:",
+  "text.beekeeping.gene.type.strict": "Strict",
+  "text.beekeeping.gene.type.picky": "Picky",
+  "text.beekeeping.gene.type.any": "Any",
 
+  "text.beekeeping.temperature.coldest": "Coldest",
+  "text.beekeeping.temperature.cold": "Cold",
+  "text.beekeeping.temperature.tempered": "Tempered",
+  "text.beekeeping.temperature.warm": "Warm",
+  "text.beekeeping.temperature.warmest": "Warmest",
+
+  "tooltip.beekeeping.apiary.continuous": "Continuous operation:",
   "tooltip.beekeeping.apiary.satisfied": "Satisfied",
   "tooltip.beekeeping.apiary.unsatisfied": "Unsatisfied",
   "tooltip.beekeeping.apiary.not_working": "Not Working",
