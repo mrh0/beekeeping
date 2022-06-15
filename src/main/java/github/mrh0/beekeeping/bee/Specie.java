@@ -2,13 +2,11 @@ package github.mrh0.beekeeping.bee;
 
 import github.mrh0.beekeeping.Beekeeping;
 import github.mrh0.beekeeping.Util;
-import github.mrh0.beekeeping.bee.genes.BiomeToleranceGene;
-import github.mrh0.beekeeping.bee.genes.Gene;
-import github.mrh0.beekeeping.bee.genes.LightToleranceGene;
-import github.mrh0.beekeeping.bee.genes.WeatherToleranceGene;
+import github.mrh0.beekeeping.bee.genes.*;
 import github.mrh0.beekeeping.bee.item.DroneBee;
 import github.mrh0.beekeeping.bee.item.PrincessBee;
 import github.mrh0.beekeeping.bee.item.QueenBee;
+import github.mrh0.beekeeping.biome.BiomeTemperature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -175,6 +173,19 @@ public class Specie {
         WeatherToleranceGene tolerance = WeatherToleranceGene.of(WeatherToleranceGene.get(stack.getTag()));
         if(level.isThundering())
             return Satisfaction.NOT_WORKING;
+
+        return switch (tolerance) {
+            case PICKY -> level.isRainingAt(pos) ? Satisfaction.SATISFIED : Satisfaction.UNSATISFIED;
+            case STRICT -> level.isRainingAt(pos) ? Satisfaction.SATISFIED : Satisfaction.NOT_WORKING;
+            default -> Satisfaction.SATISFIED;
+        };
+    }
+
+    public Satisfaction getTemperatureSatisfaction(ItemStack stack, Level level, BlockPos pos) {
+        float f = level.getBiomeManager().getBiome(pos).value().getBaseTemperature();
+        BiomeTemperature temp = BiomeTemperature.of(f);
+
+        TemperatureToleranceGene tolerance = TemperatureToleranceGene.of(TemperatureToleranceGene.get(stack.getTag()));
 
         return switch (tolerance) {
             case PICKY -> level.isRainingAt(pos) ? Satisfaction.SATISFIED : Satisfaction.UNSATISFIED;
