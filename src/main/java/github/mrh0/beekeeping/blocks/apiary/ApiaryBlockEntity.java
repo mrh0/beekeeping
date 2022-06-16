@@ -81,7 +81,7 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider {
                     return;
 
                 ItemStack offspringQueen = new ItemStack(offspring.queenItem);
-                queen.setTag(BeeLifecycle.getOffspringItemStack(drone, princess, offspring));
+                offspringQueen.setTag(BeeLifecycle.getOffspringItemStack(drone, princess, offspring));
                 itemHandler.setStackInSlot(0, ItemStack.EMPTY);
                 itemHandler.setStackInSlot(1, ItemStack.EMPTY);
                 itemHandler.setStackInSlot(2, offspringQueen);
@@ -178,10 +178,21 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider {
         BeeProduceRecipe bpr = optional.get();
         ItemStack commonProduce = bpr.getCommonProduce(satisfied);
         ItemStack rareProduce = bpr.getRolledRareProduce(satisfied);
+
+        ItemStack princess = BeeLifecycle.clone(queen, bpr.getSpecie().princessItem);
+        ItemStack drone = BeeLifecycle.clone(queen, bpr.getSpecie().droneItem);
+
+        if(!insert(princess, inv, true))
+            return false;
+        if(!insert(drone, inv, true))
+            return false;
         if(!insert(commonProduce, inv, true))
             return false;
         if(!insert(rareProduce, inv, true))
             return false;
+
+        insert(princess, inv, false);
+        insert(drone, inv, false);
         insert(commonProduce, inv, false);
         insert(rareProduce, inv, false);
         return true;

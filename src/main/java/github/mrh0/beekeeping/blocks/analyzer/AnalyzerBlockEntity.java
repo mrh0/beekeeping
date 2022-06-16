@@ -41,8 +41,6 @@ public class AnalyzerBlockEntity extends BlockEntity implements MenuProvider {
     private final ItemStackHandler itemHandler = new ItemStackHandler(1) {
         @Override
         protected void onContentsChanged(int slot) {
-            setChanged();
-
             if(slot == 0) {
                 ItemStack stack = getAnalyzed();
                 if(stack.isEmpty())
@@ -54,8 +52,8 @@ public class AnalyzerBlockEntity extends BlockEntity implements MenuProvider {
                 if(stack.getTag() == null)
                     BeeItem.init(stack);
                 BeeItem.setAnalyzed(stack.getTag(), true);
-                Beekeeping.LOGGER.debug("Analyzed");
             }
+            setChanged();
         }
     };
 

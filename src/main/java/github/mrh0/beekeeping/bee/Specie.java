@@ -28,11 +28,15 @@ public class Specie {
     public static String mod = Beekeeping.MODID;
 
     public Gene.RandomFunction lifetimeGene = Gene::randomNarrow;
-    public Gene.RandomFunction biomeGene = rand -> BiomeToleranceGene.PICKY.ordinal();
+    //public Gene.RandomFunction biomeGene = rand -> BiomeToleranceGene.PICKY.ordinal();
+    public Gene.RandomFunction weatherGene = rand -> WeatherToleranceGene.PICKY.ordinal();
+    public Gene.RandomFunction temperatureGene = rand -> TemperatureToleranceGene.PICKY.ordinal();
     public Gene.RandomFunction lightGene = rand -> LightToleranceGene.PICKY.ordinal();
     public Gene.RandomFunction produceGene = Gene::normal;
 
     private boolean isNocturnal = false;
+    private BiomeTemperature preferredTemperature = BiomeTemperature.TEMPERED;
+    //private int preferredLight;
 
     public enum Satisfaction {
         SATISFIED(0, "tooltip.beekeeping.apiary.satisfied"),
@@ -105,8 +109,13 @@ public class Specie {
         return this.queenItem;
     }
 
-    public Specie setBiomeGene(Gene.RandomFunction fn) {
-        this.biomeGene = fn;
+    public Specie setWeatherGene(Gene.RandomFunction fn) {
+        this.weatherGene = fn;
+        return this;
+    }
+
+    public Specie setTemperatureGene(Gene.RandomFunction fn) {
+        this.temperatureGene = fn;
         return this;
     }
 
@@ -125,8 +134,15 @@ public class Specie {
         return this;
     }
 
+    @Deprecated
     public Specie setPreferredBiomes(TagKey...biomeTag) {
         this.preferredBiomes = biomeTag;
+        return this;
+    }
+
+    public Specie ofBiome(Biome biome) {
+        preferredTemperature = BiomeTemperature.of(biome.getBaseTemperature());
+        weatherGene = rand -> biome.getDownfall() < 0.5f ? WeatherToleranceGene.STRICT.ordinal() : WeatherToleranceGene.PICKY.ordinal();
         return this;
     }
 

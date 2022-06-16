@@ -92,21 +92,24 @@ public abstract class BeeItem extends Item {
 
         init(tag, beeItem,
                 Gene.eval(beeItem.specie.lifetimeGene),
-                Gene.eval(beeItem.specie.biomeGene),
+                Gene.eval(beeItem.specie.weatherGene),
+                Gene.eval(beeItem.specie.temperatureGene),
                 Gene.eval(beeItem.specie.lightGene),
                 Gene.eval(beeItem.specie.produceGene)
         );
+
     }
 
-    public static void init(CompoundTag tag, BeeItem beeItem, int lifetimeGene, int biomeGene, int lightGene, int produceGene) {
+    public static void init(CompoundTag tag, BeeItem beeItem, int lifetimeGene, int weatherGene, int temperatureGene, int lightGene, int produceGene) {
         setAnalyzed(tag, false);
 
-        System.out.println(lifetimeGene + ":" + biomeGene + ":" + lightGene + ":" + produceGene);
-        System.out.println(LifetimeGene.of(lifetimeGene).getName() + ":" + BiomeToleranceGene.of(biomeGene).getName() + ":" + LightToleranceGene.of(lightGene).getName() + ":" + RareProduceGene.of(produceGene).getName());
+        //System.out.println(lifetimeGene + ":" + weatherGene + ":" + temperatureGene + ":" + lightGene + ":" + produceGene);
+        //System.out.println(LifetimeGene.of(lifetimeGene).getName() + ":" + WeatherToleranceGene.of(biomeGene).getName() + ":" + LightToleranceGene.of(lightGene).getName() + ":" + RareProduceGene.of(produceGene).getName());
 
         LifetimeGene.set(tag, lifetimeGene);
-        BiomeToleranceGene.set(tag, biomeGene);
-        LifetimeGene.set(tag, lightGene);
+        WeatherToleranceGene.set(tag, weatherGene);
+        TemperatureToleranceGene.set(tag, temperatureGene);
+        LightToleranceGene.set(tag, lightGene);
         RareProduceGene.set(tag, produceGene);
 
         setHealth(tag, LifetimeGene.of(LifetimeGene.get(tag)).getTime());
@@ -156,8 +159,10 @@ public abstract class BeeItem extends Item {
         CompoundTag tag = stack.getTag();
         list.add(new TranslatableComponent("tooltip.beekeeping.gene.lifetime")
                 .append(": ").append(new TextComponent(LifetimeGene.of(LifetimeGene.get(tag)).getName()).withStyle(formatting[LifetimeGene.get(tag)])));
-        list.add(new TranslatableComponent("tooltip.beekeeping.gene.biome")
-                .append(": ").append(new TextComponent(BiomeToleranceGene.of(BiomeToleranceGene.get(tag)).getName()).withStyle(formatting[BiomeToleranceGene.get(tag)])));
+        list.add(new TranslatableComponent("tooltip.beekeeping.gene.weather")
+                .append(": ").append(new TextComponent(WeatherToleranceGene.of(WeatherToleranceGene.get(tag)).getName()).withStyle(formatting[WeatherToleranceGene.get(tag)])));
+        list.add(new TranslatableComponent("tooltip.beekeeping.gene.temperature")
+                .append(": ").append(new TextComponent(TemperatureToleranceGene.of(TemperatureToleranceGene.get(tag)).getName()).withStyle(formatting[TemperatureToleranceGene.get(tag)])));
         list.add(new TranslatableComponent("tooltip.beekeeping.gene.light")
                 .append(": ").append(new TextComponent(LightToleranceGene.of(LightToleranceGene.get(tag)).getName()).withStyle(formatting[LightToleranceGene.get(tag)])));
         list.add(new TranslatableComponent("tooltip.beekeeping.gene.produce")

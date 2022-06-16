@@ -8,6 +8,7 @@ import github.mrh0.beekeeping.recipe.BeeBreedingRecipe;
 import github.mrh0.beekeeping.recipe.BeeProduceRecipe;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
@@ -30,7 +31,8 @@ public class BeeLifecycle {
         CompoundTag tag = new CompoundTag();
         BeeItem.init(tag, offspring.queenItem,
                 Gene.select(LifetimeGene.get(drone.getTag()), LifetimeGene.get(princess.getTag())),
-                Gene.select(BiomeToleranceGene.get(drone.getTag()), BiomeToleranceGene.get(princess.getTag())),
+                Gene.select(WeatherToleranceGene.get(drone.getTag()), WeatherToleranceGene.get(princess.getTag())),
+                Gene.select(TemperatureToleranceGene.get(drone.getTag()), TemperatureToleranceGene.get(princess.getTag())),
                 Gene.select(LightToleranceGene.get(drone.getTag()), LightToleranceGene.get(princess.getTag())),
                 Gene.select(RareProduceGene.get(drone.getTag()), RareProduceGene.get(princess.getTag()))
         );
@@ -43,5 +45,19 @@ public class BeeLifecycle {
 
         return level.getRecipeManager()
                 .getRecipeFor(BeeProduceRecipe.Type.INSTANCE, inv, level);
+    }
+
+    public static ItemStack clone(ItemStack bee, BeeItem type) {
+        CompoundTag b = bee.getTag();
+        CompoundTag tag = new CompoundTag();
+        BeeItem.init(tag, type,
+                LifetimeGene.get(b),
+                WeatherToleranceGene.get(b),
+                TemperatureToleranceGene.get(b),
+                LightToleranceGene.get(b),
+                RareProduceGene.get(b));
+        ItemStack r = new ItemStack(type);
+        r.setTag(tag);
+        return r;
     }
 }
