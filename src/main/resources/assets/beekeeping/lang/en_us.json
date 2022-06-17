@@ -24,7 +24,7 @@
   "tooltip.beekeeping.gene.light": "Light Tolerance",
   "tooltip.beekeeping.gene.weather": "Weather Tolerance",
   "tooltip.beekeeping.gene.temperature": "Temperature Tolerance",
-  "tooltip.beekeeping.gene.produce": "Produce Balance",
+  "tooltip.beekeeping.gene.produce": "Produce Quality",
 
   "text.beekeeping.gene.type.strict": "Strict",
   "text.beekeeping.gene.type.picky": "Picky",

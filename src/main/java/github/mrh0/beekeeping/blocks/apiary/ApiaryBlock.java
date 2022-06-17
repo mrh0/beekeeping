@@ -1,6 +1,7 @@
 package github.mrh0.beekeeping.blocks.apiary;
 
 import github.mrh0.beekeeping.Index;
+import github.mrh0.beekeeping.network.TogglePacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -91,7 +92,9 @@ public class ApiaryBlock extends BaseEntityBlock {
         if (!level.isClientSide()) {
             BlockEntity entity = level.getBlockEntity(pos);
             if(entity instanceof ApiaryBlockEntity) {
-                NetworkHooks.openGui(((ServerPlayer)player), (ApiaryBlockEntity)entity, pos);
+                ApiaryBlockEntity abe = (ApiaryBlockEntity)entity;
+                NetworkHooks.openGui(((ServerPlayer)player), abe, pos);
+                TogglePacket.sync(pos, level, 0, abe.continuous);
             } else {
                 throw new IllegalStateException("Our Container provider is missing!");
             }

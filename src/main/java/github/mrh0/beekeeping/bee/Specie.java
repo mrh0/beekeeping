@@ -140,6 +140,11 @@ public class Specie {
         return this;
     }
 
+    public Specie setPreferredTemperature(BiomeTemperature temp) {
+        preferredTemperature = temp;
+        return this;
+    }
+
     public Specie ofBiome(Biome biome) {
         preferredTemperature = BiomeTemperature.of(biome.getBaseTemperature());
         weatherGene = rand -> biome.getDownfall() < 0.5f ? WeatherToleranceGene.STRICT.ordinal() : WeatherToleranceGene.PICKY.ordinal();
@@ -204,8 +209,8 @@ public class Specie {
         TemperatureToleranceGene tolerance = TemperatureToleranceGene.of(TemperatureToleranceGene.get(stack.getTag()));
 
         return switch (tolerance) {
-            case PICKY -> level.isRainingAt(pos) ? Satisfaction.SATISFIED : Satisfaction.UNSATISFIED;
-            case STRICT -> level.isRainingAt(pos) ? Satisfaction.SATISFIED : Satisfaction.NOT_WORKING;
+            case PICKY -> preferredTemperature == temp ? Satisfaction.SATISFIED : (preferredTemperature.isAdjacent(temp) ? Satisfaction.UNSATISFIED : Satisfaction.NOT_WORKING);
+            case STRICT -> preferredTemperature == temp ? Satisfaction.SATISFIED : Satisfaction.NOT_WORKING;
             default -> Satisfaction.SATISFIED;
         };
     }

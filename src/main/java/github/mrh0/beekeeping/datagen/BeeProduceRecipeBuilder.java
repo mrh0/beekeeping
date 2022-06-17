@@ -97,18 +97,24 @@ public class BeeProduceRecipeBuilder implements RecipeBuilder {
             produce.add("satisfied", makeProduce(commonProduceSatisfied, rareProduceSatisfied, rareChanceSatisfied));
         }
 
-        private JsonObject makeProduce(ItemStack commonProduce, Item rareProduce, double rareChance) {
+        private JsonObject makeProduce(@Nullable ItemStack commonProduce, @Nullable Item rareProduce, double rareChance) {
             JsonObject obj = new JsonObject();
             JsonObject common = new JsonObject();
             JsonObject rare = new JsonObject();
-            obj.add("common", common);
-            obj.add("rare", rare);
 
-            common.addProperty("item", commonProduce.getItem().getRegistryName().toString());
-            common.addProperty("count", commonProduce.getCount());
+            if(commonProduce != null && !commonProduce.isEmpty()) {
+                obj.add("common", common);
 
-            rare.addProperty("item", rareProduce.getRegistryName().toString());
-            rare.addProperty("chance", rareChance);
+                common.addProperty("item", commonProduce.getItem().getRegistryName().toString());
+                common.addProperty("count", commonProduce.getCount());
+            }
+
+            if(rareProduce != null && rareChance > 0d) {
+                obj.add("rare", rare);
+
+                rare.addProperty("item", rareProduce.getRegistryName().toString());
+                rare.addProperty("chance", rareChance);
+            }
             return obj;
         }
 

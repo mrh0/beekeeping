@@ -12,7 +12,7 @@ public enum BiomeTemperature {
     private String name;
 
     BiomeTemperature(String name) {
-
+        this.name = name;
     }
 
     public static BiomeTemperature of(float temp) {
@@ -33,5 +33,11 @@ public enum BiomeTemperature {
 
     public TranslatableComponent getComponent() {
         return new TranslatableComponent("title.beekeeping.temperature." + getName());
+    }
+
+    public boolean isAdjacent(BiomeTemperature temp) {
+        return this == temp
+            || this.ordinal()-1 == temp.ordinal()
+            || this.ordinal()+1 == temp.ordinal();
     }
 }

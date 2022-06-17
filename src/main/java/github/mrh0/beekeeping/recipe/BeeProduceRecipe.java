@@ -12,6 +12,7 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
@@ -128,15 +129,28 @@ public class BeeProduceRecipe implements Recipe<SimpleContainer> {
             JsonObject satisfied = GsonHelper.getAsJsonObject(produce, "satisfied");
             JsonObject unsatisfied = GsonHelper.getAsJsonObject(produce, "unsatisfied");
 
-            ItemStack commonProduceUnsatisfied = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(unsatisfied, "common"));
-            JsonObject rareUnsatisfied = GsonHelper.getAsJsonObject(unsatisfied, "rare");
-            Item rareProduceUnsatisfied = ShapedRecipe.itemFromJson(rareUnsatisfied);
-            double rareChanceUnsatisfied = GsonHelper.getAsDouble(rareUnsatisfied, "chance");
+            ItemStack commonProduceUnsatisfied = ItemStack.EMPTY;
+            if(unsatisfied.has("common"))
+                commonProduceUnsatisfied = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(unsatisfied, "common"));
 
-            ItemStack commonProduceSatisfied = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(satisfied, "common"));
-            JsonObject rareSatisfied = GsonHelper.getAsJsonObject(satisfied, "rare");
-            Item rareProduceSatisfied = ShapedRecipe.itemFromJson(rareSatisfied);
-            double rareChanceSatisfied = GsonHelper.getAsDouble(rareSatisfied, "chance");
+            Item rareProduceUnsatisfied = Items.AIR;
+            double rareChanceUnsatisfied = 0d;
+            if(unsatisfied.has("rare")) {
+                JsonObject rareUnsatisfied = GsonHelper.getAsJsonObject(unsatisfied, "rare");
+                rareProduceUnsatisfied = ShapedRecipe.itemFromJson(rareUnsatisfied);
+                rareChanceUnsatisfied = GsonHelper.getAsDouble(rareUnsatisfied, "chance");
+            }
+
+            ItemStack commonProduceSatisfied = ItemStack.EMPTY;
+            if(satisfied.has("common"))
+                commonProduceSatisfied = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(satisfied, "common"));
+            Item rareProduceSatisfied = Items.AIR;
+            double rareChanceSatisfied = 0d;
+            if(satisfied.has("rare")) {
+                JsonObject rareSatisfied = GsonHelper.getAsJsonObject(satisfied, "rare");
+                rareProduceSatisfied = ShapedRecipe.itemFromJson(rareSatisfied);
+                rareChanceSatisfied = GsonHelper.getAsDouble(rareSatisfied, "chance");
+            }
 
             return new BeeProduceRecipe(id, specie,
                     commonProduceSatisfied, rareProduceSatisfied, rareChanceSatisfied,
