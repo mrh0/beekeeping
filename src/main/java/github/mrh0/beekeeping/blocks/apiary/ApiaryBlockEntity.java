@@ -45,6 +45,9 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
     }
 
     public boolean continuous = false;
+    public int breedProgressTime = 0;
+    public static final int BREED_TIME = 60;
+    private Specie offspringCache = null;
 
     public ItemStack getDrone() {
         return itemHandler.getStackInSlot(0);
@@ -65,35 +68,42 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
             if(slot < 3) {
                 if(getLevel().isClientSide())
                     return;
-                ItemStack drone = getDrone();
-                ItemStack princess = getPrincess();
-                ItemStack queen = getQueen();
-
-                if(drone.isEmpty())
-                    return;
-                if(princess.isEmpty())
-                    return;
-                if(!queen.isEmpty())
-                    return;
-
-                if(drone.getTag() == null)
-                    BeeItem.init(drone);
-                if(princess.getTag() == null)
-                    BeeItem.init(princess);
-
-                Specie offspring = BeeLifecycle.getOffspringSpecie(getLevel(), drone, princess);
-                if(offspring == null)
-                    return;
-
-                ItemStack offspringQueen = new ItemStack(offspring.queenItem);
-                offspringQueen.setTag(BeeLifecycle.getOffspringItemStack(drone, princess, offspring));
-                itemHandler.setStackInSlot(0, ItemStack.EMPTY);
-                itemHandler.setStackInSlot(1, ItemStack.EMPTY);
-                itemHandler.setStackInSlot(2, offspringQueen);
+                breedCheck();
             }
             setChanged();
         }
     };
+
+    private void breedCheck() {
+        ItemStack drone = getDrone();
+        ItemStack princess = getPrincess();
+        ItemStack queen = getQueen();
+
+        if(drone.isEmpty())
+            return;
+        if(princess.isEmpty())
+            return;
+        if(!queen.isEmpty())
+            return;
+
+        if(drone.getTag() == null)
+            BeeItem.init(drone);
+        if(princess.getTag() == null)
+            BeeItem.init(princess);
+
+        offspringCache = BeeLifecycle.getOffspringSpecie(getLevel(), drone, princess);
+    }
+
+    private void preformBreeding() {
+        if(offspringCache == null)
+            return;
+
+        ItemStack offspringQueen = new ItemStack(offspringCache.queenItem);
+        offspringQueen.setTag(BeeLifecycle.getOffspringItemStack(getDrone(), getPrincess(), offspringCache));
+        itemHandler.setStackInSlot(0, ItemStack.EMPTY);
+        itemHandler.setStackInSlot(1, ItemStack.EMPTY);
+        itemHandler.setStackInSlot(2, offspringQueen);
+    }
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
 
@@ -154,6 +164,14 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
     public int slowTick = 0;
     public boolean checkLock = false;
     public static void tick(Level level, BlockPos pos, BlockState state, ApiaryBlockEntity abe) {
+        if(abe.getQueen().isEmpty() && !abe.getDrone().isEmpty() && !abe.getPrincess().isEmpty()) {
+            abe.breedProgressTime++;
+            if(abe.breedProgressTime > BREED_TIME) {
+                abe.breedProgressTime = 0;
+                abe.preformBreeding();
+            }
+        }
+
         if(abe.slowTick++ < 20)
             return;
         abe.slowTick = 0;
