@@ -21,6 +21,9 @@ public class DataGenerators {
         var blockTags = new BlockTagGenerator(generator, existingFileHelper);
         generator.addProvider(new RecipeGenerator(generator));
         generator.addProvider(new ItemModelGenerator(generator, existingFileHelper));
+        generator.addProvider(new BlockTagGenerator(generator, existingFileHelper));
         generator.addProvider(new ItemTagGenerator(generator, blockTags, existingFileHelper));
+        generator.addProvider(new LootTableGenerator(generator));
+        generator.addProvider(new BlockStateGenerator(generator, existingFileHelper));
     }
 }

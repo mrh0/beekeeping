@@ -55,4 +55,8 @@ public class Beekeeping {
         MenuScreens.register(Index.ANALYZER_MENU.get(), AnalyzerScreen::new);
         MenuScreens.register(Index.APIARY_MENU.get(), ApiaryScreen::new);
     }
+
+    public static ResourceLocation get(String resource) {
+        return new ResourceLocation(Beekeeping.MODID, resource);
+    }
 }

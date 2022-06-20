@@ -4,13 +4,13 @@
   "produce": {
     "unsatisfied": {
       "common": {
-        "item": "minecraft:stick",
+        "item": "minecraft:honeycomb",
         "count": 1
       }
     },
     "satisfied": {
       "common": {
-        "item": "minecraft:stick",
+        "item": "minecraft:honeycomb",
         "count": 2
       }
     }

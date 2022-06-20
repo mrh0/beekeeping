@@ -3,6 +3,7 @@ package github.mrh0.beekeeping.screen.apiary;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import github.mrh0.beekeeping.Beekeeping;
+import github.mrh0.beekeeping.bee.Satisfaction;
 import github.mrh0.beekeeping.bee.Specie;
 import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.blocks.apiary.ApiaryBlockEntity;
@@ -68,11 +69,11 @@ public class ApiaryScreen extends BeeScreen<ApiaryMenu, ApiaryBlockEntity> {
         if(getQueen().getTag() == null)
             return;
 
-        Specie.Satisfaction lightSatisfaction = specie.getLightSatisfaction(getQueen(), getLevel(), getBlockPos());
-        Specie.Satisfaction weatherSatisfaction = specie.getWeatherSatisfaction(getQueen(), getLevel(), getBlockPos());
-        Specie.Satisfaction temperatureSatisfaction = specie.getTemperatureSatisfaction(getQueen(), getLevel(), getBlockPos());
+        Satisfaction lightSatisfaction = specie.getLightSatisfaction(getQueen(), getLevel(), getBlockPos());
+        Satisfaction weatherSatisfaction = specie.getWeatherSatisfaction(getQueen(), getLevel(), getBlockPos());
+        Satisfaction temperatureSatisfaction = specie.getTemperatureSatisfaction(getQueen(), getLevel(), getBlockPos());
 
-        Specie.Satisfaction s = Specie.Satisfaction.calc(lightSatisfaction, weatherSatisfaction, temperatureSatisfaction);
+        Satisfaction s = Satisfaction.calc(lightSatisfaction, weatherSatisfaction, temperatureSatisfaction);
         this.blit(poseStack, satisfaction.getX(), satisfaction.getY(), imageWidth, 32 + s.index*satisfaction.h, satisfaction.w, satisfaction.h);
     }
 
@@ -109,7 +110,7 @@ public class ApiaryScreen extends BeeScreen<ApiaryMenu, ApiaryBlockEntity> {
         toggleOffTip.add(new TextComponent("Off").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
     }
 
-    private static MutableComponent checkExcCross(Specie.Satisfaction satisfaction) {
+    private static MutableComponent checkExcCross(Satisfaction satisfaction) {
         return switch (satisfaction) {
             case SATISFIED -> new TextComponent("✔ ").withStyle(ChatFormatting.GREEN);
             case UNSATISFIED -> new TextComponent("! ").withStyle(ChatFormatting.YELLOW);
@@ -124,11 +125,11 @@ public class ApiaryScreen extends BeeScreen<ApiaryMenu, ApiaryBlockEntity> {
             return tip;
 
         //Specie.Satisfaction biomeSatisfaction = specie.getBiomeSatisfaction(queen, level, pos);
-        Specie.Satisfaction lightSatisfaction = specie.getLightSatisfaction(queen, level, pos);
-        Specie.Satisfaction weatherSatisfaction = specie.getWeatherSatisfaction(queen, level, pos);
-        Specie.Satisfaction temperatureSatisfaction = specie.getTemperatureSatisfaction(queen, level, pos);
+        Satisfaction lightSatisfaction = specie.getLightSatisfaction(queen, level, pos);
+        Satisfaction weatherSatisfaction = specie.getWeatherSatisfaction(queen, level, pos);
+        Satisfaction temperatureSatisfaction = specie.getTemperatureSatisfaction(queen, level, pos);
 
-        Specie.Satisfaction satisfaction = Specie.Satisfaction.calc(lightSatisfaction, weatherSatisfaction, temperatureSatisfaction);
+        Satisfaction satisfaction = Satisfaction.calc(lightSatisfaction, weatherSatisfaction, temperatureSatisfaction);
         tip.add(checkExcCross(satisfaction).append(satisfaction.component).withStyle(ChatFormatting.BOLD));
 
         //tip.add(checkExcCross(biomeSatisfaction).append(new TranslatableComponent("tooltip.beekeeping.apiary.biome")));

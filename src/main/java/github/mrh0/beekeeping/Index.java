@@ -7,6 +7,7 @@ import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlock;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlockEntity;
 import github.mrh0.beekeeping.blocks.apiary.ApiaryBlock;
 import github.mrh0.beekeeping.blocks.apiary.ApiaryBlockEntity;
+import github.mrh0.beekeeping.blocks.beehive.BeehiveBlock;
 import github.mrh0.beekeeping.group.ItemGroup;
 import github.mrh0.beekeeping.recipe.BeeBreedingRecipe;
 import github.mrh0.beekeeping.recipe.BeeProduceRecipe;
@@ -14,6 +15,7 @@ import github.mrh0.beekeeping.screen.analyzer.AnalyzerMenu;
 import github.mrh0.beekeeping.screen.apiary.ApiaryMenu;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -22,14 +24,16 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.network.IContainerFactory;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import org.openjdk.nashorn.internal.ir.annotations.Ignore;
 
 public class Index {
     public static final DeferredRegister<Item> ITEMS =
@@ -66,7 +70,7 @@ public class Index {
         var r = SpeciesRegistry.instance;
         r.register(new Specie("common", 0xFFb9c2cf)
                 .setLifetimeGene(Gene::randomWide))
-                .setPreferredBiomes(BiomeTags.IS_FOREST, BiomeTags.IS_BEACH, BiomeTags.IS_TAIGA);
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.PLAINS), 2);
         r.register(new Specie("forest", 0xFF93c47d)
                 .setLifetimeGene(Gene::randomWide))
                 .setPreferredBiomes(BiomeTags.IS_FOREST);
@@ -93,6 +97,14 @@ public class Index {
         ITEMS.register("analyzer", () -> new BlockItem(ANALYZER_BLOCK.get(), new Item.Properties().tab(ItemGroup.BEES)));
         APIARY_BLOCK = BLOCKS.register("apiary", () -> new ApiaryBlock());
         ITEMS.register("apiary", () -> new BlockItem(APIARY_BLOCK.get(), new Item.Properties().tab(ItemGroup.BEES)));
+
+        for(Specie specie : SpeciesRegistry.instance.getAll()) {
+            if(!specie.hasBeehive())
+                return;
+
+            specie.beehive.block = BLOCKS.register(specie.beehive.getName(), () -> new BeehiveBlock(BlockBehaviour.Properties.of(Blocks.BEEHIVE.defaultBlockState().getMaterial())));
+            ITEMS.register(specie.beehive.getName(), () -> new BlockItem(specie.beehive.block.get(), new Item.Properties().tab(ItemGroup.BEES)));
+        }
     }
 
     //  BLOCK ENTITY
@@ -124,12 +136,14 @@ public class Index {
     public static TagKey<Item> DRONE_BEES_TAG;
     public static TagKey<Item> PRINCESS_BEES_TAG;
     public static TagKey<Item> QUEEN_BEES_TAG;
+    public static TagKey<Block> BEEHIVE_TAG;
 
     public static void tags() {
         BEES_TAG = ItemTags.create(new ResourceLocation("beekeeping", "bees"));
         DRONE_BEES_TAG = ItemTags.create(new ResourceLocation("beekeeping", "drone_bees"));
         PRINCESS_BEES_TAG = ItemTags.create(new ResourceLocation("beekeeping", "princess_bees"));
         QUEEN_BEES_TAG = ItemTags.create(new ResourceLocation("beekeeping", "queen_bees"));
+        BEEHIVE_TAG = BlockTags.create(new ResourceLocation("beekeeping", "beehives"));
     }
 
     //  RECIPE

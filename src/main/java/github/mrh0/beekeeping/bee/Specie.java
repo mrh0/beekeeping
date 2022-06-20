@@ -7,6 +7,7 @@ import github.mrh0.beekeeping.bee.item.DroneBee;
 import github.mrh0.beekeeping.bee.item.PrincessBee;
 import github.mrh0.beekeeping.bee.item.QueenBee;
 import github.mrh0.beekeeping.biome.BiomeTemperature;
+import github.mrh0.beekeeping.blocks.beehive.BeehiveBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -15,6 +16,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.registries.RegistryObject;
+
+import java.util.Set;
+import java.util.function.Function;
 
 public class Specie {
     private final String name;
@@ -38,38 +44,7 @@ public class Specie {
     private BiomeTemperature preferredTemperature = BiomeTemperature.TEMPERED;
     //private int preferredLight;
 
-    public enum Satisfaction {
-        SATISFIED(0, "tooltip.beekeeping.apiary.satisfied"),
-        UNSATISFIED(1, "tooltip.beekeeping.apiary.unsatisfied"),
-        NOT_WORKING(2, "tooltip.beekeeping.apiary.not_working");
-
-        public final int index;
-        public final TranslatableComponent component;
-
-        Satisfaction(int index, String key) {
-            this.index = index;
-            this.component = new TranslatableComponent(key);
-        }
-
-        public static Satisfaction calc(Satisfaction...list) {
-            Satisfaction satisfaction = SATISFIED;
-            for(Satisfaction s : list) {
-                if(s == NOT_WORKING)
-                    return NOT_WORKING;
-                if(s == UNSATISFIED)
-                    satisfaction = UNSATISFIED;
-            }
-            return satisfaction;
-        }
-
-        public static Satisfaction map(int value, int satisfied, int unsatisfied) {
-            if(value < unsatisfied)
-                return Satisfaction.NOT_WORKING;
-            else if(value < satisfied)
-                return Satisfaction.UNSATISFIED;
-            return  Satisfaction.SATISFIED;
-        }
-    }
+    public Beehive beehive = null;
 
     public Specie(String name, int color, boolean foil) {
         this.name = name;
@@ -213,6 +188,15 @@ public class Specie {
             case STRICT -> preferredTemperature == temp ? Satisfaction.SATISFIED : Satisfaction.NOT_WORKING;
             default -> Satisfaction.SATISFIED;
         };
+    }
+
+    public Specie addBeehive(Function<Set<BiomeDictionary.Type>, Boolean> biomeType, int tries) {
+        this.beehive = new Beehive(this, biomeType, tries);
+        return this;
+    }
+
+    public boolean hasBeehive() {
+        return this.beehive != null;
     }
 
     public static Specie getByName(String name) {
