@@ -59,7 +59,7 @@ public class ApiaryScreen extends BeeScreen<ApiaryMenu, ApiaryBlockEntity> {
             drawSatisfaction(poseStack);
         }
 
-        drawBreedProgress(poseStack, (double)getBlockEntity().breedProgressTime/(double)getBlockEntity().BREED_TIME);
+        drawBreedProgress(poseStack, (double)getMenu().data.get(0)/(double)getBlockEntity().BREED_TIME);
     }
 
     private void drawSatisfaction(PoseStack poseStack) {

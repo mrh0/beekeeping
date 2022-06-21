@@ -3,6 +3,10 @@
   "values": [
     "beekeeping:common_drone",
     "beekeeping:forest_drone",
-    "beekeeping:tempered_drone"
+    "beekeeping:tempered_drone",
+    "beekeeping:jungle_drone",
+    "beekeeping:snowy_drone",
+    "beekeeping:frozen_drone",
+    "beekeeping:glacial_drone"
   ]
 }

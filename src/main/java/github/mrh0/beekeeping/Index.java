@@ -3,6 +3,7 @@ package github.mrh0.beekeeping;
 import github.mrh0.beekeeping.bee.Specie;
 import github.mrh0.beekeeping.bee.SpeciesRegistry;
 import github.mrh0.beekeeping.bee.genes.Gene;
+import github.mrh0.beekeeping.biome.BiomeTemperature;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlock;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlockEntity;
 import github.mrh0.beekeeping.blocks.apiary.ApiaryBlock;
@@ -14,7 +15,6 @@ import github.mrh0.beekeeping.recipe.BeeProduceRecipe;
 import github.mrh0.beekeeping.screen.analyzer.AnalyzerMenu;
 import github.mrh0.beekeeping.screen.apiary.ApiaryMenu;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -69,14 +69,28 @@ public class Index {
     public static void species() {
         var r = SpeciesRegistry.instance;
         r.register(new Specie("common", 0xFFb9c2cf)
-                .setLifetimeGene(Gene::randomWide))
-                .addBeehive(types -> types.contains(BiomeDictionary.Type.PLAINS), 2);
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.PLAINS), 3, 16));
         r.register(new Specie("forest", 0xFF93c47d)
-                .setLifetimeGene(Gene::randomWide))
-                .setPreferredBiomes(BiomeTags.IS_FOREST);
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.FOREST), 3, 8));
         r.register(new Specie("tempered", 0xFFb6d7a8)
-                .setLifetimeGene(Gene::randomWide))
-                .setPreferredBiomes(BiomeTags.IS_FOREST, BiomeTags.IS_TAIGA);
+                .setTemperatureGene(Gene::random5Narrow));
+
+        r.register(new Specie("jungle", 0xFF6aa84f)
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.JUNGLE), 3, 12)
+                .setLifetimeGene(Gene::random5Low)
+                .setPreferredTemperature(BiomeTemperature.WARM));
+
+        r.register(new Specie("snowy", 0xFFefefef)
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.SNOWY), 4, 24)
+                .setTemperatureGene(Gene::random3High)
+                .setPreferredTemperature(BiomeTemperature.COLD));
+        r.register(new Specie("frozen", 0xFFd0e0e3)
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.COLD) && types.contains(BiomeDictionary.Type.MOUNTAIN), 3, 24)
+                .setTemperatureGene(Gene::random3High)
+                .setPreferredTemperature(BiomeTemperature.COLD));
+        r.register(new Specie("glacial", 0xFFa2c4c9, true)
+                .setTemperatureGene(Gene::strict)
+                .setPreferredTemperature(BiomeTemperature.COLDEST));
     }
 
     //  ITEM
@@ -100,8 +114,7 @@ public class Index {
 
         for(Specie specie : SpeciesRegistry.instance.getAll()) {
             if(!specie.hasBeehive())
-                return;
-
+                continue;
             specie.beehive.block = BLOCKS.register(specie.beehive.getName(), () -> new BeehiveBlock(BlockBehaviour.Properties.of(Blocks.BEEHIVE.defaultBlockState().getMaterial())));
             ITEMS.register(specie.beehive.getName(), () -> new BlockItem(specie.beehive.block.get(), new Item.Properties().tab(ItemGroup.BEES)));
         }

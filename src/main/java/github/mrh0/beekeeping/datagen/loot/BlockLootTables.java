@@ -14,9 +14,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntries;
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntry;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.LootNumberProviderType;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.registries.RegistryObject;
 
 public class BlockLootTables extends BlockLoot {
@@ -31,7 +35,7 @@ public class BlockLootTables extends BlockLoot {
 
         for(Specie specie : SpeciesRegistry.instance.getAll()) {
             if(!specie.hasBeehive())
-                return;
+                continue;
             this.add(specie.beehive.block.get(),
                     (block) -> beehiveLootTable(specie.beehive.block.get(), specie.queenItem, specie.princessItem, specie.droneItem));
         }
@@ -40,10 +44,14 @@ public class BlockLootTables extends BlockLoot {
     protected static LootTable.Builder beehiveLootTable(Block beehive, Item queen, Item princess, Item drone) {
         return LootTable.lootTable()
                 .withPool(LootPool.lootPool().when(HAS_SILK_TOUCH).setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(beehive)))
-                .withPool(LootPool.lootPool().when(HAS_NO_SILK_TOUCH).setRolls(ConstantValue.exactly(0.3F)).add(LootItem.lootTableItem(queen)))
-                .withPool(LootPool.lootPool().when(HAS_NO_SILK_TOUCH).setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(princess)))
-                .withPool(LootPool.lootPool().when(HAS_NO_SILK_TOUCH).setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(drone)))
-                .withPool(LootPool.lootPool().when(HAS_NO_SILK_TOUCH).setRolls(ConstantValue.exactly(0.5F)).add(LootItem.lootTableItem(drone)));
+                .withPool(LootPool.lootPool().when(HAS_NO_SILK_TOUCH).setRolls(ConstantValue.exactly(1.0f))
+                    .add(LootItem.lootTableItem(princess).setWeight(2))
+                    .add(LootItem.lootTableItem(queen).setWeight(1))
+                )
+                .withPool(LootPool.lootPool().when(HAS_NO_SILK_TOUCH).setRolls(UniformGenerator.between(1, 3))
+                        .add(LootItem.lootTableItem(princess).setWeight(1))
+                        .add(LootItem.lootTableItem(drone).setWeight(3))
+                );
     }
 
     @Override

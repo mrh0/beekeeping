@@ -7,9 +7,7 @@ import github.mrh0.beekeeping.bee.item.DroneBee;
 import github.mrh0.beekeeping.bee.item.PrincessBee;
 import github.mrh0.beekeeping.bee.item.QueenBee;
 import github.mrh0.beekeeping.biome.BiomeTemperature;
-import github.mrh0.beekeeping.blocks.beehive.BeehiveBlock;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -17,7 +15,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Set;
 import java.util.function.Function;
@@ -26,23 +23,21 @@ public class Specie {
     private final String name;
     private boolean foil;
     private int color;
-    private TagKey<Biome>[] preferredBiomes = null;
+    //private TagKey<Biome>[] preferredBiomes = null;
     private final ResourceLocation resource;
     public DroneBee droneItem;
     public PrincessBee princessItem;
     public QueenBee queenItem;
     public static String mod = Beekeeping.MODID;
 
-    public Gene.RandomFunction lifetimeGene = Gene::randomNarrow;
-    //public Gene.RandomFunction biomeGene = rand -> BiomeToleranceGene.PICKY.ordinal();
-    public Gene.RandomFunction weatherGene = rand -> WeatherToleranceGene.PICKY.ordinal();
-    public Gene.RandomFunction temperatureGene = rand -> TemperatureToleranceGene.PICKY.ordinal();
-    public Gene.RandomFunction lightGene = rand -> LightToleranceGene.PICKY.ordinal();
-    public Gene.RandomFunction produceGene = Gene::normal;
+    public Gene.RandomFunction lifetimeGene = Gene::random5Narrow;
+    public Gene.RandomFunction weatherGene = Gene::strict;
+    public Gene.RandomFunction temperatureGene = Gene::picky;
+    public Gene.RandomFunction lightGene = Gene::strict;
+    public Gene.RandomFunction produceGene = Gene::random5Narrow;
 
     private boolean isNocturnal = false;
     private BiomeTemperature preferredTemperature = BiomeTemperature.TEMPERED;
-    //private int preferredLight;
 
     public Beehive beehive = null;
 
@@ -109,11 +104,11 @@ public class Specie {
         return this;
     }
 
-    @Deprecated
+    /*@Deprecated
     public Specie setPreferredBiomes(TagKey...biomeTag) {
         this.preferredBiomes = biomeTag;
         return this;
-    }
+    }*/
 
     public Specie setPreferredTemperature(BiomeTemperature temp) {
         preferredTemperature = temp;
@@ -137,7 +132,7 @@ public class Specie {
         return this;
     }
 
-    public Satisfaction getBiomeSatisfaction(ItemStack stack, Level level, BlockPos pos) {
+    /*public Satisfaction getBiomeSatisfaction(ItemStack stack, Level level, BlockPos pos) {
         //level.getBiomeManager().getBiome(pos).value().getBaseTemperature();
         if(preferredBiomes == null || preferredBiomes.length == 0)
             return Satisfaction.SATISFIED;
@@ -152,7 +147,7 @@ public class Specie {
             default -> Satisfaction.SATISFIED;
         };
         //return level.getBiomeManager().getBiome(pos).is(preferredBiomes) ? Satisfaction.SATISFIED : Satisfaction.NOT_WORKING;
-    }
+    }*/
 
     public Satisfaction getLightSatisfaction(ItemStack stack, Level level, BlockPos pos) {
         LightToleranceGene tolerance = LightToleranceGene.of(LightToleranceGene.get(stack.getTag()));
@@ -167,12 +162,12 @@ public class Specie {
 
     public Satisfaction getWeatherSatisfaction(ItemStack stack, Level level, BlockPos pos) {
         WeatherToleranceGene tolerance = WeatherToleranceGene.of(WeatherToleranceGene.get(stack.getTag()));
-        if(level.isThundering())
-            return Satisfaction.NOT_WORKING;
+        //if(level.isThundering())
+        //    return Satisfaction.NOT_WORKING;
 
         return switch (tolerance) {
-            case PICKY -> level.isRainingAt(pos) ? Satisfaction.SATISFIED : Satisfaction.UNSATISFIED;
-            case STRICT -> level.isRainingAt(pos) ? Satisfaction.SATISFIED : Satisfaction.NOT_WORKING;
+            case PICKY -> level.isRainingAt(pos) ? Satisfaction.UNSATISFIED : Satisfaction.SATISFIED;
+            case STRICT -> level.isRainingAt(pos) ? Satisfaction.NOT_WORKING : Satisfaction.SATISFIED;
             default -> Satisfaction.SATISFIED;
         };
     }
@@ -190,8 +185,8 @@ public class Specie {
         };
     }
 
-    public Specie addBeehive(Function<Set<BiomeDictionary.Type>, Boolean> biomeType, int tries) {
-        this.beehive = new Beehive(this, biomeType, tries);
+    public Specie addBeehive(Function<Set<BiomeDictionary.Type>, Boolean> biomeType, int tries, int rarity) {
+        this.beehive = new Beehive(this, biomeType, tries, rarity);
         return this;
     }
 

@@ -11,15 +11,17 @@ public class Beehive {
     public final Specie specie;
     public final Function<Set<BiomeDictionary.Type>, Boolean> biomeType;
     public final int tries;
+    public final int rarity;
     public RegistryObject<BeehiveBlock> block;
 
-    public Beehive(Specie specie, Function<Set<BiomeDictionary.Type>, Boolean> biomeType, int tries) {
+    public Beehive(Specie specie, Function<Set<BiomeDictionary.Type>, Boolean> biomeType, int tries, int rarity) {
         this.specie = specie;
         this.biomeType = biomeType;
         this.tries = tries;
+        this.rarity = rarity;
     }
 
     public String getName() {
-        return "beehive_" + specie.getName();
+        return specie.getName() + "_beehive";
     }
 }

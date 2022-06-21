@@ -1,6 +1,10 @@
 {
   "replace": false,
   "values": [
-    "beekeeping:beehive_common"
+    "beekeeping:common_beehive",
+    "beekeeping:forest_beehive",
+    "beekeeping:jungle_beehive",
+    "beekeeping:snowy_beehive",
+    "beekeeping:frozen_beehive"
   ]
 }

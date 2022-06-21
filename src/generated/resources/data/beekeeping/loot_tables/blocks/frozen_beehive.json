@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "beekeeping:beehive_common"
+          "name": "beekeeping:frozen_beehive"
         }
       ],
       "conditions": [
@@ -27,42 +27,9 @@
       ]
     },
     {
-      "rolls": 0.3,
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "beekeeping:common_queen"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:inverted",
-          "term": {
-            "condition": "minecraft:match_tool",
-            "predicate": {
-              "enchantments": [
-                {
-                  "enchantment": "minecraft:silk_touch",
-                  "levels": {
-                    "min": 1
-                  }
-                }
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
       "rolls": 1.0,
       "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "beekeeping:common_princess"
-        }
-      ],
+      "entries": [],
       "conditions": [
         {
           "condition": "minecraft:inverted",
@@ -83,40 +50,21 @@
       ]
     },
     {
-      "rolls": 1.0,
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 1.0,
+        "max": 3.0
+      },
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "beekeeping:common_drone"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:inverted",
-          "term": {
-            "condition": "minecraft:match_tool",
-            "predicate": {
-              "enchantments": [
-                {
-                  "enchantment": "minecraft:silk_touch",
-                  "levels": {
-                    "min": 1
-                  }
-                }
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "rolls": 0.5,
-      "bonus_rolls": 0.0,
-      "entries": [
+          "name": "beekeeping:frozen_princess"
+        },
         {
           "type": "minecraft:item",
-          "name": "beekeeping:common_drone"
+          "weight": 3,
+          "name": "beekeeping:frozen_drone"
         }
       ],
       "conditions": [

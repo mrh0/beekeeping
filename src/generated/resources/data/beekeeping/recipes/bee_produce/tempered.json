@@ -1,0 +1,18 @@
+{
+  "type": "beekeeping:bee_produce",
+  "specie": "tempered",
+  "produce": {
+    "unsatisfied": {
+      "common": {
+        "item": "minecraft:honeycomb",
+        "count": 7
+      }
+    },
+    "satisfied": {
+      "common": {
+        "item": "minecraft:honeycomb",
+        "count": 14
+      }
+    }
+  }
+}

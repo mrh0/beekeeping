@@ -3,6 +3,10 @@
   "values": [
     "beekeeping:common_princess",
     "beekeeping:forest_princess",
-    "beekeeping:tempered_princess"
+    "beekeeping:tempered_princess",
+    "beekeeping:jungle_princess",
+    "beekeeping:snowy_princess",
+    "beekeeping:frozen_princess",
+    "beekeeping:glacial_princess"
   ]
 }

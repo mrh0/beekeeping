@@ -41,7 +41,27 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
     protected final ContainerData data;
     public ApiaryBlockEntity(BlockPos pos, BlockState state) {
         super(Index.APIARY_BLOCK_ENTITY.get(), pos, state);
-        data = new SimpleContainerData(0);
+        data = new ContainerData() {
+            @Override
+            public int get(int index) {
+                return switch (index) {
+                    default -> breedProgressTime;
+                };
+            }
+
+            @Override
+            public void set(int index, int value) {
+                switch(index) {
+                    default: breedProgressTime = value;
+                        break;
+                }
+            }
+
+            @Override
+            public int getCount() {
+                return 1;
+            }
+        };
     }
 
     public boolean continuous = false;

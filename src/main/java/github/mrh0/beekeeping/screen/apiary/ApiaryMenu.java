@@ -20,7 +20,7 @@ import net.minecraftforge.items.SlotItemHandler;
 public class ApiaryMenu extends BeeMenu<ApiaryBlockEntity> {
     private final ApiaryBlockEntity blockEntity;
     private final Level level;
-    private final ContainerData data;
+    public final ContainerData data;
 
     public ApiaryMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
         this(id, inv, inv.player.level.getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));

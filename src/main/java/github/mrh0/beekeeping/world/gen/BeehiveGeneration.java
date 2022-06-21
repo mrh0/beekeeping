@@ -22,7 +22,7 @@ public class BeehiveGeneration {
 
         for(Specie specie : SpeciesRegistry.instance.getAll()) {
             if (!specie.hasBeehive())
-                return;
+                continue;
 
             if(specie.beehive.biomeType.apply(types)) {
                 List<Holder<PlacedFeature>> base =

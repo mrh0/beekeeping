@@ -10,9 +10,8 @@ import net.minecraft.world.level.levelgen.placement.RarityFilter;
 
 public class BeekeepingPlacedFeatures {
     public static Holder<PlacedFeature> getPlacedFeatures(Beehive beehive) {
-        return PlacementUtils.register("beehive",
+        return PlacementUtils.register(beehive.getName(),
                 BeekeepingConfiguredFeatures.getConfiguredFeatures(beehive), RarityFilter.onAverageOnceEvery(16),
                 InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
     }
-    //final Holder<PlacedFeature> BEEHIVE =
 }

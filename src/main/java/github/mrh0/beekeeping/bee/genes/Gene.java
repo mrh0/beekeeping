@@ -25,24 +25,42 @@ public interface Gene {
         int rand(Random rand);
     }
 
-    static int randomWide(Random rand) {
+    static int random5Wide(Random rand) {
         return rand.nextInt(5);
     }
 
-    static int randomNarrow(Random rand) {
+    static int random5Narrow(Random rand) {
         return rand.nextInt(3) + 1;
     }
 
-    static int randomLow(Random rand) {
+    static int random5Low(Random rand) {
         return rand.nextInt(3);
     }
 
-    static int randomHigh(Random rand) {
+    static int random5High(Random rand) {
         return rand.nextInt(3) + 2;
     }
 
-    static int normal(Random rand) {
+    static int normal5(Random rand) {
         return 2;
+    }
+
+    static int strict(Random rand) {
+        return 0;
+    }
+    static int picky(Random rand) {
+        return 1;
+    }
+    static int any(Random rand) {
+        return 2;
+    }
+
+    static int random3Low(Random rand) {
+        return rand.nextInt(2);
+    }
+
+    static int random3High(Random rand) {
+        return rand.nextInt(2) + 1;
     }
 
     static int eval(RandomFunction fn) {

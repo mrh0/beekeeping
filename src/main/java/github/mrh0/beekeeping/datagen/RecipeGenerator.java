@@ -23,8 +23,12 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
         for(Specie specie : SpeciesRegistry.instance.getAll())
             new BeeBreedingRecipeBuilder(specie, specie, specie)
                 .save(rc);*/
+
         breed(rc,"common", "forest", "tempered", true);
-        produce(rc, "common", Items.HONEYCOMB, 1, 2, null, 0, 0);
+
+        produce(rc, "common", Items.HONEYCOMB, 9, 13, null, 0, 0);
+        produce(rc, "forest", Items.HONEYCOMB, 9, 13, null, 0, 0);
+        produce(rc, "tempered", Items.HONEYCOMB, 7, 14, null, 0, 0);
     }
 
     private void breed(Consumer<FinishedRecipe> recipeConsumer, String drone, String princess, String offspring, boolean mirror) {
