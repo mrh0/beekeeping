@@ -27,7 +27,7 @@ public class BeehiveGeneration {
             if(specie.beehive.biomeType.apply(types)) {
                 List<Holder<PlacedFeature>> base =
                         event.getGeneration().getFeatures(GenerationStep.Decoration.VEGETAL_DECORATION);
-                base.add(BeekeepingPlacedFeatures.getPlacedFeatures(specie.beehive));
+                base.add(BeekeepingPlacedFeatures.getPlacedFeatures(specie.beehive, specie.beehive.rarity));
             }
         }
     }

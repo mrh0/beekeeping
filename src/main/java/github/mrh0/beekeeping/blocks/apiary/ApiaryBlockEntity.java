@@ -1,6 +1,7 @@
 package github.mrh0.beekeeping.blocks.apiary;
 
 import github.mrh0.beekeeping.Index;
+import github.mrh0.beekeeping.bee.Satisfaction;
 import github.mrh0.beekeeping.bee.Specie;
 import github.mrh0.beekeeping.bee.breeding.BeeLifecycle;
 import github.mrh0.beekeeping.bee.item.BeeItem;
@@ -125,6 +126,21 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
         itemHandler.setStackInSlot(2, offspringQueen);
     }
 
+    public Satisfaction getSatisfaction() {
+        if(getQueen() == null || getQueen().isEmpty())
+            return Satisfaction.NOT_WORKING;
+
+        Specie specie = BeeItem.of(getQueen());
+        if(specie == null)
+            return Satisfaction.NOT_WORKING;
+
+        Satisfaction lightSatisfaction = specie.getLightSatisfaction(getQueen(), getLevel(), getBlockPos());
+        Satisfaction weatherSatisfaction = specie.getWeatherSatisfaction(getQueen(), getLevel(), getBlockPos());
+        Satisfaction temperatureSatisfaction = specie.getTemperatureSatisfaction(getQueen(), getLevel(), getBlockPos());
+
+        return Satisfaction.calc(lightSatisfaction, weatherSatisfaction, temperatureSatisfaction);
+    }
+
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
 
     @Override
@@ -183,37 +199,45 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
 
     public int slowTick = 0;
     public boolean checkLock = false;
+    public Satisfaction satisfactionCache;
     public static void tick(Level level, BlockPos pos, BlockState state, ApiaryBlockEntity abe) {
-        if(abe.getQueen().isEmpty() && !abe.getDrone().isEmpty() && !abe.getPrincess().isEmpty()) {
-            abe.breedProgressTime++;
-            if(abe.breedProgressTime > BREED_TIME) {
-                abe.breedProgressTime = 0;
-                abe.preformBreeding();
+        abe.localTick();
+    }
+
+    public void localTick() {
+        if(getQueen().isEmpty() && !getDrone().isEmpty() && !getPrincess().isEmpty()) {
+            breedProgressTime++;
+            if(breedProgressTime > BREED_TIME) {
+                breedProgressTime = 0;
+                preformBreeding();
             }
         }
 
-        if(abe.slowTick++ < 20)
+        if(slowTick++ < 20)
             return;
-        abe.slowTick = 0;
-        ItemStack queen = abe.getQueen();
+        slowTick = 0;
+        ItemStack queen = getQueen();
         Specie specie = BeeItem.of(queen);
         if(specie == null)
             return;
         if(queen.getTag() == null)
             BeeItem.init(queen);
 
+        satisfactionCache = getSatisfaction();
+
         int hp = BeeItem.getHealth(queen.getTag());
         if(hp <= 0) {
-            if(abe.checkLock)
+            if(checkLock)
                 return;
-            if(attemptInsert(level, queen, abe.itemHandler, true, abe.continuous)) {
-                abe.itemHandler.setStackInSlot(2, ItemStack.EMPTY);
+            if(attemptInsert(level, queen, itemHandler, satisfactionCache == Satisfaction.SATISFIED, continuous)) {
+                itemHandler.setStackInSlot(2, ItemStack.EMPTY);
                 return;
             }
-            abe.checkLock = true;
+            checkLock = true;
             return;
         }
-        BeeItem.setHealth(queen.getTag(), hp-20);
+        if(satisfactionCache != Satisfaction.NOT_WORKING)
+            BeeItem.setHealth(queen.getTag(), hp-20);
     }
 
     public static boolean attemptInsert(Level level, ItemStack queen, ItemStackHandler inv, boolean satisfied, boolean continuous) {

@@ -1,6 +1,7 @@
 package github.mrh0.beekeeping.blocks.beehive;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
@@ -21,7 +22,7 @@ public class BeehiveBlock extends Block {
     }
 
     protected boolean mayPlaceOn(BlockState state, BlockGetter getter, BlockPos pos) {
-        return state.is(BlockTags.DIRT);
+        return state.isFaceSturdy(getter, pos, Direction.UP);
     }
 
     protected boolean mayPlaceNextTo(LevelReader level, BlockPos pos) {

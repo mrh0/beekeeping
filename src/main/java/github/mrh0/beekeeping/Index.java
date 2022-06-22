@@ -69,14 +69,14 @@ public class Index {
     public static void species() {
         var r = SpeciesRegistry.instance;
         r.register(new Specie("common", 0xFFb9c2cf)
-                .addBeehive(types -> types.contains(BiomeDictionary.Type.PLAINS), 3, 16));
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.PLAINS), 1, 16));
         r.register(new Specie("forest", 0xFF93c47d)
-                .addBeehive(types -> types.contains(BiomeDictionary.Type.FOREST), 3, 8));
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.FOREST), 3, 2));
         r.register(new Specie("tempered", 0xFFb6d7a8)
                 .setTemperatureGene(Gene::random5Narrow));
 
         r.register(new Specie("jungle", 0xFF6aa84f)
-                .addBeehive(types -> types.contains(BiomeDictionary.Type.JUNGLE), 3, 12)
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.JUNGLE), 4, 6)
                 .setLifetimeGene(Gene::random5Low)
                 .setPreferredTemperature(BiomeTemperature.WARM));
 
@@ -85,7 +85,7 @@ public class Index {
                 .setTemperatureGene(Gene::random3High)
                 .setPreferredTemperature(BiomeTemperature.COLD));
         r.register(new Specie("frozen", 0xFFd0e0e3)
-                .addBeehive(types -> types.contains(BiomeDictionary.Type.COLD) && types.contains(BiomeDictionary.Type.MOUNTAIN), 3, 24)
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.SNOWY) && types.contains(BiomeDictionary.Type.MOUNTAIN), 3, 24)
                 .setTemperatureGene(Gene::random3High)
                 .setPreferredTemperature(BiomeTemperature.COLD));
         r.register(new Specie("glacial", 0xFFa2c4c9, true)

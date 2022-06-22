@@ -12,8 +12,8 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvi
 
 public class BeekeepingConfiguredFeatures {
     public static Holder<ConfiguredFeature<RandomPatchConfiguration, ?>> getConfiguredFeatures(Beehive beehive) {
-        return FeatureUtils.register(beehive.getName(), Feature.FLOWER,
-                new RandomPatchConfiguration(beehive.tries, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+        return FeatureUtils.register(beehive.getName(), Feature.RANDOM_PATCH, //Feature.FLOWER
+                new RandomPatchConfiguration(beehive.tries, 16, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                         new SimpleBlockConfiguration(BlockStateProvider.simple(beehive.specie.beehive.block.get())))));
     }
 }
