@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "side": "beekeeping:block/beehives/frozen_side",
-    "bottom": "beekeeping:block/beehives/frozen_bottom",
-    "top": "beekeeping:block/beehives/frozen_top"
-  }
-}

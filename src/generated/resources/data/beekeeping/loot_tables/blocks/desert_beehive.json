@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "beekeeping:frozen_beehive"
+          "name": "beekeeping:desert_beehive"
         }
       ],
       "conditions": [
@@ -29,7 +29,17 @@
     {
       "rolls": 1.0,
       "bonus_rolls": 0.0,
-      "entries": [],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "beekeeping:desert_princess"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "beekeeping:desert_queen"
+        }
+      ],
       "conditions": [
         {
           "condition": "minecraft:inverted",
@@ -59,12 +69,12 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "beekeeping:frozen_princess"
+          "name": "beekeeping:desert_princess"
         },
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "beekeeping:frozen_drone"
+          "name": "beekeeping:desert_drone"
         }
       ],
       "conditions": [

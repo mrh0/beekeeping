@@ -5,8 +5,12 @@
     "beekeeping:forest_princess",
     "beekeeping:tempered_princess",
     "beekeeping:jungle_princess",
+    "beekeeping:coco_princess",
+    "beekeeping:savanna_princess",
+    "beekeeping:desert_princess",
     "beekeeping:snowy_princess",
     "beekeeping:frozen_princess",
-    "beekeeping:glacial_princess"
+    "beekeeping:glacial_princess",
+    "beekeeping:fungal_princess"
   ]
 }

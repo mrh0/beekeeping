@@ -4,7 +4,9 @@
     "beekeeping:common_beehive",
     "beekeeping:forest_beehive",
     "beekeeping:jungle_beehive",
+    "beekeeping:savanna_beehive",
+    "beekeeping:desert_beehive",
     "beekeeping:snowy_beehive",
-    "beekeeping:frozen_beehive"
+    "beekeeping:fungal_beehive"
   ]
 }

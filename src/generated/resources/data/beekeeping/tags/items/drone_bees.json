@@ -5,8 +5,12 @@
     "beekeeping:forest_drone",
     "beekeeping:tempered_drone",
     "beekeeping:jungle_drone",
+    "beekeeping:coco_drone",
+    "beekeeping:savanna_drone",
+    "beekeeping:desert_drone",
     "beekeeping:snowy_drone",
     "beekeeping:frozen_drone",
-    "beekeeping:glacial_drone"
+    "beekeeping:glacial_drone",
+    "beekeeping:fungal_drone"
   ]
 }

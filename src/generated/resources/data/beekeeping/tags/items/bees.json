@@ -13,6 +13,15 @@
     "beekeeping:jungle_drone",
     "beekeeping:jungle_princess",
     "beekeeping:jungle_queen",
+    "beekeeping:coco_drone",
+    "beekeeping:coco_princess",
+    "beekeeping:coco_queen",
+    "beekeeping:savanna_drone",
+    "beekeeping:savanna_princess",
+    "beekeeping:savanna_queen",
+    "beekeeping:desert_drone",
+    "beekeeping:desert_princess",
+    "beekeeping:desert_queen",
     "beekeeping:snowy_drone",
     "beekeeping:snowy_princess",
     "beekeeping:snowy_queen",
@@ -21,6 +30,9 @@
     "beekeeping:frozen_queen",
     "beekeeping:glacial_drone",
     "beekeeping:glacial_princess",
-    "beekeeping:glacial_queen"
+    "beekeeping:glacial_queen",
+    "beekeeping:fungal_drone",
+    "beekeeping:fungal_princess",
+    "beekeeping:fungal_queen"
   ]
 }

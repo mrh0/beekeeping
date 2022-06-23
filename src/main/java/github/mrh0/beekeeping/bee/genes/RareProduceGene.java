@@ -30,10 +30,10 @@ public enum RareProduceGene implements Gene {
 
     public static RareProduceGene of(int value) {
         return switch (value) {
-            case 0 -> HIGHEST;
-            case 1 -> HIGH;
-            case 3 -> LOW;
-            case 4 -> LOWEST;
+            case 0 -> LOWEST;
+            case 1 -> LOW;
+            case 3 -> HIGH;
+            case 4 -> HIGHEST;
             default -> NORMAL;
         };
     }

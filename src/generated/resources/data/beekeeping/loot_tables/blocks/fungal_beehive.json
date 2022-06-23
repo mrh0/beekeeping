@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "beekeeping:snowy_beehive"
+          "name": "beekeeping:fungal_beehive"
         }
       ],
       "conditions": [
@@ -33,11 +33,11 @@
         {
           "type": "minecraft:item",
           "weight": 2,
-          "name": "beekeeping:snowy_princess"
+          "name": "beekeeping:fungal_princess"
         },
         {
           "type": "minecraft:item",
-          "name": "beekeeping:snowy_queen"
+          "name": "beekeeping:fungal_queen"
         }
       ],
       "conditions": [
@@ -69,12 +69,12 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "beekeeping:snowy_princess"
+          "name": "beekeeping:fungal_princess"
         },
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "beekeeping:snowy_drone"
+          "name": "beekeeping:fungal_drone"
         }
       ],
       "conditions": [
