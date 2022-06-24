@@ -7,6 +7,7 @@
     "beekeeping:savanna_beehive",
     "beekeeping:desert_beehive",
     "beekeeping:snowy_beehive",
-    "beekeeping:fungal_beehive"
+    "beekeeping:fungal_beehive",
+    "beekeeping:scorched_beehive"
   ]
 }

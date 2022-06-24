@@ -11,6 +11,7 @@
     "beekeeping:snowy_drone",
     "beekeeping:frozen_drone",
     "beekeeping:glacial_drone",
-    "beekeeping:fungal_drone"
+    "beekeeping:fungal_drone",
+    "beekeeping:scorched_drone"
   ]
 }

@@ -1,17 +1,25 @@
 {
   "type": "beekeeping:bee_produce",
-  "specie": "tempered",
+  "specie": "scorched",
   "produce": {
     "unsatisfied": {
       "common": {
         "item": "minecraft:honeycomb",
         "count": 9
+      },
+      "rare": {
+        "item": "minecraft:coal",
+        "chance": 0.4
       }
     },
     "satisfied": {
       "common": {
         "item": "minecraft:honeycomb",
         "count": 13
+      },
+      "rare": {
+        "item": "minecraft:coal",
+        "chance": 0.8
       }
     }
   }

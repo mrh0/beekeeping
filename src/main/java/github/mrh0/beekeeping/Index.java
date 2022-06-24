@@ -22,6 +22,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -69,50 +70,66 @@ public class Index {
     public static void species() {
         var r = SpeciesRegistry.instance;
         r.register(new Specie("common", 0xFFfff2cc)
+                .setProduce(Items.HONEYCOMB, 9, 13)
                 .addBeehive(types -> types.contains(BiomeDictionary.Type.PLAINS), 3, 16));
 
         r.register(new Specie("forest", 0xFF93c47d)
+                .setProduce(Items.HONEYCOMB, 9, 13)
                 .addBeehive(types -> types.contains(BiomeDictionary.Type.FOREST), 4, 10));
 
         r.register(new Specie("tempered", 0xFFb6d7a8)
+                .setProduce(Items.HONEYCOMB, 9, 13)
                 .setTemperatureGene(Gene::random5Narrow));
 
         r.register(new Specie("jungle", 0xFF6aa84f)
+                .setProduce(Items.HONEYCOMB, 9, 13)
                 .addBeehive(types -> types.contains(BiomeDictionary.Type.JUNGLE), 4, 10)
                 .setLifetimeGene(Gene::random5Narrow)
                 .setPreferredTemperature(BiomeTemperature.WARM));
 
-        r.register(new Specie("coco", 0xFF6aa84f)
+        r.register(new Specie("coco", 0xFF783f04)
+                .setProduce(Items.HONEYCOMB, 9, 13, Items.COCOA_BEANS, 0.7d, 0.9d)
                 .setPreferredTemperature(BiomeTemperature.WARM));
 
         r.register(new Specie("savanna", 0xFFff9900)
+                .setProduce(Items.HONEYCOMB, 9, 13)
                 .addBeehive(types -> types.contains(BiomeDictionary.Type.SAVANNA), 4, 16)
                 .setLifetimeGene(Gene::random5Narrow)
                 .setWeatherGene(Gene::strict)
                 .setPreferredTemperature(BiomeTemperature.WARMEST));
 
         r.register(new Specie("desert", 0xFFfbbc04)
+                .setProduce(Items.HONEYCOMB, 9, 13)
                 .addBeehive(types -> types.contains(BiomeDictionary.Type.SANDY) && types.contains(BiomeDictionary.Type.HOT), 3, 12)
                 .setLifetimeGene(Gene::random5Narrow)
                 .setWeatherGene(Gene::strict)
                 .setPreferredTemperature(BiomeTemperature.WARMEST));
 
         r.register(new Specie("snowy", 0xFFefefef)
-                .addBeehive(types -> types.contains(BiomeDictionary.Type.SNOWY), 4, 24)
+                .setProduce(Items.HONEYCOMB, 9, 13)
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.SNOWY), 4, 16)
                 .setTemperatureGene(Gene::random3Low)
                 .setPreferredTemperature(BiomeTemperature.COLD));
+
         r.register(new Specie("frozen", 0xFFd0e0e3)
-                //.addBeehive(types -> types.contains(BiomeDictionary.Type.SNOWY) && types.contains(BiomeDictionary.Type.MOUNTAIN), 3, 24)
-                //.setTemperatureGene(Gene::random3Low)
+                .setProduce(Items.HONEYCOMB, 9, 13)
                 .setPreferredTemperature(BiomeTemperature.COLD));
+
         r.register(new Specie("glacial", 0xFFa2c4c9, true)
+                .setProduce(Items.HONEYCOMB, 9, 13)
                 .setPreferredTemperature(BiomeTemperature.COLDEST));
 
         r.register(new Specie("fungal", 0xFF660000)
+                .setProduce(Items.HONEYCOMB, 9, 13, Items.RED_MUSHROOM, 0.5d, 0.8d)
                 .addBeehive(types -> types.contains(BiomeDictionary.Type.MUSHROOM) || types.contains(BiomeDictionary.Type.SWAMP), 3, 10)
                 .setTemperatureGene(Gene::random3High)
                 .setProduceGene(Gene::random5High)
                 .setPreferredTemperature(BiomeTemperature.TEMPERED));
+
+        r.register(new Specie("scorched", 0xFFff9900)
+                .setProduce(Items.HONEYCOMB, 9, 13, Items.COAL, 0.4d, 0.8d)
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.NETHER), 12, 10)
+                .setDark());
     }
 
     //  ITEM

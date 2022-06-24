@@ -23,6 +23,7 @@ public class Specie {
     private final String name;
     private boolean foil;
     private int color;
+    private boolean dark = false;
     //private TagKey<Biome>[] preferredBiomes = null;
     private final ResourceLocation resource;
     public DroneBee droneItem;
@@ -40,6 +41,7 @@ public class Specie {
     private BiomeTemperature preferredTemperature = BiomeTemperature.TEMPERED;
 
     public Beehive beehive = null;
+    public Produce produce = null;
 
     public Specie(String name, int color, boolean foil) {
         this.name = name;
@@ -188,6 +190,27 @@ public class Specie {
     public Specie addBeehive(Function<Set<BiomeDictionary.Type>, Boolean> biomeType, int tries, int rarity) {
         this.beehive = new Beehive(this, biomeType, tries, rarity);
         return this;
+    }
+
+    public Specie setProduce(Item common, int commonCountUnsatisfied, int commonCountSatisfied) {
+        this.produce = new Produce(common, commonCountUnsatisfied, commonCountSatisfied, null, 0, 0);
+        return this;
+    }
+
+    public Specie setProduce(Item common, int commonCountUnsatisfied, int commonCountSatisfied, Item rare,
+                             double rareChanceUnsatisfied, double rareChanceSatisfied) {
+        this.produce = new Produce(common, commonCountUnsatisfied, commonCountSatisfied,
+                rare, rareChanceUnsatisfied, rareChanceSatisfied);
+        return this;
+    }
+
+    public Specie setDark() {
+        this.dark = true;
+        return this;
+    }
+
+    public boolean isDark() {
+        return this.dark;
     }
 
     public boolean hasBeehive() {

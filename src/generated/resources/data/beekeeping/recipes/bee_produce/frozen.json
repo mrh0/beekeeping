@@ -1,6 +1,6 @@
 {
   "type": "beekeeping:bee_produce",
-  "specie": "tempered",
+  "specie": "frozen",
   "produce": {
     "unsatisfied": {
       "common": {

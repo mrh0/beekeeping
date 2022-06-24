@@ -26,9 +26,16 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
 
         breed(rc,"common", "forest", "tempered", true);
 
-        produce(rc, "common", Items.HONEYCOMB, 9, 13, null, 0, 0);
-        produce(rc, "forest", Items.HONEYCOMB, 9, 13, null, 0, 0);
-        produce(rc, "tempered", Items.HONEYCOMB, 7, 14, null, 0, 0);
+        for(Specie specie : SpeciesRegistry.instance.getAll()) {
+            if(specie.produce == null)
+                continue;
+            produce(rc, specie.getName(), specie.produce.common(), specie.produce.commonCountUnsatisfied(), specie.produce.commonCountSatisfied(),
+                specie.produce.rare(), specie.produce.rareChanceUnsatisfied(), specie.produce.rareChanceSatisfied());
+        }
+
+        //produce(rc, "common", Items.HONEYCOMB, 9, 13, null, 0, 0);
+        //produce(rc, "forest", Items.HONEYCOMB, 9, 13, null, 0, 0);
+        //produce(rc, "tempered", Items.HONEYCOMB, 7, 14, null, 0, 0);
     }
 
     private void breed(Consumer<FinishedRecipe> recipeConsumer, String drone, String princess, String offspring, boolean mirror) {

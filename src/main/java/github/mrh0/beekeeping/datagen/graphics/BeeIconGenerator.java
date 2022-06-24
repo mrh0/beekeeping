@@ -28,9 +28,10 @@ public class BeeIconGenerator {
     public static void makeAll() throws IOException {
         String rp = Path.of("../src/main/resources/icons").toAbsolutePath().toString();
         File bee = Path.of(rp, "bee.png").toFile();
-        File border = Path.of(rp, "border.png").toFile();
         File princess = Path.of(rp, "princess.png").toFile();
         File queen = Path.of(rp, "queen.png").toFile();
+        File princessDark = Path.of(rp, "princess_dark.png").toFile();
+        File queenDark = Path.of(rp, "queen_dark.png").toFile();
         File beehiveSide = Path.of(rp, "beehive_side.png").toFile();
         File beehiveBottom = Path.of(rp, "beehive_bottom.png").toFile();
         File beehiveTop = Path.of(rp, "beehive_top.png").toFile();
@@ -40,10 +41,19 @@ public class BeeIconGenerator {
         String pathHive = Path.of("../src/main/resources/assets/beekeeping/textures/block/beehives/").toAbsolutePath().toString();
         System.out.println(path);
 
+
+
         for(Specie specie : SpeciesRegistry.instance.getAll()) {
-            makeIcon(bee, border, princess, queen, path, specie.getName(), BeeItem.BeeType.DRONE, specie.getColor());
-            makeIcon(bee, border, princess, queen, path, specie.getName(), BeeItem.BeeType.PRINCESS, specie.getColor());
-            makeIcon(bee, border, princess, queen, path, specie.getName(), BeeItem.BeeType.QUEEN, specie.getColor());
+            File princessCrown = princess;
+            File queenCrown = queen;
+            if(specie.isDark()) {
+                princessCrown = princessDark;
+                queenCrown = queenDark;
+            }
+
+            makeIcon(bee, princessCrown, queenCrown, path, specie.getName(), BeeItem.BeeType.DRONE, specie.getColor());
+            makeIcon(bee, princessCrown, queenCrown, path, specie.getName(), BeeItem.BeeType.PRINCESS, specie.getColor());
+            makeIcon(bee, princessCrown, queenCrown, path, specie.getName(), BeeItem.BeeType.QUEEN, specie.getColor());
             if(specie.hasBeehive()) {
                 makeBeehive(beehiveSide, specie.getName() + "_side.png", specie.getColor(), pathHive);
                 makeBeehive(beehiveBottom, specie.getName() + "_bottom.png", specie.getColor(), pathHive);
@@ -78,16 +88,15 @@ public class BeeIconGenerator {
         ImageIO.write(beehive, "png", output);
     }
 
-    public static void makeIcon(File beeFile, File borderFile, File princessFile, File queenFile, String outpath, String name, BeeItem.BeeType type, int border) throws IOException {
+    public static void makeIcon(File beeFile, File princessFile, File queenFile, String outpath, String name, BeeItem.BeeType type, int border) throws IOException {
         BufferedImage bee = ImageIO.read(beeFile);
-        BufferedImage borderBI = ImageIO.read(borderFile);
         BufferedImage princessBI = ImageIO.read(princessFile);
         BufferedImage queenBI = ImageIO.read(queenFile);
         int size = 16;
 
         for(int x = 0; x < size; x++) {
             for(int y = 0; y < size; y++) {
-                if(borderBI.getRGB(x, y) == 0xFFFF00FF)
+                if(bee.getRGB(x, y) == 0xFFFF00FF)
                     bee.setRGB(x, y, border);
                 if(type == BeeItem.BeeType.PRINCESS) {
                     if(princessBI.getRGB(x, y) != 0x00000000)

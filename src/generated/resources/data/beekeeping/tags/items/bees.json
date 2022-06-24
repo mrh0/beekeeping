@@ -33,6 +33,9 @@
     "beekeeping:glacial_queen",
     "beekeeping:fungal_drone",
     "beekeeping:fungal_princess",
-    "beekeeping:fungal_queen"
+    "beekeeping:fungal_queen",
+    "beekeeping:scorched_drone",
+    "beekeeping:scorched_princess",
+    "beekeeping:scorched_queen"
   ]
 }

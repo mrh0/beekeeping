@@ -1,17 +1,25 @@
 {
   "type": "beekeeping:bee_produce",
-  "specie": "tempered",
+  "specie": "fungal",
   "produce": {
     "unsatisfied": {
       "common": {
         "item": "minecraft:honeycomb",
         "count": 9
+      },
+      "rare": {
+        "item": "minecraft:red_mushroom",
+        "chance": 0.5
       }
     },
     "satisfied": {
       "common": {
         "item": "minecraft:honeycomb",
         "count": 13
+      },
+      "rare": {
+        "item": "minecraft:red_mushroom",
+        "chance": 0.8
       }
     }
   }
