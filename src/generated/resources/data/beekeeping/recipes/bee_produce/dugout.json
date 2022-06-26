@@ -1,0 +1,18 @@
+{
+  "type": "beekeeping:bee_produce",
+  "specie": "dugout",
+  "produce": {
+    "unsatisfied": {
+      "common": {
+        "item": "minecraft:honeycomb",
+        "count": 9
+      }
+    },
+    "satisfied": {
+      "common": {
+        "item": "minecraft:honeycomb",
+        "count": 13
+      }
+    }
+  }
+}

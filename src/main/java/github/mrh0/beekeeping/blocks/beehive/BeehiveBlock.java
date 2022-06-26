@@ -17,7 +17,7 @@ public class BeehiveBlock extends Block {
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         BlockPos blockpos = pos.below();
         if (state.getBlock() == this) //Forge: This function is called during world gen and placement, before this block is set, so if we are not 'here' then assume it's the pre-check.
-            return this.mayPlaceOn(level.getBlockState(blockpos), level, blockpos) || mayPlaceNextTo(level, pos);
+            return anySolid(level, pos);//this.mayPlaceOn(level.getBlockState(blockpos), level, blockpos) || mayPlaceNextTo(level, pos);
         return true;
     }
 
@@ -30,5 +30,14 @@ public class BeehiveBlock extends Block {
                 || level.getBlockState(pos.east()).is(BlockTags.LOGS)
                 || level.getBlockState(pos.south()).is(BlockTags.LOGS)
                 || level.getBlockState(pos.west()).is(BlockTags.LOGS);
+    }
+
+    protected boolean anySolid(LevelReader level, BlockPos blockpos) {
+        for(Direction dir : Direction.values()) {
+            BlockPos pos = blockpos.relative(dir);
+            if(level.getBlockState(pos).isFaceSturdy(level, pos, dir.getOpposite()))
+                return true;
+        }
+        return false;
     }
 }

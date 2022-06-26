@@ -6,12 +6,13 @@
     "beekeeping:tempered_princess",
     "beekeeping:jungle_princess",
     "beekeeping:coco_princess",
-    "beekeeping:savanna_princess",
-    "beekeeping:desert_princess",
+    "beekeeping:upland_princess",
+    "beekeeping:dune_princess",
     "beekeeping:snowy_princess",
     "beekeeping:frozen_princess",
     "beekeeping:glacial_princess",
     "beekeeping:fungal_princess",
+    "beekeeping:dugout_princess",
     "beekeeping:scorched_princess"
   ]
 }

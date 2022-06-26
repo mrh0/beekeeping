@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "beekeeping:item/savanna_drone"
+    "layer0": "beekeeping:item/dugout_princess"
   }
 }

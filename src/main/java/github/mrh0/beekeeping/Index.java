@@ -14,6 +14,7 @@ import github.mrh0.beekeeping.recipe.BeeBreedingRecipe;
 import github.mrh0.beekeeping.recipe.BeeProduceRecipe;
 import github.mrh0.beekeeping.screen.analyzer.AnalyzerMenu;
 import github.mrh0.beekeeping.screen.apiary.ApiaryMenu;
+import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -71,7 +72,7 @@ public class Index {
         var r = SpeciesRegistry.instance;
         r.register(new Specie("common", 0xFFfff2cc)
                 .setProduce(Items.HONEYCOMB, 9, 13)
-                .addBeehive(types -> types.contains(BiomeDictionary.Type.PLAINS), 3, 16));
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.PLAINS), 2, 16));
 
         r.register(new Specie("forest", 0xFF93c47d)
                 .setProduce(Items.HONEYCOMB, 9, 13)
@@ -91,14 +92,14 @@ public class Index {
                 .setProduce(Items.HONEYCOMB, 9, 13, Items.COCOA_BEANS, 0.7d, 0.9d)
                 .setPreferredTemperature(BiomeTemperature.WARM));
 
-        r.register(new Specie("savanna", 0xFFff9900)
+        r.register(new Specie("upland", 0xFFff9900)
                 .setProduce(Items.HONEYCOMB, 9, 13)
                 .addBeehive(types -> types.contains(BiomeDictionary.Type.SAVANNA), 4, 16)
                 .setLifetimeGene(Gene::random5Narrow)
                 .setWeatherGene(Gene::strict)
                 .setPreferredTemperature(BiomeTemperature.WARMEST));
 
-        r.register(new Specie("desert", 0xFFfbbc04)
+        r.register(new Specie("dune", 0xFFfbbc04)
                 .setProduce(Items.HONEYCOMB, 9, 13)
                 .addBeehive(types -> types.contains(BiomeDictionary.Type.SANDY) && types.contains(BiomeDictionary.Type.HOT), 3, 12)
                 .setLifetimeGene(Gene::random5Narrow)
@@ -126,9 +127,17 @@ public class Index {
                 .setProduceGene(Gene::random5High)
                 .setPreferredTemperature(BiomeTemperature.TEMPERED));
 
+        r.register(new Specie("dugout", 0xFF660000)
+                .setProduce(Items.HONEYCOMB, 9, 13)
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.UNDERGROUND), 8, 1, PlacementUtils.FULL_RANGE)
+                .setTemperatureGene(Gene::random3High)
+                .setLightGene(Gene::any)
+                .setPreferredTemperature(BiomeTemperature.COLD));
+
+
         r.register(new Specie("scorched", 0xFFff9900)
                 .setProduce(Items.HONEYCOMB, 9, 13, Items.COAL, 0.4d, 0.8d)
-                .addBeehive(types -> types.contains(BiomeDictionary.Type.NETHER), 16, 8)
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.NETHER), 16, 1, PlacementUtils.FULL_RANGE)
                 .setDark());
     }
 

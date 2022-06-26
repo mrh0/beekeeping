@@ -4,10 +4,11 @@
     "beekeeping:common_beehive",
     "beekeeping:forest_beehive",
     "beekeeping:jungle_beehive",
-    "beekeeping:savanna_beehive",
-    "beekeeping:desert_beehive",
+    "beekeeping:upland_beehive",
+    "beekeeping:dune_beehive",
     "beekeeping:snowy_beehive",
     "beekeeping:fungal_beehive",
+    "beekeeping:dugout_beehive",
     "beekeeping:scorched_beehive"
   ]
 }

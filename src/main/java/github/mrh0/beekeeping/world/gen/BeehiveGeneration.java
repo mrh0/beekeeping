@@ -5,6 +5,7 @@ import github.mrh0.beekeeping.bee.SpeciesRegistry;
 import github.mrh0.beekeeping.world.feature.BeekeepingPlacedFeatures;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -27,7 +28,7 @@ public class BeehiveGeneration {
             if(specie.beehive.biomeType.apply(types)) {
                 List<Holder<PlacedFeature>> base =
                         event.getGeneration().getFeatures(GenerationStep.Decoration.VEGETAL_DECORATION);
-                base.add(BeekeepingPlacedFeatures.getPlacedFeatures(specie.beehive, specie.beehive.rarity));
+                base.add(BeekeepingPlacedFeatures.getPlacedFeatures(specie.beehive, specie.beehive.rarity, PlacementUtils.HEIGHTMAP));
             }
         }
     }

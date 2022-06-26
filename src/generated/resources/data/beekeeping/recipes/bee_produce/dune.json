@@ -1,6 +1,6 @@
 {
   "type": "beekeeping:bee_produce",
-  "specie": "savanna",
+  "specie": "dune",
   "produce": {
     "unsatisfied": {
       "common": {

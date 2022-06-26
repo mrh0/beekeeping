@@ -3,15 +3,12 @@ package github.mrh0.beekeeping.world.feature;
 import github.mrh0.beekeeping.bee.Beehive;
 import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
-import net.minecraft.world.level.levelgen.placement.BiomeFilter;
-import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
-import net.minecraft.world.level.levelgen.placement.PlacedFeature;
-import net.minecraft.world.level.levelgen.placement.RarityFilter;
+import net.minecraft.world.level.levelgen.placement.*;
 
 public class BeekeepingPlacedFeatures {
-    public static Holder<PlacedFeature> getPlacedFeatures(Beehive beehive, int rarity) {
+    public static Holder<PlacedFeature> getPlacedFeatures(Beehive beehive, int rarity, PlacementModifier placement) {
         return PlacementUtils.register(beehive.getName() + "_placed",
                 BeekeepingConfiguredFeatures.getConfiguredFeatures(beehive), RarityFilter.onAverageOnceEvery(rarity),
-                InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
+                InSquarePlacement.spread(), placement, BiomeFilter.biome());
     }
 }

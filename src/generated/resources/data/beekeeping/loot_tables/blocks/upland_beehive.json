@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "beekeeping:savanna_beehive"
+          "name": "beekeeping:upland_beehive"
         }
       ],
       "conditions": [
@@ -33,11 +33,11 @@
         {
           "type": "minecraft:item",
           "weight": 2,
-          "name": "beekeeping:savanna_princess"
+          "name": "beekeeping:upland_princess"
         },
         {
           "type": "minecraft:item",
-          "name": "beekeeping:savanna_queen"
+          "name": "beekeeping:upland_queen"
         }
       ],
       "conditions": [
@@ -69,12 +69,12 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "beekeeping:savanna_princess"
+          "name": "beekeeping:upland_princess"
         },
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "beekeeping:savanna_drone"
+          "name": "beekeeping:upland_drone"
         }
       ],
       "conditions": [

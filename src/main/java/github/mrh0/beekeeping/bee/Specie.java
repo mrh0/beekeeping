@@ -14,6 +14,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraftforge.common.BiomeDictionary;
 
 import java.util.Set;
@@ -189,6 +190,11 @@ public class Specie {
 
     public Specie addBeehive(Function<Set<BiomeDictionary.Type>, Boolean> biomeType, int tries, int rarity) {
         this.beehive = new Beehive(this, biomeType, tries, rarity);
+        return this;
+    }
+
+    public Specie addBeehive(Function<Set<BiomeDictionary.Type>, Boolean> biomeType, int tries, int rarity, PlacementModifier modifier) {
+        this.beehive = new Beehive(this, biomeType, tries, rarity, modifier);
         return this;
     }
 

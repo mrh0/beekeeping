@@ -6,12 +6,13 @@
     "beekeeping:tempered_queen",
     "beekeeping:jungle_queen",
     "beekeeping:coco_queen",
-    "beekeeping:savanna_queen",
-    "beekeeping:desert_queen",
+    "beekeeping:upland_queen",
+    "beekeeping:dune_queen",
     "beekeeping:snowy_queen",
     "beekeeping:frozen_queen",
     "beekeeping:glacial_queen",
     "beekeeping:fungal_queen",
+    "beekeeping:dugout_queen",
     "beekeeping:scorched_queen"
   ]
 }
