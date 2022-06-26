@@ -37,8 +37,8 @@ public class Specie {
     public Gene.RandomFunction lightGene = Gene::strict;
     public Gene.RandomFunction produceGene = Gene::random5Narrow;
 
-    private boolean isNocturnal = false;
-    private BiomeTemperature preferredTemperature = BiomeTemperature.TEMPERED;
+    public boolean isNocturnal = false;
+    public BiomeTemperature preferredTemperature = BiomeTemperature.TEMPERED;
 
     public Beehive beehive = null;
     public Produce produce = null;

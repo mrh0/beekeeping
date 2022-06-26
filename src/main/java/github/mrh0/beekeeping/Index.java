@@ -128,7 +128,7 @@ public class Index {
 
         r.register(new Specie("scorched", 0xFFff9900)
                 .setProduce(Items.HONEYCOMB, 9, 13, Items.COAL, 0.4d, 0.8d)
-                .addBeehive(types -> types.contains(BiomeDictionary.Type.NETHER), 12, 10)
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.NETHER), 16, 8)
                 .setDark());
     }
 

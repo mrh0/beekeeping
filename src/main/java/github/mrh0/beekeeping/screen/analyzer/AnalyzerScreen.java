@@ -44,6 +44,12 @@ public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity>
         drawText(poseStack, new TranslatableComponent("title.beekeeping.analyzer.temp").append(": ").append(temp+""), 14, 44, 1f);
         float rain = getLevel().getBiomeManager().getBiome(getBlockPos()).value().getDownfall();
         drawText(poseStack, new TranslatableComponent("title.beekeeping.analyzer.rain").append(": ").append(rain+""), 14, 60, 1f);
+
+        if(getSpecie() == null)
+            return;
+
+        int line = 0;
+        drawText(poseStack, new TranslatableComponent("").append(getSpecie().preferredTemperature.getComponent()), 14, 44 + 14*line, 1f);
     }
 
     @Override
