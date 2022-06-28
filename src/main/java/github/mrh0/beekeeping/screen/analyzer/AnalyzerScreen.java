@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import github.mrh0.beekeeping.Beekeeping;
 import github.mrh0.beekeeping.bee.Specie;
+import github.mrh0.beekeeping.bee.genes.LifetimeGene;
 import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlockEntity;
 import github.mrh0.beekeeping.screen.BeeScreen;
@@ -24,6 +25,18 @@ public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity>
         imageHeight = 211;
         inventoryLabelY = 121;
     }
+
+    private Bounds getListBounds(int index) {
+        return new Bounds(lx, ly, 8, 8);
+    }
+
+    private void drawListItem(PoseStack poseStack, Bounds bounds, Component text, int index, int image) {
+        drawText(poseStack, text, lx + 12, 44 + 14*index, 1f);
+        blit(poseStack, bounds.getX(), bounds.getY(), imageWidth, bounds.h*image, bounds.w, bounds.h);
+    }
+
+    int lx = 14, ly = 44;
+    private Bounds lifetimeBounds = getListBounds(0);
 
     @Override
     protected void renderBg(PoseStack poseStack, float partial, int mouseX, int mouseY) {
@@ -48,8 +61,9 @@ public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity>
         if(getSpecie() == null)
             return;
 
-        int line = 0;
-        drawText(poseStack, new TranslatableComponent("Preferred Temperature: ").append(getSpecie().preferredTemperature.getComponent()), 14, 44 + 14*line++, 1f);
+
+        drawListItem(poseStack, lifetimeBounds, LifetimeGene.of(LifetimeGene.get(getAnalyzed().getTag())).getComponent(), 0, 4);
+        drawListItem(poseStack, lifetimeBounds, LifetimeGene.of(LifetimeGene.get(getAnalyzed().getTag())).getComponent(), 1, 3);
     }
 
     @Override
