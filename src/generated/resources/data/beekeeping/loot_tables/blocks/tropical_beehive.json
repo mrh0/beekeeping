@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "beekeeping:jungle_beehive"
+          "name": "beekeeping:tropical_beehive"
         }
       ],
       "conditions": [
@@ -33,11 +33,11 @@
         {
           "type": "minecraft:item",
           "weight": 2,
-          "name": "beekeeping:jungle_princess"
+          "name": "beekeeping:tropical_princess"
         },
         {
           "type": "minecraft:item",
-          "name": "beekeeping:jungle_queen"
+          "name": "beekeeping:tropical_queen"
         }
       ],
       "conditions": [
@@ -69,12 +69,12 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "beekeeping:jungle_princess"
+          "name": "beekeeping:tropical_princess"
         },
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "beekeeping:jungle_drone"
+          "name": "beekeeping:tropical_drone"
         }
       ],
       "conditions": [

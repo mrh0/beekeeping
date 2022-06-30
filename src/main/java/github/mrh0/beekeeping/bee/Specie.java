@@ -1,5 +1,6 @@
 package github.mrh0.beekeeping.bee;
 
+import com.mojang.datafixers.util.Pair;
 import github.mrh0.beekeeping.Beekeeping;
 import github.mrh0.beekeeping.Util;
 import github.mrh0.beekeeping.bee.genes.*;
@@ -17,14 +18,17 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraftforge.common.BiomeDictionary;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
 public class Specie {
     private final String name;
-    private boolean foil;
+    private boolean foil = false;
     private int color;
     private boolean dark = false;
+    private boolean hasRareProduce = false;
     //private TagKey<Biome>[] preferredBiomes = null;
     private final ResourceLocation resource;
     public DroneBee droneItem;
@@ -44,15 +48,13 @@ public class Specie {
     public Beehive beehive = null;
     public Produce produce = null;
 
-    public Specie(String name, int color, boolean foil) {
-        this.name = name;
-        this.foil = foil;
-        this.color = color;
-        this.resource = new ResourceLocation(mod, name);
-    }
+    public List<Pair<String, String>> breeding;
 
     public Specie(String name, int color) {
-        this(name, color, false);
+        this.name = name;
+        this.color = color;
+        this.resource = new ResourceLocation(mod, name);
+        this.breeding = new ArrayList<>();
     }
 
     public ResourceLocation getResourceLocation() {
@@ -207,6 +209,18 @@ public class Specie {
                              double rareChanceUnsatisfied, double rareChanceSatisfied) {
         this.produce = new Produce(common, commonCountUnsatisfied, commonCountSatisfied,
                 rare, rareChanceUnsatisfied, rareChanceSatisfied);
+        hasRareProduce = true;
+        return this;
+    }
+
+    public Specie breedFrom(String bee1, String bee2) {
+        breeding.add(new Pair<>(bee1, bee2));
+        breeding.add(new Pair<>(bee2, bee1));
+        return this;
+    }
+
+    public Specie breedStrictFrom(String drone, String princess) {
+        breeding.add(new Pair<>(drone, princess));
         return this;
     }
 
@@ -215,8 +229,17 @@ public class Specie {
         return this;
     }
 
+    public Specie setFoil() {
+        this.foil = true;
+        return this;
+    }
+
     public boolean isDark() {
         return this.dark;
+    }
+
+    public boolean isHasRareProduce() {
+        return this.hasRareProduce;
     }
 
     public boolean hasBeehive() {

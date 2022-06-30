@@ -4,7 +4,7 @@
     "beekeeping:common_queen",
     "beekeeping:forest_queen",
     "beekeeping:tempered_queen",
-    "beekeeping:jungle_queen",
+    "beekeeping:tropical_queen",
     "beekeeping:coco_queen",
     "beekeeping:upland_queen",
     "beekeeping:dune_queen",
@@ -13,6 +13,7 @@
     "beekeeping:glacial_queen",
     "beekeeping:fungal_queen",
     "beekeeping:dugout_queen",
+    "beekeeping:nocturnal_queen",
     "beekeeping:scorched_queen"
   ]
 }

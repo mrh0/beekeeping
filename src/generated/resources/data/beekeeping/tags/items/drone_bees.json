@@ -4,7 +4,7 @@
     "beekeeping:common_drone",
     "beekeeping:forest_drone",
     "beekeeping:tempered_drone",
-    "beekeeping:jungle_drone",
+    "beekeeping:tropical_drone",
     "beekeeping:coco_drone",
     "beekeeping:upland_drone",
     "beekeeping:dune_drone",
@@ -13,6 +13,7 @@
     "beekeeping:glacial_drone",
     "beekeeping:fungal_drone",
     "beekeeping:dugout_drone",
+    "beekeeping:nocturnal_drone",
     "beekeeping:scorched_drone"
   ]
 }

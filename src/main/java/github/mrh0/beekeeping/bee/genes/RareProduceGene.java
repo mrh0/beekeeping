@@ -20,6 +20,11 @@ public enum RareProduceGene implements Gene {
         return name;
     }
 
+    @Override
+    public int getIndex() {
+        return ordinal();
+    }
+
     public static void set(CompoundTag tag, int value) {
         Gene.set(tag, "prod", value);
     }

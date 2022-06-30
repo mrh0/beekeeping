@@ -49,6 +49,10 @@
   "item.beekeeping.dugout_princess":"Dugout Princess",
   "item.beekeeping.dugout_queen":"Dugout Queen",
   "item.beekeeping.species.dugout":"Dugout",
+  "item.beekeeping.nocturnal_drone":"Nocturnal Drone",
+  "item.beekeeping.nocturnal_princess":"Nocturnal Princess",
+  "item.beekeeping.nocturnal_queen":"Nocturnal Queen",
+  "item.beekeeping.species.nocturnal":"Nocturnal",
   "item.beekeeping.scorched_drone":"Scorched Drone",
   "item.beekeeping.scorched_princess":"Scorched Princess",
   "item.beekeeping.scorched_queen":"Scorched Queen",
@@ -70,7 +74,6 @@
   "tooltip.beekeeping.gene.not_analyzed": "Analyzed to reveal genes.",
 
   "tooltip.beekeeping.gene.lifetime": "Lifetime",
-  "tooltip.beekeeping.gene.biome": "Biome Tolerance",
   "tooltip.beekeeping.gene.light": "Light Tolerance",
   "tooltip.beekeeping.gene.weather": "Weather Tolerance",
   "tooltip.beekeeping.gene.temperature": "Temperature Tolerance",
@@ -80,18 +83,33 @@
   "text.beekeeping.gene.type.picky": "Picky",
   "text.beekeeping.gene.type.any": "Any",
 
+  "text.beekeeping.gene.type.shortest": "Shortest",
+  "text.beekeeping.gene.type.short": "Short",
+  "text.beekeeping.gene.type.normal": "Normal",
+  "text.beekeeping.gene.type.long": "Long",
+  "text.beekeeping.gene.type.longest": "Longest",
+
+  "text.beekeeping.gene.type.lowest": "Lowest",
+  "text.beekeeping.gene.type.low": "Low",
+  "text.beekeeping.gene.type.high": "High",
+  "text.beekeeping.gene.type.highest": "Highest",
+
   "text.beekeeping.temperature.coldest": "Coldest",
   "text.beekeeping.temperature.cold": "Cold",
   "text.beekeeping.temperature.tempered": "Tempered",
   "text.beekeeping.temperature.warm": "Warm",
   "text.beekeeping.temperature.warmest": "Warmest",
 
+
+
+  "text.beekeeping.nocturnal": "Nocturnal",
+  "text.beekeeping.none": "None",
+
   "tooltip.beekeeping.apiary.continuous": "Continuous operation:",
   "tooltip.beekeeping.apiary.satisfied": "Satisfied",
   "tooltip.beekeeping.apiary.unsatisfied": "Unsatisfied",
   "tooltip.beekeeping.apiary.not_working": "Not Working",
 
-  "tooltip.beekeeping.apiary.biome": "Biome",
   "tooltip.beekeeping.apiary.light": "Light",
   "tooltip.beekeeping.apiary.weather": "Weather",
   "tooltip.beekeeping.apiary.temperature": "Temperature",

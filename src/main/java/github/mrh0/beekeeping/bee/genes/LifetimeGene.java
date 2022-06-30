@@ -22,6 +22,11 @@ public enum LifetimeGene implements Gene {
         return name;
     }
 
+    @Override
+    public int getIndex() {
+        return ordinal();
+    }
+
     public int getTime() {
         return time;
     }

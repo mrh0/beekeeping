@@ -80,9 +80,10 @@ public class Index {
 
         r.register(new Specie("tempered", 0xFFb6d7a8)
                 .setProduce(Items.HONEYCOMB, 9, 13)
-                .setTemperatureGene(Gene::random5Narrow));
+                .setTemperatureGene(Gene::random5Narrow)
+                .breedFrom("common", "forest"));
 
-        r.register(new Specie("jungle", 0xFF6aa84f)
+        r.register(new Specie("tropical", 0xFF6aa84f)
                 .setProduce(Items.HONEYCOMB, 9, 13)
                 .addBeehive(types -> types.contains(BiomeDictionary.Type.JUNGLE), 4, 10)
                 .setLifetimeGene(Gene::random5Narrow)
@@ -90,7 +91,8 @@ public class Index {
 
         r.register(new Specie("coco", 0xFF783f04)
                 .setProduce(Items.HONEYCOMB, 9, 13, Items.COCOA_BEANS, 0.7d, 0.9d)
-                .setPreferredTemperature(BiomeTemperature.WARM));
+                .setPreferredTemperature(BiomeTemperature.WARM)
+                .breedFrom("tropical", "snowy"));
 
         r.register(new Specie("upland", 0xFFff9900)
                 .setProduce(Items.HONEYCOMB, 9, 13)
@@ -116,7 +118,8 @@ public class Index {
                 .setProduce(Items.HONEYCOMB, 9, 13)
                 .setPreferredTemperature(BiomeTemperature.COLD));
 
-        r.register(new Specie("glacial", 0xFFa2c4c9, true)
+        r.register(new Specie("glacial", 0xFFa2c4c9)
+                .setFoil()
                 .setProduce(Items.HONEYCOMB, 9, 13)
                 .setPreferredTemperature(BiomeTemperature.COLDEST));
 
@@ -134,6 +137,9 @@ public class Index {
                 .setLightGene(Gene::any)
                 .setPreferredTemperature(BiomeTemperature.COLD));
 
+        r.register(new Specie("nocturnal", 0xFF073763)
+                .setProduce(Items.HONEYCOMB, 9, 13, Items.GLOWSTONE_DUST, 0.5d, 0.8d)
+                .setNocturnal());
 
         r.register(new Specie("scorched", 0xFFff9900)
                 .setProduce(Items.HONEYCOMB, 9, 13, Items.COAL, 0.4d, 0.8d)

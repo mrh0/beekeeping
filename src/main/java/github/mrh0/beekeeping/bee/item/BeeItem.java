@@ -115,13 +115,14 @@ public abstract class BeeItem extends Item {
         setHealth(tag, LifetimeGene.of(LifetimeGene.get(tag)).getTime());
     }
 
-    //  Remove
+    /*
     @Override
     public boolean isBarVisible(ItemStack stack) {
         if(stack.getTag() == null)
             return false;
         return getAnalyzed(stack.getTag());
     }
+    */
 
     @Override
     public int getBarWidth(ItemStack stack) {
@@ -135,14 +136,6 @@ public abstract class BeeItem extends Item {
         double max = LifetimeGene.of(LifetimeGene.get(stack.getTag())).getTime();
         return health/max;
     }
-
-    ChatFormatting[] formatting = {
-            ChatFormatting.DARK_AQUA,
-            ChatFormatting.AQUA,
-            ChatFormatting.YELLOW,
-            ChatFormatting.GOLD,
-            ChatFormatting.RED
-    };
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
@@ -158,17 +151,17 @@ public abstract class BeeItem extends Item {
 
         CompoundTag tag = stack.getTag();
         list.add(new TranslatableComponent("tooltip.beekeeping.gene.lifetime")
-                .append(": ").append(new TextComponent(LifetimeGene.of(LifetimeGene.get(tag)).getName()).withStyle(formatting[LifetimeGene.get(tag)])));
+                .append(": ").append(LifetimeGene.of(LifetimeGene.get(tag)).getComponent()));
         list.add(new TranslatableComponent("tooltip.beekeeping.gene.weather")
-                .append(": ").append(new TextComponent(WeatherToleranceGene.of(WeatherToleranceGene.get(tag)).getName()).withStyle(formatting[WeatherToleranceGene.get(tag)])));
+                .append(": ").append(WeatherToleranceGene.of(WeatherToleranceGene.get(tag)).getComponent()));
         list.add(new TranslatableComponent("tooltip.beekeeping.gene.temperature")
-                .append(": ").append(new TextComponent(TemperatureToleranceGene.of(TemperatureToleranceGene.get(tag)).getName()).withStyle(formatting[TemperatureToleranceGene.get(tag)])));
+                .append(": ").append(TemperatureToleranceGene.of(TemperatureToleranceGene.get(tag)).getComponent()));
         list.add(new TranslatableComponent("tooltip.beekeeping.gene.light")
-                .append(": ").append(new TextComponent(LightToleranceGene.of(LightToleranceGene.get(tag)).getName()).withStyle(formatting[LightToleranceGene.get(tag)])));
+                .append(": ").append(LightToleranceGene.of(LightToleranceGene.get(tag)).getComponent()));
         list.add(new TranslatableComponent("tooltip.beekeeping.gene.produce")
-                .append(": ").append(new TextComponent(RareProduceGene.of(RareProduceGene.get(tag)).getName()).withStyle(formatting[RareProduceGene.get(tag)])));
+                .append(": ").append(RareProduceGene.of(RareProduceGene.get(tag)).getComponent()));
 
-        list.add(new TextComponent("health: " + getHealth(stack.getTag())));
+        //list.add(new TextComponent("health: " + getHealth(stack.getTag())));
     }
 
     public static Specie of(ItemStack stack) {

@@ -4,13 +4,16 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import github.mrh0.beekeeping.Beekeeping;
 import github.mrh0.beekeeping.bee.Specie;
-import github.mrh0.beekeeping.bee.genes.LifetimeGene;
+import github.mrh0.beekeeping.bee.genes.*;
 import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlockEntity;
 import github.mrh0.beekeeping.screen.BeeScreen;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -27,15 +30,16 @@ public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity>
     }
 
     private Bounds getListBounds(int index) {
-        return new Bounds(lx, ly, 8, 8);
+        return new Bounds(lx, ly + 14*index, 8, 8);
     }
 
-    private void drawListItem(PoseStack poseStack, Bounds bounds, Component text, int index, int image) {
-        drawText(poseStack, text, lx + 12, 44 + 14*index, 1f);
-        blit(poseStack, bounds.getX(), bounds.getY(), imageWidth, bounds.h*image, bounds.w, bounds.h);
+    private void drawListItem(PoseStack poseStack, Component text, int index, int image) {
+        drawText(poseStack, text, lx + 12, ly + 14*index, 1f);
+        RenderSystem.setShaderTexture(0, TEXTURE);
+        blit(poseStack, lx + getXOffset(), ly + 14*index + getYOffset(), imageWidth, 8*image, 8, 8);
     }
 
-    int lx = 14, ly = 44;
+    int lx = 14, ly = 45;
     private Bounds lifetimeBounds = getListBounds(0);
 
     @Override
@@ -61,9 +65,27 @@ public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity>
         if(getSpecie() == null)
             return;
 
+        LightToleranceGene lightTolerance = LightToleranceGene.of(LightToleranceGene.get(getAnalyzed().getTag()));
+        int lightToleranceImage = lightTolerance == LightToleranceGene.ANY ? 2 : (getSpecie().isNocturnal ? 1 : 0);
 
-        drawListItem(poseStack, lifetimeBounds, LifetimeGene.of(LifetimeGene.get(getAnalyzed().getTag())).getComponent(), 0, 4);
-        drawListItem(poseStack, lifetimeBounds, LifetimeGene.of(LifetimeGene.get(getAnalyzed().getTag())).getComponent(), 1, 3);
+        int temperatureImage = getSpecie().preferredTemperature.ordinal();
+
+        RareProduceGene rareProduceGene = RareProduceGene.of(RareProduceGene.get(getAnalyzed().getTag()));
+
+        int line = 0;
+        drawListItem(poseStack, LifetimeGene.of(LifetimeGene.get(getAnalyzed().getTag())).getComponent(), line++, 4);
+        drawListItem(poseStack, WeatherToleranceGene.of(WeatherToleranceGene.get(getAnalyzed().getTag())).getComponent(), line++, 3);
+        drawListItem(poseStack, TemperatureToleranceGene.of(TemperatureToleranceGene.get(getAnalyzed().getTag())).getComponent()
+                .append(" ").append(getSpecie().preferredTemperature.getComponent()), line++, 6 + temperatureImage);
+        drawListItem(poseStack,
+                getSpecie().isNocturnal ?
+                lightTolerance.getComponent().append(" ").append(new TranslatableComponent("text.beekeeping.nocturnal").withStyle(ChatFormatting.DARK_BLUE)) : lightTolerance.getComponent(),
+                line++, lightToleranceImage);
+        drawListItem(poseStack,
+                getSpecie().isHasRareProduce() ? rareProduceGene.getComponent()
+                 : new TextComponent("").append(rareProduceGene.getComponent().withStyle(ChatFormatting.STRIKETHROUGH))
+                        .append(" ").append(new TranslatableComponent("text.beekeeping.none").withStyle(ChatFormatting.RED)),
+                line++, 5);
     }
 
     @Override

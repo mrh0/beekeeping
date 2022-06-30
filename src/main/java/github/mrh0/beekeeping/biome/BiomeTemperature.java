@@ -1,5 +1,7 @@
 package github.mrh0.beekeeping.biome;
 
+import github.mrh0.beekeeping.bee.genes.Gene;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 
 public enum BiomeTemperature {
@@ -31,8 +33,8 @@ public enum BiomeTemperature {
         return name;
     }
 
-    public TranslatableComponent getComponent() {
-        return new TranslatableComponent("title.beekeeping.temperature." + getName());
+    public MutableComponent getComponent() {
+        return new TranslatableComponent("text.beekeeping.temperature." + getName()).withStyle(Gene.formatting[ordinal()]);
     }
 
     public boolean isAdjacent(BiomeTemperature temp) {
