@@ -128,8 +128,8 @@ public class Specie {
 
     public boolean hasSatisfactoryLightLevel(int sunlight, boolean isDay) {
         if(isNocturnal)
-            return sunlight > 13 && !isDay;
-        return sunlight > 13 && isDay;
+            return sunlight > 11 && !isDay;
+        return sunlight > 11 && isDay;
     }
 
     public Specie setNocturnal() {
@@ -167,12 +167,12 @@ public class Specie {
 
     public Satisfaction getWeatherSatisfaction(ItemStack stack, Level level, BlockPos pos) {
         WeatherToleranceGene tolerance = WeatherToleranceGene.of(WeatherToleranceGene.get(stack.getTag()));
-        //if(level.isThundering())
-        //    return Satisfaction.NOT_WORKING;
+        if(level.isThundering())
+            return Satisfaction.NOT_WORKING;
 
         return switch (tolerance) {
-            case PICKY -> level.isRainingAt(pos) ? Satisfaction.UNSATISFIED : Satisfaction.SATISFIED;
-            case STRICT -> level.isRainingAt(pos) ? Satisfaction.NOT_WORKING : Satisfaction.SATISFIED;
+            case PICKY -> level.isRaining() ? Satisfaction.UNSATISFIED : Satisfaction.SATISFIED;
+            case STRICT -> level.isRaining() ? Satisfaction.NOT_WORKING : Satisfaction.SATISFIED;
             default -> Satisfaction.SATISFIED;
         };
     }

@@ -1,0 +1,26 @@
+{
+  "type": "beekeeping:bee_produce",
+  "specie": "magmatic",
+  "produce": {
+    "unsatisfied": {
+      "common": {
+        "item": "minecraft:honeycomb",
+        "count": 9
+      },
+      "rare": {
+        "item": "minecraft:magma_cream",
+        "chance": 0.4
+      }
+    },
+    "satisfied": {
+      "common": {
+        "item": "minecraft:honeycomb",
+        "count": 13
+      },
+      "rare": {
+        "item": "minecraft:magma_cream",
+        "chance": 0.8
+      }
+    }
+  }
+}

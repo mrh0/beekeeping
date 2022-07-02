@@ -1,0 +1,26 @@
+{
+  "type": "beekeeping:bee_produce",
+  "specie": "fair",
+  "produce": {
+    "unsatisfied": {
+      "common": {
+        "item": "minecraft:honeycomb",
+        "count": 9
+      },
+      "rare": {
+        "item": "minecraft:sugar",
+        "chance": 0.7
+      }
+    },
+    "satisfied": {
+      "common": {
+        "item": "minecraft:honeycomb",
+        "count": 13
+      },
+      "rare": {
+        "item": "minecraft:sugar",
+        "chance": 0.9
+      }
+    }
+  }
+}

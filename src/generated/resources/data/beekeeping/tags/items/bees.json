@@ -34,6 +34,12 @@
     "beekeeping:fungal_drone",
     "beekeeping:fungal_princess",
     "beekeeping:fungal_queen",
+    "beekeeping:mossy_drone",
+    "beekeeping:mossy_princess",
+    "beekeeping:mossy_queen",
+    "beekeeping:fair_drone",
+    "beekeeping:fair_princess",
+    "beekeeping:fair_queen",
     "beekeeping:dugout_drone",
     "beekeeping:dugout_princess",
     "beekeeping:dugout_queen",
@@ -42,6 +48,18 @@
     "beekeeping:nocturnal_queen",
     "beekeeping:scorched_drone",
     "beekeeping:scorched_princess",
-    "beekeeping:scorched_queen"
+    "beekeeping:scorched_queen",
+    "beekeeping:magmatic_drone",
+    "beekeeping:magmatic_princess",
+    "beekeeping:magmatic_queen",
+    "beekeeping:infernal_drone",
+    "beekeeping:infernal_princess",
+    "beekeeping:infernal_queen",
+    "beekeeping:demonic_drone",
+    "beekeeping:demonic_princess",
+    "beekeeping:demonic_queen",
+    "beekeeping:ender_drone",
+    "beekeeping:ender_princess",
+    "beekeeping:ender_queen"
   ]
 }

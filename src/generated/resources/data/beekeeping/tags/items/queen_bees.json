@@ -12,8 +12,14 @@
     "beekeeping:frozen_queen",
     "beekeeping:glacial_queen",
     "beekeeping:fungal_queen",
+    "beekeeping:mossy_queen",
+    "beekeeping:fair_queen",
     "beekeeping:dugout_queen",
     "beekeeping:nocturnal_queen",
-    "beekeeping:scorched_queen"
+    "beekeeping:scorched_queen",
+    "beekeeping:magmatic_queen",
+    "beekeeping:infernal_queen",
+    "beekeeping:demonic_queen",
+    "beekeeping:ender_queen"
   ]
 }

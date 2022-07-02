@@ -63,17 +63,11 @@ public class ApiaryScreen extends BeeScreen<ApiaryMenu, ApiaryBlockEntity> {
     }
 
     private void drawSatisfaction(PoseStack poseStack) {
-        Specie specie = BeeItem.of(getQueen());
-        if(specie == null)
-            return;
-        if(getQueen().getTag() == null)
-            return;
+        Satisfaction weatherSatisfaction = Satisfaction.of(getMenu().data.get(2));
+        Satisfaction temperatureSatisfaction = Satisfaction.of(getMenu().data.get(3));
+        Satisfaction lightSatisfaction = Satisfaction.of(getMenu().data.get(4));
 
-        Satisfaction lightSatisfaction = specie.getLightSatisfaction(getQueen(), getLevel(), getBlockPos());
-        Satisfaction weatherSatisfaction = specie.getWeatherSatisfaction(getQueen(), getLevel(), getBlockPos());
-        Satisfaction temperatureSatisfaction = specie.getTemperatureSatisfaction(getQueen(), getLevel(), getBlockPos());
-
-        Satisfaction s = Satisfaction.calc(lightSatisfaction, weatherSatisfaction, temperatureSatisfaction);
+        Satisfaction s = Satisfaction.calc(weatherSatisfaction, temperatureSatisfaction, lightSatisfaction);
         this.blit(poseStack, satisfaction.getX(), satisfaction.getY(), imageWidth, 32 + s.ordinal()*satisfaction.h, satisfaction.w, satisfaction.h);
     }
 
@@ -120,19 +114,13 @@ public class ApiaryScreen extends BeeScreen<ApiaryMenu, ApiaryBlockEntity> {
 
     private List<Component> buildSatisfactionTooltip(ItemStack queen) {
         List<Component> tip = new ArrayList<>();
-        Specie specie = BeeItem.of(queen);
-        if(specie == null)
-            return tip;
 
-        //Specie.Satisfaction biomeSatisfaction = specie.getBiomeSatisfaction(queen, level, pos);
         Satisfaction weatherSatisfaction = Satisfaction.of(getMenu().data.get(2));
         Satisfaction temperatureSatisfaction = Satisfaction.of(getMenu().data.get(3));
         Satisfaction lightSatisfaction = Satisfaction.of(getMenu().data.get(4));
 
-        Satisfaction satisfaction = Satisfaction.calc(lightSatisfaction, weatherSatisfaction, temperatureSatisfaction);
+        Satisfaction satisfaction = Satisfaction.calc(weatherSatisfaction, temperatureSatisfaction, lightSatisfaction);
         tip.add(checkExcCross(satisfaction).append(satisfaction.component).withStyle(ChatFormatting.BOLD));
-
-        //tip.add(checkExcCross(biomeSatisfaction).append(new TranslatableComponent("tooltip.beekeeping.apiary.biome")));
         tip.add(checkExcCross(weatherSatisfaction).append(new TranslatableComponent("tooltip.beekeeping.apiary.weather")));
         tip.add(checkExcCross(temperatureSatisfaction).append(new TranslatableComponent("tooltip.beekeeping.apiary.temperature")));
         tip.add(checkExcCross(lightSatisfaction).append(new TranslatableComponent("tooltip.beekeeping.apiary.light")));

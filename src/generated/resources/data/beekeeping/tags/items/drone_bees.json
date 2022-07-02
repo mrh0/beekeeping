@@ -12,8 +12,14 @@
     "beekeeping:frozen_drone",
     "beekeeping:glacial_drone",
     "beekeeping:fungal_drone",
+    "beekeeping:mossy_drone",
+    "beekeeping:fair_drone",
     "beekeeping:dugout_drone",
     "beekeeping:nocturnal_drone",
-    "beekeeping:scorched_drone"
+    "beekeeping:scorched_drone",
+    "beekeeping:magmatic_drone",
+    "beekeeping:infernal_drone",
+    "beekeeping:demonic_drone",
+    "beekeeping:ender_drone"
   ]
 }

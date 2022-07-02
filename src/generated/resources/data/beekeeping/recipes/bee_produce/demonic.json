@@ -1,0 +1,26 @@
+{
+  "type": "beekeeping:bee_produce",
+  "specie": "demonic",
+  "produce": {
+    "unsatisfied": {
+      "common": {
+        "item": "minecraft:honeycomb",
+        "count": 9
+      },
+      "rare": {
+        "item": "minecraft:blaze_powder",
+        "chance": 0.4
+      }
+    },
+    "satisfied": {
+      "common": {
+        "item": "minecraft:honeycomb",
+        "count": 13
+      },
+      "rare": {
+        "item": "minecraft:blaze_powder",
+        "chance": 0.8
+      }
+    }
+  }
+}

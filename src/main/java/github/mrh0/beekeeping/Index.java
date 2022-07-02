@@ -92,7 +92,7 @@ public class Index {
         r.register(new Specie("coco", 0xFF783f04)
                 .setProduce(Items.HONEYCOMB, 9, 13, Items.COCOA_BEANS, 0.7d, 0.9d)
                 .setPreferredTemperature(BiomeTemperature.WARM)
-                .breedFrom("tropical", "snowy"));
+                .breedFrom("tropical", "fair"));
 
         r.register(new Specie("upland", 0xFFff9900)
                 .setProduce(Items.HONEYCOMB, 9, 13)
@@ -116,21 +116,33 @@ public class Index {
 
         r.register(new Specie("frozen", 0xFFd0e0e3)
                 .setProduce(Items.HONEYCOMB, 9, 13)
-                .setPreferredTemperature(BiomeTemperature.COLD));
+                .setPreferredTemperature(BiomeTemperature.COLD)
+                .breedFrom("snowy", "dugout"));
 
         r.register(new Specie("glacial", 0xFFa2c4c9)
                 .setFoil()
                 .setProduce(Items.HONEYCOMB, 9, 13)
-                .setPreferredTemperature(BiomeTemperature.COLDEST));
+                .setPreferredTemperature(BiomeTemperature.COLDEST)
+                .breedFrom("frozen", "nocturnal"));
 
         r.register(new Specie("fungal", 0xFF660000)
                 .setProduce(Items.HONEYCOMB, 9, 13, Items.RED_MUSHROOM, 0.5d, 0.8d)
                 .addBeehive(types -> types.contains(BiomeDictionary.Type.MUSHROOM) || types.contains(BiomeDictionary.Type.SWAMP), 3, 10)
                 .setTemperatureGene(Gene::random3High)
-                .setProduceGene(Gene::random5High)
-                .setPreferredTemperature(BiomeTemperature.TEMPERED));
+                .setProduceGene(Gene::random5High));
 
-        r.register(new Specie("dugout", 0xFF660000)
+        r.register(new Specie("mossy", 0xFF38761d)
+                .setProduce(Items.HONEYCOMB, 9, 13, Items.MOSS_BLOCK, 0.5d, 0.8d)
+                .setTemperatureGene(Gene::random3Low)
+                .setProduceGene(Gene::normal5)
+                .breedFrom("dugout", "fungal"));
+
+        r.register(new Specie("fair", 0xFF00ff00)
+                .setProduce(Items.HONEYCOMB, 9, 13, Items.SUGAR, 0.7d, 0.9d)
+                .setFoil()
+                .breedFrom("mossy", "frozen"));
+
+        r.register(new Specie("dugout", 0xFF7f6000)
                 .setProduce(Items.HONEYCOMB, 9, 13)
                 .addBeehive(types -> types.contains(BiomeDictionary.Type.UNDERGROUND), 8, 1, PlacementUtils.FULL_RANGE)
                 .setTemperatureGene(Gene::random3High)
@@ -139,7 +151,8 @@ public class Index {
 
         r.register(new Specie("nocturnal", 0xFF073763)
                 .setProduce(Items.HONEYCOMB, 9, 13, Items.GLOWSTONE_DUST, 0.5d, 0.8d)
-                .setNocturnal());
+                .setNocturnal()
+                .breedFrom("ender", "dugout"));
 
         r.register(new Specie("scorched", 0xFFff9900)
                 .setProduce(Items.HONEYCOMB, 9, 13, Items.COAL, 0.4d, 0.8d)
@@ -148,10 +161,30 @@ public class Index {
                 .setLightGene(Gene::any)
                 .setDark());
 
+        r.register(new Specie("magmatic", 0xFFff6d01)
+                .setProduce(Items.HONEYCOMB, 9, 13, Items.MAGMA_CREAM, 0.4d, 0.8d)
+                .setPreferredTemperature(BiomeTemperature.WARMEST)
+                .setLightGene(Gene::any)
+                .setDark()
+                .breedFrom("scorched", "dune"));
+
+        r.register(new Specie("infernal", 0xFFff0000)
+                .setProduce(Items.HONEYCOMB, 9, 13, Items.GUNPOWDER, 0.4d, 0.8d)
+                .setPreferredTemperature(BiomeTemperature.WARMEST)
+                .setLightGene(Gene::any)
+                .setDark());
+
+        r.register(new Specie("demonic", 0xFF990000)
+                .setProduce(Items.HONEYCOMB, 9, 13, Items.BLAZE_POWDER, 0.4d, 0.8d)
+                .setPreferredTemperature(BiomeTemperature.WARMEST)
+                .setLightGene(Gene::any)
+                .setFoil()
+                .setDark());
+
         r.register(new Specie("ender", 0xFF134f5c)
                 .setProduce(Items.HONEYCOMB, 9, 13, Items.ENDER_PEARL, 0.2d, 0.4d)
                 .addBeehive(types -> types.contains(BiomeDictionary.Type.END), 2, 16, PlacementUtils.HEIGHTMAP)
-                .setPreferredTemperature(BiomeTemperature.WARMEST)
+                .setPreferredTemperature(BiomeTemperature.COLD)
                 .setLightGene(Gene::any)
                 .setDark());
     }

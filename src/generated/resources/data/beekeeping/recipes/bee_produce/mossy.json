@@ -1,0 +1,26 @@
+{
+  "type": "beekeeping:bee_produce",
+  "specie": "mossy",
+  "produce": {
+    "unsatisfied": {
+      "common": {
+        "item": "minecraft:honeycomb",
+        "count": 9
+      },
+      "rare": {
+        "item": "minecraft:moss_block",
+        "chance": 0.5
+      }
+    },
+    "satisfied": {
+      "common": {
+        "item": "minecraft:honeycomb",
+        "count": 13
+      },
+      "rare": {
+        "item": "minecraft:moss_block",
+        "chance": 0.8
+      }
+    }
+  }
+}
