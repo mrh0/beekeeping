@@ -144,6 +144,15 @@ public class Index {
         r.register(new Specie("scorched", 0xFFff9900)
                 .setProduce(Items.HONEYCOMB, 9, 13, Items.COAL, 0.4d, 0.8d)
                 .addBeehive(types -> types.contains(BiomeDictionary.Type.NETHER), 16, 1, PlacementUtils.FULL_RANGE)
+                .setPreferredTemperature(BiomeTemperature.WARMEST)
+                .setLightGene(Gene::any)
+                .setDark());
+
+        r.register(new Specie("ender", 0xFF134f5c)
+                .setProduce(Items.HONEYCOMB, 9, 13, Items.ENDER_PEARL, 0.2d, 0.4d)
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.END), 2, 16, PlacementUtils.HEIGHTMAP)
+                .setPreferredTemperature(BiomeTemperature.WARMEST)
+                .setLightGene(Gene::any)
                 .setDark());
     }
 

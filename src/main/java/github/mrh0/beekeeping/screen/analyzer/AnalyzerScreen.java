@@ -11,13 +11,12 @@ import github.mrh0.beekeeping.screen.BeeScreen;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.List;
 
 public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity> {
     private static final ResourceLocation TEXTURE =
@@ -30,7 +29,7 @@ public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity>
     }
 
     private Bounds getListBounds(int index) {
-        return new Bounds(lx, ly + 14*index, 8, 8);
+        return new Bounds(lx, ly + 14*index - 2, imageWidth - lx, 12);
     }
 
     private void drawListItem(PoseStack poseStack, Component text, int index, int image) {
@@ -41,6 +40,10 @@ public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity>
 
     int lx = 14, ly = 45;
     private Bounds lifetimeBounds = getListBounds(0);
+    private Bounds weatherBounds = getListBounds(1);
+    private Bounds temperatureBounds = getListBounds(2);
+    private Bounds lightBounds = getListBounds(3);
+    private Bounds produceBounds = getListBounds(4);
 
     @Override
     protected void renderBg(PoseStack poseStack, float partial, int mouseX, int mouseY) {
@@ -71,6 +74,7 @@ public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity>
         int temperatureImage = getSpecie().preferredTemperature.ordinal();
 
         RareProduceGene rareProduceGene = RareProduceGene.of(RareProduceGene.get(getAnalyzed().getTag()));
+        int rareProduceBonus = (int)((rareProduceGene.getChance()-1d)*100d);
 
         int line = 0;
         drawListItem(poseStack, LifetimeGene.of(LifetimeGene.get(getAnalyzed().getTag())).getComponent(), line++, 4);
@@ -82,10 +86,30 @@ public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity>
                 lightTolerance.getComponent().append(" ").append(new TranslatableComponent("text.beekeeping.nocturnal").withStyle(ChatFormatting.DARK_BLUE)) : lightTolerance.getComponent(),
                 line++, lightToleranceImage);
         drawListItem(poseStack,
-                getSpecie().isHasRareProduce() ? rareProduceGene.getComponent()
+                getSpecie().isHasRareProduce() ? rareProduceGene.getComponent().append(" ").append((rareProduceBonus >= 0 ? "+" : "") + rareProduceBonus + "%")
                  : new TextComponent("").append(rareProduceGene.getComponent().withStyle(ChatFormatting.STRIKETHROUGH))
                         .append(" ").append(new TranslatableComponent("text.beekeeping.none").withStyle(ChatFormatting.RED)),
                 line++, 5);
+    }
+
+    private static List<Component> lifetimeDescription = List.of(new TranslatableComponent("tooltip.beekeeping.gene.lifetime"));
+    private static List<Component> weatherDescription = List.of(new TranslatableComponent("tooltip.beekeeping.gene.weather"));
+    private static List<Component> temperatureDescription = List.of(new TranslatableComponent("tooltip.beekeeping.gene.temperature"));
+    private static List<Component> lightDescription = List.of(new TranslatableComponent("tooltip.beekeeping.gene.light"));
+    private static List<Component> produceDescription = List.of(new TranslatableComponent("tooltip.beekeeping.gene.produce"));
+    @Override
+    protected void renderTooltip(PoseStack poseStack, int mouseX, int mouseY) {
+        super.renderTooltip(poseStack, mouseX, mouseY);
+        if(lifetimeBounds.in(mouseX, mouseY))
+            renderComponentTooltip(poseStack, lifetimeDescription, mouseX, mouseY);
+        else if(weatherBounds.in(mouseX, mouseY))
+            renderComponentTooltip(poseStack, weatherDescription, mouseX, mouseY);
+        else if(temperatureBounds.in(mouseX, mouseY))
+            renderComponentTooltip(poseStack, temperatureDescription, mouseX, mouseY);
+        else if(lightBounds.in(mouseX, mouseY))
+            renderComponentTooltip(poseStack, lightDescription, mouseX, mouseY);
+        else if(produceBounds.in(mouseX, mouseY))
+            renderComponentTooltip(poseStack, produceDescription, mouseX, mouseY);
     }
 
     @Override

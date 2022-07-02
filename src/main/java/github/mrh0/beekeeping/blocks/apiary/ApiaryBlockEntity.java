@@ -4,6 +4,7 @@ import github.mrh0.beekeeping.Index;
 import github.mrh0.beekeeping.bee.Satisfaction;
 import github.mrh0.beekeeping.bee.Specie;
 import github.mrh0.beekeeping.bee.breeding.BeeLifecycle;
+import github.mrh0.beekeeping.bee.genes.RareProduceGene;
 import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.network.IHasToggleOption;
 import github.mrh0.beekeeping.network.TogglePacket;
@@ -46,21 +47,34 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
             @Override
             public int get(int index) {
                 return switch (index) {
-                    default -> breedProgressTime;
+                    case 0 -> breedProgressTime;
+                    case 1 -> satisfactionCache == null ? 0 : satisfactionCache.ordinal();
+                    case 2 -> weatherSatisfactionCache == null ? 0 : weatherSatisfactionCache.ordinal();
+                    case 3 -> temperatureSatisfactionCache == null ? 0 : temperatureSatisfactionCache.ordinal();
+                    case 4 -> lightSatisfactionCache == null ? 0 : lightSatisfactionCache.ordinal();
+                    default -> 0;
                 };
             }
 
             @Override
             public void set(int index, int value) {
                 switch(index) {
-                    default: breedProgressTime = value;
+                    case 0: breedProgressTime = value;
+                        break;
+                    case 1: satisfactionCache = Satisfaction.of(value);
+                        break;
+                    case 2: weatherSatisfactionCache = Satisfaction.of(value);
+                        break;
+                    case 3: temperatureSatisfactionCache = Satisfaction.of(value);
+                        break;
+                    case 4: lightSatisfactionCache = Satisfaction.of(value);
                         break;
                 }
             }
 
             @Override
             public int getCount() {
-                return 1;
+                return 5;
             }
         };
     }
@@ -126,19 +140,23 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
         itemHandler.setStackInSlot(2, offspringQueen);
     }
 
-    public Satisfaction getSatisfaction() {
-        if(getQueen() == null || getQueen().isEmpty())
-            return Satisfaction.NOT_WORKING;
+    public void updateSatisfaction() {
+        if(getQueen() == null || getQueen().isEmpty()) {
+            satisfactionCache = Satisfaction.NOT_WORKING;
+            return;
+        }
 
         Specie specie = BeeItem.of(getQueen());
-        if(specie == null)
-            return Satisfaction.NOT_WORKING;
+        if(specie == null) {
+            satisfactionCache = Satisfaction.NOT_WORKING;
+            return;
+        }
 
-        Satisfaction lightSatisfaction = specie.getLightSatisfaction(getQueen(), getLevel(), getBlockPos());
-        Satisfaction weatherSatisfaction = specie.getWeatherSatisfaction(getQueen(), getLevel(), getBlockPos());
-        Satisfaction temperatureSatisfaction = specie.getTemperatureSatisfaction(getQueen(), getLevel(), getBlockPos());
+        lightSatisfactionCache = specie.getLightSatisfaction(getQueen(), getLevel(), getBlockPos());
+        weatherSatisfactionCache = specie.getWeatherSatisfaction(getQueen(), getLevel(), getBlockPos());
+        temperatureSatisfactionCache = specie.getTemperatureSatisfaction(getQueen(), getLevel(), getBlockPos());
 
-        return Satisfaction.calc(lightSatisfaction, weatherSatisfaction, temperatureSatisfaction);
+        satisfactionCache = Satisfaction.calc(lightSatisfactionCache, weatherSatisfactionCache, temperatureSatisfactionCache);
     }
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
@@ -200,11 +218,17 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
     public int slowTick = 0;
     public boolean checkLock = false;
     public Satisfaction satisfactionCache;
+    public Satisfaction weatherSatisfactionCache;
+    public Satisfaction temperatureSatisfactionCache;
+    public Satisfaction lightSatisfactionCache;
     public static void tick(Level level, BlockPos pos, BlockState state, ApiaryBlockEntity abe) {
         abe.localTick();
     }
 
     public void localTick() {
+        if(getLevel().isClientSide())
+            return;
+
         if(getQueen().isEmpty() && !getDrone().isEmpty() && !getPrincess().isEmpty()) {
             breedProgressTime++;
             if(breedProgressTime > BREED_TIME) {
@@ -223,7 +247,7 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
         if(queen.getTag() == null)
             BeeItem.init(queen);
 
-        satisfactionCache = getSatisfaction();
+        updateSatisfaction();
 
         int hp = BeeItem.getHealth(queen.getTag());
         if(hp <= 0) {
@@ -244,9 +268,11 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
         var optional = BeeLifecycle.getProduceRecipe(level, queen);
         if(optional.isEmpty())
             return true;
+        if(queen == null || queen.isEmpty())
+            return true;
         BeeProduceRecipe bpr = optional.get();
         ItemStack commonProduce = bpr.getCommonProduce(satisfied);
-        ItemStack rareProduce = bpr.getRolledRareProduce(satisfied);
+        ItemStack rareProduce = bpr.getRolledRareProduce(satisfied, RareProduceGene.of(RareProduceGene.get(queen.getTag())).getChance());
 
         ItemStack princess = BeeLifecycle.clone(queen, bpr.getSpecie().princessItem);
         ItemStack drone = BeeLifecycle.clone(queen, bpr.getSpecie().droneItem);

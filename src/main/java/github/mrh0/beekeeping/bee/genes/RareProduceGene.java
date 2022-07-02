@@ -42,4 +42,14 @@ public enum RareProduceGene implements Gene {
             default -> NORMAL;
         };
     }
+
+    public double getChance() {
+        return switch(this) {
+            case LOWEST -> 0.5d;
+            case LOW -> 0.7d;
+            case HIGH -> 1.3d;
+            case HIGHEST -> 1.5d;
+            default -> 1d;
+        };
+    }
 }

@@ -67,8 +67,8 @@ public class BeeProduceRecipe implements Recipe<SimpleContainer> {
         return satisfied ? rareChanceSatisfied : rareChanceUnsatisfied;
     }
 
-    public ItemStack getRolledRareProduce(boolean satisfied) {
-        return Util.rollChance(new ItemStack(getRareProduce(satisfied)), getRareChance(satisfied));
+    public ItemStack getRolledRareProduce(boolean satisfied, double bonus) {
+        return Util.rollChance(new ItemStack(getRareProduce(satisfied)), getRareChance(satisfied) * bonus);
     }
 
     @Override

@@ -74,7 +74,7 @@ public class ApiaryScreen extends BeeScreen<ApiaryMenu, ApiaryBlockEntity> {
         Satisfaction temperatureSatisfaction = specie.getTemperatureSatisfaction(getQueen(), getLevel(), getBlockPos());
 
         Satisfaction s = Satisfaction.calc(lightSatisfaction, weatherSatisfaction, temperatureSatisfaction);
-        this.blit(poseStack, satisfaction.getX(), satisfaction.getY(), imageWidth, 32 + s.index*satisfaction.h, satisfaction.w, satisfaction.h);
+        this.blit(poseStack, satisfaction.getX(), satisfaction.getY(), imageWidth, 32 + s.ordinal()*satisfaction.h, satisfaction.w, satisfaction.h);
     }
 
     private void drawToggle(PoseStack poseStack, int i) {
@@ -113,42 +113,43 @@ public class ApiaryScreen extends BeeScreen<ApiaryMenu, ApiaryBlockEntity> {
     private static MutableComponent checkExcCross(Satisfaction satisfaction) {
         return switch (satisfaction) {
             case SATISFIED -> new TextComponent("✔ ").withStyle(ChatFormatting.GREEN);
-            case UNSATISFIED -> new TextComponent("! ").withStyle(ChatFormatting.YELLOW);
+            case UNSATISFIED -> new TextComponent(" ! ").withStyle(ChatFormatting.YELLOW);
             default -> new TextComponent("✘ ").withStyle(ChatFormatting.RED);
         };
     }
 
-    private static List<Component> buildSatisfactionTooltip(ItemStack queen, Level level, BlockPos pos) {
+    private List<Component> buildSatisfactionTooltip(ItemStack queen) {
         List<Component> tip = new ArrayList<>();
         Specie specie = BeeItem.of(queen);
         if(specie == null)
             return tip;
 
         //Specie.Satisfaction biomeSatisfaction = specie.getBiomeSatisfaction(queen, level, pos);
-        Satisfaction lightSatisfaction = specie.getLightSatisfaction(queen, level, pos);
-        Satisfaction weatherSatisfaction = specie.getWeatherSatisfaction(queen, level, pos);
-        Satisfaction temperatureSatisfaction = specie.getTemperatureSatisfaction(queen, level, pos);
+        Satisfaction weatherSatisfaction = Satisfaction.of(getMenu().data.get(2));
+        Satisfaction temperatureSatisfaction = Satisfaction.of(getMenu().data.get(3));
+        Satisfaction lightSatisfaction = Satisfaction.of(getMenu().data.get(4));
 
         Satisfaction satisfaction = Satisfaction.calc(lightSatisfaction, weatherSatisfaction, temperatureSatisfaction);
         tip.add(checkExcCross(satisfaction).append(satisfaction.component).withStyle(ChatFormatting.BOLD));
 
         //tip.add(checkExcCross(biomeSatisfaction).append(new TranslatableComponent("tooltip.beekeeping.apiary.biome")));
-        tip.add(checkExcCross(lightSatisfaction).append(new TranslatableComponent("tooltip.beekeeping.apiary.light")));
         tip.add(checkExcCross(weatherSatisfaction).append(new TranslatableComponent("tooltip.beekeeping.apiary.weather")));
         tip.add(checkExcCross(temperatureSatisfaction).append(new TranslatableComponent("tooltip.beekeeping.apiary.temperature")));
+        tip.add(checkExcCross(lightSatisfaction).append(new TranslatableComponent("tooltip.beekeeping.apiary.light")));
 
         return tip;
     }
 
     @Override
     protected void renderTooltip(PoseStack poseStack, int mouseX, int mouseY) {
-        super.renderTooltip(poseStack, mouseX, mouseY);
         if(toggle.in(mouseX, mouseY)) {
             renderComponentTooltip(poseStack, getToggleState() ? toggleOnTip : toggleOffTip, mouseX, mouseY);
         }
-        if(satisfaction.in(mouseX, mouseY)) {
-            renderComponentTooltip(poseStack, buildSatisfactionTooltip(getQueen(), getLevel(), getBlockPos()), mouseX, mouseY);
+        else if(satisfaction.in(mouseX, mouseY)) {
+            renderComponentTooltip(poseStack, buildSatisfactionTooltip(getQueen()), mouseX, mouseY);
         }
+        else
+            super.renderTooltip(poseStack, mouseX, mouseY);
     }
 
     public ItemStack getQueen() {

@@ -3,15 +3,13 @@ package github.mrh0.beekeeping.bee;
 import net.minecraft.network.chat.TranslatableComponent;
 
 public enum Satisfaction {
-    SATISFIED(0, "tooltip.beekeeping.apiary.satisfied"),
-    UNSATISFIED(1, "tooltip.beekeeping.apiary.unsatisfied"),
-    NOT_WORKING(2, "tooltip.beekeeping.apiary.not_working");
+    SATISFIED("tooltip.beekeeping.apiary.satisfied"),
+    UNSATISFIED("tooltip.beekeeping.apiary.unsatisfied"),
+    NOT_WORKING("tooltip.beekeeping.apiary.not_working");
 
-    public final int index;
     public final TranslatableComponent component;
 
-    Satisfaction(int index, String key) {
-        this.index = index;
+    Satisfaction(String key) {
         this.component = new TranslatableComponent(key);
     }
 
@@ -24,6 +22,14 @@ public enum Satisfaction {
                 satisfaction = UNSATISFIED;
         }
         return satisfaction;
+    }
+
+    public static Satisfaction of(int index) {
+        return switch(index) {
+            case 0 -> SATISFIED;
+            case 1 -> UNSATISFIED;
+            default -> NOT_WORKING;
+        };
     }
 
     @Deprecated
