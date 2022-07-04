@@ -1,11 +1,14 @@
 package github.mrh0.beekeeping.compat.jei;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import github.mrh0.beekeeping.Beekeeping;
 import github.mrh0.beekeeping.Index;
+import github.mrh0.beekeeping.network.ClientMinecraftWrapper;
 import github.mrh0.beekeeping.recipe.BeeProduceRecipe;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -27,7 +30,7 @@ public class BeeProduceRecipeCategory implements IRecipeCategory<BeeProduceRecip
     private final IDrawable icon;
 
     public BeeProduceRecipeCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(TEXTURE, 0, 0, 112, 32);
+        this.background = helper.createDrawable(TEXTURE, 0, 0, 118, 53);
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(Index.APIARY_BLOCK.get()));
     }
 
@@ -59,8 +62,22 @@ public class BeeProduceRecipeCategory implements IRecipeCategory<BeeProduceRecip
     @Override
     public void setRecipe(@Nonnull IRecipeLayoutBuilder builder, @Nonnull BeeProduceRecipe recipe, @Nonnull IFocusGroup focusGroup) {
         builder.addSlot(RecipeIngredientRole.INPUT, 7, 8).addIngredients(recipe.getIngredients().get(0));
-        builder.addSlot(RecipeIngredientRole.INPUT, 44, 8).addIngredients(recipe.getIngredients().get(1));
+        builder.addSlot(RecipeIngredientRole.INPUT, 7, 29).addIngredients(recipe.getIngredients().get(0));
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 85, 8).addItemStack(recipe.getResultItem());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 44, 8).addItemStack(recipe.getCommonProduce(true));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 44, 29).addItemStack(recipe.getCommonProduce(false));
+
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 81, 8).addItemStack(new ItemStack(recipe.getRareProduce(true)));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 81, 29).addItemStack(new ItemStack(recipe.getRareProduce(false)));
+    }
+
+    @Override
+    public void draw(BeeProduceRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
+        IRecipeCategory.super.draw(recipe, recipeSlotsView, stack, mouseX, mouseY);
+
+        if(recipe.getRareChance(true) > 0)
+            ClientMinecraftWrapper.get().font.draw(stack, (int)(recipe.getRareChance(true)*100) + "%", 100, 12, 4210752);
+        if(recipe.getRareChance(false) > 0)
+            ClientMinecraftWrapper.get().font.draw(stack, (int)(recipe.getRareChance(false)*100) + "%", 100, 34, 4210752);
     }
 }

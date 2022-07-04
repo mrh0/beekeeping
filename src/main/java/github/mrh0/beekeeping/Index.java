@@ -183,7 +183,7 @@ public class Index {
 
         r.register(new Specie("ender", 0xFF134f5c)
                 .setProduce(Items.HONEYCOMB, 9, 13, Items.ENDER_PEARL, 0.2d, 0.4d)
-                .addBeehive(types -> types.contains(BiomeDictionary.Type.END), 2, 16, PlacementUtils.HEIGHTMAP)
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.END), 2, 16)
                 .setPreferredTemperature(BiomeTemperature.COLD)
                 .setLightGene(Gene::any)
                 .setDark());

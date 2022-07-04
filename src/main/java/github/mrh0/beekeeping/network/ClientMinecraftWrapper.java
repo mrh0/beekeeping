@@ -7,4 +7,8 @@ public class ClientMinecraftWrapper {
     public static Level getClientLevel() {
         return Minecraft.getInstance().level;
     }
+
+    public static Minecraft get() {
+        return Minecraft.getInstance();
+    }
 }
