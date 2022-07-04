@@ -9,10 +9,12 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
+import net.minecraft.world.level.levelgen.placement.HeightmapPlacement;
 
 public class BeekeepingConfiguredFeatures {
-    public static Holder<ConfiguredFeature<RandomPatchConfiguration, ?>> getConfiguredFeatures(Beehive beehive) {
-        return FeatureUtils.register(beehive.getName() + "_configured", Feature.RANDOM_PATCH, //Feature.FLOWER
+    public static Holder<ConfiguredFeature<RandomPatchConfiguration, ?>> getConfiguredFeatures(Beehive beehive, Feature feature) {
+        return FeatureUtils.register(beehive.getName() + "_configured", feature, //Feature.FLOWER
                 new RandomPatchConfiguration(beehive.tries, 16, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                         new SimpleBlockConfiguration(BlockStateProvider.simple(beehive.specie.beehive.block.get())))));
     }

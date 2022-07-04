@@ -9,7 +9,8 @@
       },
       "rare": {
         "item": "minecraft:sugar",
-        "chance": 0.7
+        "chance": 1.0,
+        "count": 8
       }
     },
     "satisfied": {
@@ -19,7 +20,8 @@
       },
       "rare": {
         "item": "minecraft:sugar",
-        "chance": 0.9
+        "chance": 1.0,
+        "count": 16
       }
     }
   }

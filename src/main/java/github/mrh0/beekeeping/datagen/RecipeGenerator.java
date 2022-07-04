@@ -32,7 +32,7 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
             if(specie.produce == null)
                 continue;
             produce(rc, specie.getName(), specie.produce.common(), specie.produce.commonCountUnsatisfied(), specie.produce.commonCountSatisfied(),
-                specie.produce.rare(), specie.produce.rareChanceUnsatisfied(), specie.produce.rareChanceSatisfied());
+                specie.produce.rare(), specie.produce.rareCountUnsatisfied(), specie.produce.rareCountSatisfied(), specie.produce.rareChanceUnsatisfied(), specie.produce.rareChanceSatisfied());
 
             for(Pair<String, String> pair : specie.breeding) {
                 breed(rc, Specie.getByName(pair.getFirst()), Specie.getByName(pair.getSecond()), specie);
@@ -50,9 +50,10 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
     }
 
     private void produce(Consumer<FinishedRecipe> recipeConsumer, String specie, Item common, int commonCountUnsatisfied, int commonCountSatisfied, Item rare,
-                          double rareChanceUnsatisfied, double rareChanceSatisfied) {
-        new BeeProduceRecipeBuilder(Specie.getByName(specie), new ItemStack(common, commonCountUnsatisfied), rare, rareChanceUnsatisfied,
-                new ItemStack(common, commonCountSatisfied), rare, rareChanceSatisfied)
+                         int rareCountUnsatisfied, int rareCountSatisfied,
+                         double rareChanceUnsatisfied, double rareChanceSatisfied) {
+        new BeeProduceRecipeBuilder(Specie.getByName(specie), new ItemStack(common, commonCountUnsatisfied), new ItemStack(rare, rareCountUnsatisfied), rareChanceUnsatisfied,
+                new ItemStack(common, commonCountSatisfied), new ItemStack(rare, rareCountSatisfied), rareChanceSatisfied)
                 .save(recipeConsumer);
     }
 }

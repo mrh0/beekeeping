@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "beekeeping:block/beehives/malignant_side",
+    "bottom": "beekeeping:block/beehives/malignant_bottom",
+    "top": "beekeeping:block/beehives/malignant_top"
+  }
+}

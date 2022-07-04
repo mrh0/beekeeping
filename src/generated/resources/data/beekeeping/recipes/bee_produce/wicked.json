@@ -1,0 +1,28 @@
+{
+  "type": "beekeeping:bee_produce",
+  "specie": "wicked",
+  "produce": {
+    "unsatisfied": {
+      "common": {
+        "item": "minecraft:honeycomb",
+        "count": 9
+      },
+      "rare": {
+        "item": "minecraft:air",
+        "chance": 1.0,
+        "count": 0
+      }
+    },
+    "satisfied": {
+      "common": {
+        "item": "minecraft:honeycomb",
+        "count": 13
+      },
+      "rare": {
+        "item": "minecraft:spider_eye",
+        "chance": 1.0,
+        "count": 3
+      }
+    }
+  }
+}

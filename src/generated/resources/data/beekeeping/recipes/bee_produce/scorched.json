@@ -9,7 +9,8 @@
       },
       "rare": {
         "item": "minecraft:coal",
-        "chance": 0.4
+        "chance": 1.0,
+        "count": 3
       }
     },
     "satisfied": {
@@ -19,7 +20,8 @@
       },
       "rare": {
         "item": "minecraft:coal",
-        "chance": 0.8
+        "chance": 1.0,
+        "count": 7
       }
     }
   }

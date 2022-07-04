@@ -6,12 +6,22 @@
       "common": {
         "item": "minecraft:honeycomb",
         "count": 9
+      },
+      "rare": {
+        "item": "minecraft:snowball",
+        "chance": 1.0,
+        "count": 8
       }
     },
     "satisfied": {
       "common": {
         "item": "minecraft:honeycomb",
         "count": 13
+      },
+      "rare": {
+        "item": "minecraft:snowball",
+        "chance": 1.0,
+        "count": 16
       }
     }
   }

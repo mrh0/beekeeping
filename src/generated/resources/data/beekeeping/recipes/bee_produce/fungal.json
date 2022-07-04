@@ -9,7 +9,8 @@
       },
       "rare": {
         "item": "minecraft:red_mushroom",
-        "chance": 0.5
+        "chance": 0.5,
+        "count": 1
       }
     },
     "satisfied": {
@@ -19,7 +20,8 @@
       },
       "rare": {
         "item": "minecraft:red_mushroom",
-        "chance": 0.8
+        "chance": 0.8,
+        "count": 1
       }
     }
   }

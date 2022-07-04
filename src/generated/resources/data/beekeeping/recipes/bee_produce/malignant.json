@@ -1,0 +1,28 @@
+{
+  "type": "beekeeping:bee_produce",
+  "specie": "malignant",
+  "produce": {
+    "unsatisfied": {
+      "common": {
+        "item": "minecraft:honeycomb",
+        "count": 9
+      },
+      "rare": {
+        "item": "minecraft:bone_meal",
+        "chance": 1.0,
+        "count": 3
+      }
+    },
+    "satisfied": {
+      "common": {
+        "item": "minecraft:honeycomb",
+        "count": 13
+      },
+      "rare": {
+        "item": "minecraft:bone_meal",
+        "chance": 1.0,
+        "count": 7
+      }
+    }
+  }
+}

@@ -67,17 +67,17 @@ public class BeeProduceRecipeCategory implements IRecipeCategory<BeeProduceRecip
         builder.addSlot(RecipeIngredientRole.OUTPUT, 44, 8).addItemStack(recipe.getCommonProduce(true));
         builder.addSlot(RecipeIngredientRole.OUTPUT, 44, 29).addItemStack(recipe.getCommonProduce(false));
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 81, 8).addItemStack(new ItemStack(recipe.getRareProduce(true)));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 81, 29).addItemStack(new ItemStack(recipe.getRareProduce(false)));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 81, 8).addItemStack(recipe.getRareProduce(true));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 81, 29).addItemStack(recipe.getRareProduce(false));
     }
 
     @Override
     public void draw(BeeProduceRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
         IRecipeCategory.super.draw(recipe, recipeSlotsView, stack, mouseX, mouseY);
 
-        if(recipe.getRareChance(true) > 0)
+        if(recipe.getRareChance(true) > 0 && recipe.getRareChance(true) < 1)
             ClientMinecraftWrapper.get().font.draw(stack, (int)(recipe.getRareChance(true)*100) + "%", 100, 12, 4210752);
-        if(recipe.getRareChance(false) > 0)
+        if(recipe.getRareChance(false) > 0 && recipe.getRareChance(false) < 1)
             ClientMinecraftWrapper.get().font.draw(stack, (int)(recipe.getRareChance(false)*100) + "%", 100, 34, 4210752);
     }
 }

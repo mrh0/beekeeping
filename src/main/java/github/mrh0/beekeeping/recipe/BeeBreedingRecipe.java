@@ -43,6 +43,11 @@ public class BeeBreedingRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
+    public String getGroup() {
+        return "bee_breeding";
+    }
+
+    @Override
     public NonNullList<Ingredient> getIngredients() {
         return recipeItems;
     }

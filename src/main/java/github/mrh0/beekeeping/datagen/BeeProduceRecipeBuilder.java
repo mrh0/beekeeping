@@ -20,16 +20,16 @@ import java.util.function.Consumer;
 public class BeeProduceRecipeBuilder implements RecipeBuilder {
     private final Specie specie;
     private final ItemStack commonProduceUnsatisfied;
-    private final Item rareProduceUnsatisfied;
+    private final ItemStack rareProduceUnsatisfied;
     private final double rareChanceUnsatisfied;
 
     private final ItemStack commonProduceSatisfied;
-    private final Item rareProduceSatisfied;
+    private final ItemStack rareProduceSatisfied;
     private final double rareChanceSatisfied;
 
     public BeeProduceRecipeBuilder(Specie specie,
-           ItemStack commonProduceUnsatisfied, Item rareProduceUnsatisfied, double rareChanceUnsatisfied,
-           ItemStack commonProduceSatisfied, Item rareProduceSatisfied, double rareChanceSatisfied) {
+           ItemStack commonProduceUnsatisfied, ItemStack rareProduceUnsatisfied, double rareChanceUnsatisfied,
+           ItemStack commonProduceSatisfied, ItemStack rareProduceSatisfied, double rareChanceSatisfied) {
         this.specie = specie;
         this.commonProduceUnsatisfied = commonProduceUnsatisfied;
         this.rareProduceUnsatisfied = rareProduceUnsatisfied;
@@ -66,16 +66,16 @@ public class BeeProduceRecipeBuilder implements RecipeBuilder {
         private final ResourceLocation id;
         private final Specie specie;
         private final ItemStack commonProduceUnsatisfied;
-        private final Item rareProduceUnsatisfied;
+        private final ItemStack rareProduceUnsatisfied;
         private final double rareChanceUnsatisfied;
 
         private final ItemStack commonProduceSatisfied;
-        private final Item rareProduceSatisfied;
+        private final ItemStack rareProduceSatisfied;
         private final double rareChanceSatisfied;
 
         public Result(ResourceLocation id, Specie specie,
-                      ItemStack commonProduceUnsatisfied, Item rareProduceUnsatisfied, double rareChanceUnsatisfied,
-                      ItemStack commonProduceSatisfied, Item rareProduceSatisfied, double rareChanceSatisfied) {
+                      ItemStack commonProduceUnsatisfied, ItemStack rareProduceUnsatisfied, double rareChanceUnsatisfied,
+                      ItemStack commonProduceSatisfied, ItemStack rareProduceSatisfied, double rareChanceSatisfied) {
             this.id = id;
             this.specie = specie;
             this.commonProduceUnsatisfied = commonProduceUnsatisfied;
@@ -97,7 +97,7 @@ public class BeeProduceRecipeBuilder implements RecipeBuilder {
             produce.add("satisfied", makeProduce(commonProduceSatisfied, rareProduceSatisfied, rareChanceSatisfied));
         }
 
-        private JsonObject makeProduce(@Nullable ItemStack commonProduce, @Nullable Item rareProduce, double rareChance) {
+        private JsonObject makeProduce(@Nullable ItemStack commonProduce, @Nullable ItemStack rareProduce, double rareChance) {
             JsonObject obj = new JsonObject();
             JsonObject common = new JsonObject();
             JsonObject rare = new JsonObject();
@@ -112,8 +112,9 @@ public class BeeProduceRecipeBuilder implements RecipeBuilder {
             if(rareProduce != null && rareChance > 0d) {
                 obj.add("rare", rare);
 
-                rare.addProperty("item", rareProduce.getRegistryName().toString());
+                rare.addProperty("item", rareProduce.getItem().getRegistryName().toString());
                 rare.addProperty("chance", rareChance);
+                rare.addProperty("count", rareProduce.getCount());
             }
             return obj;
         }

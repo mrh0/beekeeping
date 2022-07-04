@@ -15,6 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraftforge.common.BiomeDictionary;
 
@@ -195,20 +196,35 @@ public class Specie {
         return this;
     }
 
-    public Specie addBeehive(Function<Set<BiomeDictionary.Type>, Boolean> biomeType, int tries, int rarity, PlacementModifier modifier) {
-        this.beehive = new Beehive(this, biomeType, tries, rarity, modifier);
+    public Specie addBeehive(Function<Set<BiomeDictionary.Type>, Boolean> biomeType, int tries, int rarity, PlacementModifier modifier, Feature feature, Function<BlockPos, Boolean> blockPlaceAllow) {
+        this.beehive = new Beehive(this, biomeType, tries, rarity, modifier, feature, blockPlaceAllow);
         return this;
     }
 
     public Specie setProduce(Item common, int commonCountUnsatisfied, int commonCountSatisfied) {
-        this.produce = new Produce(common, commonCountUnsatisfied, commonCountSatisfied, null, 0, 0);
+        this.produce = new Produce(common, commonCountUnsatisfied, commonCountSatisfied, null, 0, 0, 0, 0);
         return this;
     }
 
     public Specie setProduce(Item common, int commonCountUnsatisfied, int commonCountSatisfied, Item rare,
                              double rareChanceUnsatisfied, double rareChanceSatisfied) {
         this.produce = new Produce(common, commonCountUnsatisfied, commonCountSatisfied,
-                rare, rareChanceUnsatisfied, rareChanceSatisfied);
+                rare, 1, 1, rareChanceUnsatisfied, rareChanceSatisfied);
+        hasRareProduce = true;
+        return this;
+    }
+
+    public Specie setProduce(Item common, int commonCountUnsatisfied, int commonCountSatisfied, Item rare, int rareCountUnsatisfied, int rareCountSatisfied,
+                             double rareChanceUnsatisfied, double rareChanceSatisfied) {
+        this.produce = new Produce(common, commonCountUnsatisfied, commonCountSatisfied,
+                rare, rareCountUnsatisfied, rareCountSatisfied, rareChanceUnsatisfied, rareChanceSatisfied);
+        hasRareProduce = true;
+        return this;
+    }
+
+    public Specie setProduce(Item common, int commonCountUnsatisfied, int commonCountSatisfied, Item rare, int rareCountUnsatisfied, int rareCountSatisfied) {
+        this.produce = new Produce(common, commonCountUnsatisfied, commonCountSatisfied,
+                rare, rareCountUnsatisfied, rareCountSatisfied, 1d, 1d);
         hasRareProduce = true;
         return this;
     }

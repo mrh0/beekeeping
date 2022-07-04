@@ -1,0 +1,28 @@
+{
+  "type": "beekeeping:bee_produce",
+  "specie": "withered",
+  "produce": {
+    "unsatisfied": {
+      "common": {
+        "item": "minecraft:honeycomb",
+        "count": 9
+      },
+      "rare": {
+        "item": "minecraft:wither_skeleton_skull",
+        "chance": 0.02,
+        "count": 1
+      }
+    },
+    "satisfied": {
+      "common": {
+        "item": "minecraft:honeycomb",
+        "count": 13
+      },
+      "rare": {
+        "item": "minecraft:wither_skeleton_skull",
+        "chance": 0.05,
+        "count": 1
+      }
+    }
+  }
+}
