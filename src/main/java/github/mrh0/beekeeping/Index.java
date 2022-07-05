@@ -93,7 +93,7 @@ public class Index {
         r.register(new Specie("coco", 0xFF783f04)
                 .setProduce(Items.HONEYCOMB, 9, 13, Items.COCOA_BEANS, 3, 7)
                 .setPreferredTemperature(BiomeTemperature.WARM)
-                .breedFrom("tropical", "fair"));
+                .breedFrom("tropical", "dugout"));
 
         r.register(new Specie("upland", 0xFFff9900)
                 .setProduce(Items.HONEYCOMB, 9, 13)
@@ -140,8 +140,8 @@ public class Index {
 
         r.register(new Specie("fair", 0xFF00ff00)
                 .setProduce(Items.HONEYCOMB, 9, 13, Items.SUGAR, 8, 16)
-                .setFoil()
-                .breedFrom("mossy", "snowy"));
+                .breedFrom("coco", "snowy")
+                .setFoil());
 
         r.register(new Specie("dugout", 0xFF7f6000)
                 .setProduce(Items.HONEYCOMB, 9, 13)
@@ -182,7 +182,7 @@ public class Index {
                 .setDark());
 
         r.register(new Specie("magmatic", 0xFFff6d01)
-                .setProduce(Items.HONEYCOMB, 9, 13, Items.MAGMA_CREAM, 0.4d, 0.8d)
+                .setProduce(Items.HONEYCOMB, 9, 13, Items.MAGMA_CREAM, 0.5d, 0.8d)
                 .setPreferredTemperature(BiomeTemperature.WARMEST)
                 .setLightGene(Gene::any)
                 .setDark()
@@ -196,7 +196,7 @@ public class Index {
                 .breedFrom("magmatic", "wicked"));
 
         r.register(new Specie("demonic", 0xFF990000)
-                .setProduce(Items.HONEYCOMB, 9, 13, Items.BLAZE_POWDER, 0.4d, 0.8d)
+                .setProduce(Items.HONEYCOMB, 9, 13, Items.BLAZE_POWDER, 0.5d, 0.8d)
                 .setPreferredTemperature(BiomeTemperature.WARMEST)
                 .setLightGene(Gene::any)
                 .setFoil()
