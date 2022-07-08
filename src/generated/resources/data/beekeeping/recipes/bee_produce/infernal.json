@@ -8,9 +8,9 @@
         "count": 9
       },
       "rare": {
-        "item": "minecraft:air",
+        "item": "minecraft:gunpowder",
         "chance": 1.0,
-        "count": 0
+        "count": 1
       }
     },
     "satisfied": {

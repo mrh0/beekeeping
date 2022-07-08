@@ -1,6 +1,6 @@
 {
   "type": "beekeeping:bee_breeding",
-  "drone": "tropical",
-  "princess": "fair",
+  "drone": "dugout",
+  "princess": "tropical",
   "offspring": "coco"
 }

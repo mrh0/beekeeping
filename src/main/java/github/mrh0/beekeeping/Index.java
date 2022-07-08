@@ -72,11 +72,11 @@ public class Index {
     public static void species() {
         var r = SpeciesRegistry.instance;
         r.register(new Specie("common", 0xFFfff2cc)
-                .setProduce(Items.HONEYCOMB, 9, 13)
+                .setProduce(Items.HONEYCOMB, 5, 9)
                 .addBeehive(types -> types.contains(BiomeDictionary.Type.PLAINS), 2, 16));
 
         r.register(new Specie("forest", 0xFF93c47d)
-                .setProduce(Items.HONEYCOMB, 9, 13)
+                .setProduce(Items.HONEYCOMB, 5, 9)
                 .addBeehive(types -> types.contains(BiomeDictionary.Type.FOREST), 4, 10));
 
         r.register(new Specie("tempered", 0xFFb6d7a8)
@@ -96,7 +96,7 @@ public class Index {
                 .breedFrom("tropical", "dugout"));
 
         r.register(new Specie("upland", 0xFFff9900)
-                .setProduce(Items.HONEYCOMB, 9, 13)
+                .setProduce(Items.HONEYCOMB, 5, 9, Items.HONEY_BLOCK, 1, 2)
                 .addBeehive(types -> types.contains(BiomeDictionary.Type.SAVANNA), 4, 16)
                 .setLifetimeGene(Gene::random5Narrow)
                 .setWeatherGene(Gene::strict)
@@ -162,7 +162,7 @@ public class Index {
                 .setDark());
 
         r.register(new Specie("wicked", 0xFF666666)
-                .setProduce(Items.HONEYCOMB, 9, 13, Items.SPIDER_EYE, 0, 3)
+                .setProduce(Items.HONEYCOMB, 9, 13, Items.SPIDER_EYE, 1, 3)
                 .setPreferredTemperature(BiomeTemperature.WARM)
                 .setDark()
                 .breedFrom("malignant", "upland"));
@@ -189,7 +189,7 @@ public class Index {
                 .breedFrom("scorched", "dune"));
 
         r.register(new Specie("infernal", 0xFFff0000)
-                .setProduce(Items.HONEYCOMB, 9, 13, Items.GUNPOWDER, 0, 3)
+                .setProduce(Items.HONEYCOMB, 9, 13, Items.GUNPOWDER, 1, 3)
                 .setPreferredTemperature(BiomeTemperature.WARMEST)
                 .setLightGene(Gene::any)
                 .setDark()

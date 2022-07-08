@@ -5,13 +5,23 @@
     "unsatisfied": {
       "common": {
         "item": "minecraft:honeycomb",
-        "count": 9
+        "count": 5
+      },
+      "rare": {
+        "item": "minecraft:honey_block",
+        "chance": 1.0,
+        "count": 1
       }
     },
     "satisfied": {
       "common": {
         "item": "minecraft:honeycomb",
-        "count": 13
+        "count": 9
+      },
+      "rare": {
+        "item": "minecraft:honey_block",
+        "chance": 1.0,
+        "count": 2
       }
     }
   }

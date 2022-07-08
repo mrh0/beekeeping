@@ -6,6 +6,7 @@ import github.mrh0.beekeeping.bee.Specie;
 import github.mrh0.beekeeping.bee.breeding.BeeLifecycle;
 import github.mrh0.beekeeping.bee.genes.RareProduceGene;
 import github.mrh0.beekeeping.bee.item.BeeItem;
+import github.mrh0.beekeeping.config.Config;
 import github.mrh0.beekeeping.network.IHasToggleOption;
 import github.mrh0.beekeeping.network.TogglePacket;
 import github.mrh0.beekeeping.recipe.BeeProduceRecipe;
@@ -16,7 +17,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -24,7 +24,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -40,6 +39,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHasToggleOption {
+
+    private static final int LIFETIME_STEP = 20;//Config.LIFETIME_STEP.get();
+    public static final int BREED_TIME = Config.BREED_TIME.get();
+
     protected final ContainerData data;
     public ApiaryBlockEntity(BlockPos pos, BlockState state) {
         super(Index.APIARY_BLOCK_ENTITY.get(), pos, state);
@@ -81,22 +84,21 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
 
     public boolean continuous = false;
     public int breedProgressTime = 0;
-    public static final int BREED_TIME = 60;
     private Specie offspringCache = null;
 
     public ItemStack getDrone() {
-        return itemHandler.getStackInSlot(0);
+        return inputItemHandler.getStackInSlot(0);
     }
 
     public ItemStack getPrincess() {
-        return itemHandler.getStackInSlot(1);
+        return inputItemHandler.getStackInSlot(1);
     }
 
     public ItemStack getQueen() {
-        return itemHandler.getStackInSlot(2);
+        return inputItemHandler.getStackInSlot(2);
     }
 
-    private final ItemStackHandler itemHandler = new ItemStackHandler(9) {
+    private final ItemStackHandler inputItemHandler = new ItemStackHandler(9) {
         @Override
         protected void onContentsChanged(int slot) {
             checkLock = false;
@@ -105,6 +107,25 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
                     return;
                 breedCheck();
             }
+            setChanged();
+        }
+
+        @NotNull
+        @Override
+        public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
+            if(stack.is(Index.DRONE_BEES_TAG) && slot == 0)
+                return super.insertItem(slot, stack, simulate);
+            if(stack.is(Index.PRINCESS_BEES_TAG) && slot == 1)
+                return super.insertItem(slot, stack, simulate);
+            if(stack.is(Index.QUEEN_BEES_TAG) && slot == 2)
+                return super.insertItem(slot, stack, simulate);
+            return stack;
+        }
+    };
+
+    private final ItemStackHandler outputItemHandler = new ItemStackHandler(6) {
+        @Override
+        protected void onContentsChanged(int slot) {
             setChanged();
         }
     };
@@ -135,9 +156,9 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
 
         ItemStack offspringQueen = new ItemStack(offspringCache.queenItem);
         offspringQueen.setTag(BeeLifecycle.getOffspringItemStack(getDrone(), getPrincess(), offspringCache));
-        itemHandler.setStackInSlot(0, ItemStack.EMPTY);
-        itemHandler.setStackInSlot(1, ItemStack.EMPTY);
-        itemHandler.setStackInSlot(2, offspringQueen);
+        inputItemHandler.setStackInSlot(0, ItemStack.EMPTY);
+        inputItemHandler.setStackInSlot(1, ItemStack.EMPTY);
+        inputItemHandler.setStackInSlot(2, offspringQueen);
     }
 
     public void updateSatisfaction() {
@@ -159,7 +180,8 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
         satisfactionCache = Satisfaction.calc(lightSatisfactionCache, weatherSatisfactionCache, temperatureSatisfactionCache);
     }
 
-    private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
+    private LazyOptional<IItemHandler> lazyInputItemHandler = LazyOptional.empty();
+    private LazyOptional<IItemHandler> lazyOutputItemHandler = LazyOptional.empty();
 
     @Override
     public Component getDisplayName() {
@@ -175,8 +197,11 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-            return lazyItemHandler.cast();
+        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            if(side == Direction.DOWN)
+                return lazyOutputItemHandler.cast();
+            return lazyInputItemHandler.cast();
+        }
 
         return super.getCapability(cap, side);
     }
@@ -184,18 +209,21 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
     @Override
     public void onLoad() {
         super.onLoad();
-        lazyItemHandler = LazyOptional.of(() -> itemHandler);
+        lazyInputItemHandler = LazyOptional.of(() -> inputItemHandler);
+        lazyOutputItemHandler = LazyOptional.of(() -> outputItemHandler);
     }
 
     @Override
     public void invalidateCaps()  {
         super.invalidateCaps();
-        lazyItemHandler.invalidate();
+        lazyInputItemHandler.invalidate();
+        lazyOutputItemHandler.invalidate();
     }
 
     @Override
     protected void saveAdditional(@NotNull CompoundTag tag) {
-        tag.put("inventory", itemHandler.serializeNBT());
+        tag.put("input", inputItemHandler.serializeNBT());
+        tag.put("output", outputItemHandler.serializeNBT());
         tag.putBoolean("continuous", continuous);
         super.saveAdditional(tag);
     }
@@ -203,16 +231,23 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
-        itemHandler.deserializeNBT(nbt.getCompound("inventory"));
+        inputItemHandler.deserializeNBT(nbt.getCompound("input"));
+        outputItemHandler.deserializeNBT(nbt.getCompound("output"));
         continuous = nbt.getBoolean("continuous");
     }
 
     public void drop() {
-        SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
-        for (int i = 0; i < itemHandler.getSlots(); i++) {
-            inventory.setItem(i, itemHandler.getStackInSlot(i));
+        SimpleContainer input = new SimpleContainer(inputItemHandler.getSlots());
+        for (int i = 0; i < inputItemHandler.getSlots(); i++) {
+            input.setItem(i, inputItemHandler.getStackInSlot(i));
         }
-        Containers.dropContents(this.level, this.worldPosition, inventory);
+        Containers.dropContents(this.level, this.worldPosition, input);
+
+        SimpleContainer output = new SimpleContainer(outputItemHandler.getSlots());
+        for (int i = 0; i < outputItemHandler.getSlots(); i++) {
+            output.setItem(i, outputItemHandler.getStackInSlot(i));
+        }
+        Containers.dropContents(this.level, this.worldPosition, output);
     }
 
     public int slowTick = 0;
@@ -236,6 +271,8 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
                 preformBreeding();
             }
         }
+        else
+            breedProgressTime = 0;
 
         if(slowTick++ < 20)
             return;
@@ -253,18 +290,18 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
         if(hp <= 0) {
             if(checkLock)
                 return;
-            if(attemptInsert(level, queen, itemHandler, satisfactionCache == Satisfaction.SATISFIED, continuous)) {
-                itemHandler.setStackInSlot(2, ItemStack.EMPTY);
+            if(attemptInsert(level, queen, inputItemHandler, outputItemHandler, satisfactionCache == Satisfaction.SATISFIED, continuous)) {
+                inputItemHandler.setStackInSlot(2, ItemStack.EMPTY);
                 return;
             }
             checkLock = true;
             return;
         }
         if(satisfactionCache != Satisfaction.NOT_WORKING)
-            BeeItem.setHealth(queen.getTag(), hp-20);
+            BeeItem.setHealth(queen.getTag(), hp-LIFETIME_STEP);
     }
 
-    public static boolean attemptInsert(Level level, ItemStack queen, ItemStackHandler inv, boolean satisfied, boolean continuous) {
+    public static boolean attemptInsert(Level level, ItemStack queen, ItemStackHandler input, ItemStackHandler output, boolean satisfied, boolean continuous) {
         var optional = BeeLifecycle.getProduceRecipe(level, queen);
         if(optional.isEmpty())
             return true;
@@ -278,43 +315,51 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
         ItemStack drone = BeeLifecycle.clone(queen, bpr.getSpecie().droneItem);
 
         if(continuous) {
-            if(!inv.getStackInSlot(0).isEmpty())
+            if(!input.getStackInSlot(0).isEmpty())
+                if(!insert(drone, output, true))
+                    return false;
+            if(!input.getStackInSlot(1).isEmpty())
+                if(!insert(princess, output, true))
+                    return false;
+
+            if(!insert(commonProduce, output, true))
                 return false;
-            if(!inv.getStackInSlot(1).isEmpty())
-                return false;
-            if(!insert(drone, inv, true))
-                return false;
-            if(!insert(commonProduce, inv, true))
-                return false;
-            if(!insert(rareProduce, inv, true))
+            if(!insert(rareProduce, output, true))
                 return false;
 
-            inv.setStackInSlot(0, drone);
-            inv.setStackInSlot(1, princess);
+            if(input.getStackInSlot(0).isEmpty())
+                input.setStackInSlot(0, drone);
+            else
+                insert(drone, output, false);
+
+            if(input.getStackInSlot(1).isEmpty())
+                input.setStackInSlot(1, princess);
+            else
+                insert(princess, output, false);
         }
         else {
-            if(!insert(princess, inv, true))
+            if(!insert(princess, output, true))
                 return false;
-            if(!insert(drone, inv, true))
+            if(!insert(drone, output, true))
                 return false;
-            if(!insert(commonProduce, inv, true))
+            if(!insert(commonProduce, output, true))
                 return false;
-            if(!insert(rareProduce, inv, true))
+            if(!insert(rareProduce, output, true))
                 return false;
 
-            insert(princess, inv, false);
-            insert(drone, inv, false);
+            insert(princess, output, false);
+            insert(drone, output, false);
         }
-        insert(commonProduce, inv, false);
-        insert(rareProduce, inv, false);
+        insert(commonProduce, output, false);
+        insert(rareProduce, output, false);
         return true;
     }
 
-    public static boolean insert(ItemStack stack, ItemStackHandler inv, boolean sim) {
+    public static boolean insert(ItemStack stack, ItemStackHandler output, boolean sim) {
         if(stack.isEmpty())
             return true;
-        for(int i = 3; i < inv.getSlots(); i++) {
-            stack = inv.insertItem(i, stack, sim);
+        for(int i = 0; i < output.getSlots(); i++) {
+            stack = output.insertItem(i, stack, sim);
             if(stack.isEmpty())
                 return true;
         }

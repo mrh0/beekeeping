@@ -9,7 +9,7 @@
       },
       "rare": {
         "item": "minecraft:magma_cream",
-        "chance": 0.4,
+        "chance": 0.5,
         "count": 1
       }
     },
