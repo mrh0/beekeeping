@@ -1,13 +1,14 @@
 package github.mrh0.beekeeping.bee.genes;
 
+import github.mrh0.beekeeping.config.Config;
 import net.minecraft.nbt.CompoundTag;
 
 public enum LifetimeGene implements Gene {
-    SHORTEST("shortest", 60*5),
-    SHORT("short", 60*7),
-    NORMAL("normal", 60*10),
-    LONG("long", 60*13),
-    LONGEST("longest", 60*15);
+    SHORTEST("shortest", Config.LIFETIME_GENE_SHORTEST.get()),
+    SHORT("short", Config.LIFETIME_GENE_SHORT.get()),
+    NORMAL("normal", Config.LIFETIME_GENE_NORMAL.get()),
+    LONG("long", Config.LIFETIME_GENE_LONG.get()),
+    LONGEST("longest", Config.LIFETIME_GENE_LONGEST.get());
 
     private final String name;
     private final int time;

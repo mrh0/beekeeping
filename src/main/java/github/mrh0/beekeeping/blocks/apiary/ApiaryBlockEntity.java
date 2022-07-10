@@ -40,7 +40,7 @@ import javax.annotation.Nullable;
 
 public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHasToggleOption {
 
-    private static final int LIFETIME_STEP = 20;//Config.LIFETIME_STEP.get();
+    private static final int LIFETIME_STEP = Config.LIFETIME_STEP.get();
     public static final int BREED_TIME = Config.BREED_TIME.get();
 
     protected final ContainerData data;
