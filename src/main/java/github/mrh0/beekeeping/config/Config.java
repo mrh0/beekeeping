@@ -31,6 +31,43 @@ public class Config {
 
     public static ForgeConfigSpec.BooleanValue BEEHIVE_GENERATION_ENABLED;
 
+    public static ForgeConfigSpec.IntValue BEEHIVE_COMMON_TRIES;
+    public static ForgeConfigSpec.IntValue BEEHIVE_COMMON_RARITY;
+
+    public static ForgeConfigSpec.IntValue BEEHIVE_FOREST_TRIES;
+    public static ForgeConfigSpec.IntValue BEEHIVE_FOREST_RARITY;
+
+    public static ForgeConfigSpec.IntValue BEEHIVE_TROPICAL_TRIES;
+    public static ForgeConfigSpec.IntValue BEEHIVE_TROPICAL_RARITY;
+
+    public static ForgeConfigSpec.IntValue BEEHIVE_UPLAND_TRIES;
+    public static ForgeConfigSpec.IntValue BEEHIVE_UPLAND_RARITY;
+
+    public static ForgeConfigSpec.IntValue BEEHIVE_DUNE_TRIES;
+    public static ForgeConfigSpec.IntValue BEEHIVE_DUNE_RARITY;
+
+    public static ForgeConfigSpec.IntValue BEEHIVE_SNOWY_TRIES;
+    public static ForgeConfigSpec.IntValue BEEHIVE_SNOWY_RARITY;
+
+    public static ForgeConfigSpec.IntValue BEEHIVE_FUNGAL_TRIES;
+    public static ForgeConfigSpec.IntValue BEEHIVE_FUNGAL_RARITY;
+
+    public static ForgeConfigSpec.IntValue BEEHIVE_DUGOUT_TRIES;
+    public static ForgeConfigSpec.IntValue BEEHIVE_DUGOUT_RARITY;
+    public static ForgeConfigSpec.IntValue BEEHIVE_DUGOUT_MIN_HEIGHT;
+    public static ForgeConfigSpec.IntValue BEEHIVE_DUGOUT_MAX_HEIGHT;
+
+    public static ForgeConfigSpec.IntValue BEEHIVE_MALIGNANT_TRIES;
+    public static ForgeConfigSpec.IntValue BEEHIVE_MALIGNANT_RARITY;
+
+    public static ForgeConfigSpec.IntValue BEEHIVE_SCORCHED_TRIES;
+    public static ForgeConfigSpec.IntValue BEEHIVE_SCORCHED_RARITY;
+    public static ForgeConfigSpec.IntValue BEEHIVE_SCORCHED_MIN_HEIGHT;
+    public static ForgeConfigSpec.IntValue BEEHIVE_SCORCHED_MAX_HEIGHT;
+
+    public static ForgeConfigSpec.IntValue BEEHIVE_ENDER_TRIES;
+    public static ForgeConfigSpec.IntValue BEEHIVE_ENDER_RARITY;
+
     static {
         COMMON_BUILDER.comment("Bee Lifecycle").push(CATEGORY_BEE);
 
@@ -71,6 +108,69 @@ public class Config {
 
         BEEHIVE_GENERATION_ENABLED = COMMON_BUILDER.comment("Enabled beehive world generation")
                 .define("beehive_generation_enabled", true);
+
+        BEEHIVE_COMMON_TRIES = COMMON_BUILDER.comment("Number of place tries.")
+                .defineInRange("beehive_common_tries", 2, 0, Integer.MAX_VALUE);
+        BEEHIVE_COMMON_RARITY = COMMON_BUILDER.comment("Rarity, 1 in every.")
+                .defineInRange("beehive_common_rarity", 16, 0, Integer.MAX_VALUE);
+
+        BEEHIVE_FOREST_TRIES = COMMON_BUILDER.comment("Number of place tries.")
+                .defineInRange("beehive_forest_tries", 4, 0, Integer.MAX_VALUE);
+        BEEHIVE_FOREST_RARITY = COMMON_BUILDER.comment("Rarity, 1 in every.")
+                .defineInRange("beehive_forest_rarity", 10, 0, Integer.MAX_VALUE);
+
+        BEEHIVE_TROPICAL_TRIES = COMMON_BUILDER.comment("Number of place tries.")
+                .defineInRange("beehive_tropical_tries", 4, 0, Integer.MAX_VALUE);
+        BEEHIVE_TROPICAL_RARITY = COMMON_BUILDER.comment("Rarity, 1 in every.")
+                .defineInRange("beehive_tropical_rarity", 10, 0, Integer.MAX_VALUE);
+
+        BEEHIVE_UPLAND_TRIES = COMMON_BUILDER.comment("Number of place tries.")
+                .defineInRange("beehive_upland_tries", 4, 0, Integer.MAX_VALUE);
+        BEEHIVE_UPLAND_RARITY = COMMON_BUILDER.comment("Rarity, 1 in every.")
+                .defineInRange("beehive_upland_rarity", 16, 0, Integer.MAX_VALUE);
+
+        BEEHIVE_DUNE_TRIES = COMMON_BUILDER.comment("Number of place tries.")
+                .defineInRange("beehive_dune_tries", 3, 0, Integer.MAX_VALUE);
+        BEEHIVE_DUNE_RARITY = COMMON_BUILDER.comment("Rarity, 1 in every.")
+                .defineInRange("beehive_dune_rarity", 12, 0, Integer.MAX_VALUE);
+
+        BEEHIVE_SNOWY_TRIES = COMMON_BUILDER.comment("Number of place tries.")
+                .defineInRange("beehive_snowy_tries", 4, 0, Integer.MAX_VALUE);
+        BEEHIVE_SNOWY_RARITY = COMMON_BUILDER.comment("Rarity, 1 in every.")
+                .defineInRange("beehive_snowy_rarity", 16, 0, Integer.MAX_VALUE);
+
+        BEEHIVE_FUNGAL_TRIES = COMMON_BUILDER.comment("Number of place tries.")
+                .defineInRange("beehive_fungal_tries", 3, 0, Integer.MAX_VALUE);
+        BEEHIVE_FUNGAL_RARITY = COMMON_BUILDER.comment("Rarity, 1 in every.")
+                .defineInRange("beehive_fungal_rarity", 10, 0, Integer.MAX_VALUE);
+
+        BEEHIVE_DUGOUT_TRIES = COMMON_BUILDER.comment("Number of place tries.")
+                .defineInRange("beehive_dugout_tries", 3, 0, Integer.MAX_VALUE);
+        BEEHIVE_DUGOUT_RARITY = COMMON_BUILDER.comment("Rarity, 1 in every.")
+                .defineInRange("beehive_dugout_rarity", 6, 0, Integer.MAX_VALUE);
+        BEEHIVE_DUGOUT_MIN_HEIGHT = COMMON_BUILDER.comment("Number of place tries.")
+                .defineInRange("beehive_dugout_min_height", 0, -127, 255);
+        BEEHIVE_DUGOUT_MAX_HEIGHT = COMMON_BUILDER.comment("Rarity, 1 in every.")
+                .defineInRange("beehive_dugout_max_height", 60, -127, 255);
+
+        BEEHIVE_MALIGNANT_TRIES = COMMON_BUILDER.comment("Number of place tries.")
+                .defineInRange("beehive_malignant_tries", 1, 0, Integer.MAX_VALUE);
+        BEEHIVE_MALIGNANT_RARITY = COMMON_BUILDER.comment("Rarity, 1 in every.")
+                .defineInRange("beehive_malignant_rarity", 8, 0, Integer.MAX_VALUE);
+
+        BEEHIVE_SCORCHED_TRIES = COMMON_BUILDER.comment("Number of place tries.")
+                .defineInRange("beehive_scorched_tries", 6, 0, Integer.MAX_VALUE);
+        BEEHIVE_SCORCHED_RARITY = COMMON_BUILDER.comment("Rarity, 1 in every.")
+                .defineInRange("beehive_scorched_rarity", 6, 0, Integer.MAX_VALUE);
+        BEEHIVE_SCORCHED_MIN_HEIGHT = COMMON_BUILDER.comment("Number of place tries.")
+                .defineInRange("beehive_scorched_min_height", 0, -127, 255);
+        BEEHIVE_SCORCHED_MAX_HEIGHT = COMMON_BUILDER.comment("Rarity, 1 in every.")
+                .defineInRange("beehive_scorched_max_height", 127, -127, 255);
+
+        BEEHIVE_ENDER_TRIES = COMMON_BUILDER.comment("Number of place tries.")
+                .defineInRange("beehive_ender_tries", 2, 0, Integer.MAX_VALUE);
+        BEEHIVE_ENDER_RARITY = COMMON_BUILDER.comment("Rarity, 1 in every.")
+                .defineInRange("beehive_ender_rarity", 16, 0, Integer.MAX_VALUE);
 
         COMMON_BUILDER.pop();
 

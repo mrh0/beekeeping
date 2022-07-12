@@ -9,6 +9,7 @@ import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlockEntity;
 import github.mrh0.beekeeping.blocks.apiary.ApiaryBlock;
 import github.mrh0.beekeeping.blocks.apiary.ApiaryBlockEntity;
 import github.mrh0.beekeeping.blocks.beehive.BeehiveBlock;
+import github.mrh0.beekeeping.config.Config;
 import github.mrh0.beekeeping.group.ItemGroup;
 import github.mrh0.beekeeping.recipe.BeeBreedingRecipe;
 import github.mrh0.beekeeping.recipe.BeeProduceRecipe;
@@ -73,11 +74,13 @@ public class Index {
         var r = SpeciesRegistry.instance;
         r.register(new Specie("common", 0xFFfff2cc)
                 .setProduce(Items.HONEYCOMB, 5, 9)
-                .addBeehive(types -> types.contains(BiomeDictionary.Type.PLAINS), 2, 16));
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.PLAINS),
+                        Config.BEEHIVE_COMMON_TRIES.get(), Config.BEEHIVE_COMMON_RARITY.get()));
 
         r.register(new Specie("forest", 0xFF93c47d)
                 .setProduce(Items.HONEYCOMB, 5, 9)
-                .addBeehive(types -> types.contains(BiomeDictionary.Type.FOREST), 4, 10));
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.FOREST),
+                        Config.BEEHIVE_FOREST_TRIES.get(), Config.BEEHIVE_FOREST_RARITY.get()));
 
         r.register(new Specie("tempered", 0xFFb6d7a8)
                 .setProduce(Items.HONEYCOMB, 13, 17)
@@ -86,7 +89,8 @@ public class Index {
 
         r.register(new Specie("tropical", 0xFF6aa84f)
                 .setProduce(Items.HONEYCOMB, 9, 13)
-                .addBeehive(types -> types.contains(BiomeDictionary.Type.JUNGLE), 4, 10)
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.JUNGLE),
+                        Config.BEEHIVE_TROPICAL_TRIES.get(), Config.BEEHIVE_TROPICAL_RARITY.get())
                 .setLifetimeGene(Gene::random5Narrow)
                 .setPreferredTemperature(BiomeTemperature.WARM));
 
@@ -97,21 +101,24 @@ public class Index {
 
         r.register(new Specie("upland", 0xFFff9900)
                 .setProduce(Items.HONEYCOMB, 5, 9, Items.HONEY_BLOCK, 1, 2)
-                .addBeehive(types -> types.contains(BiomeDictionary.Type.SAVANNA), 4, 16)
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.SAVANNA),
+                        Config.BEEHIVE_UPLAND_TRIES.get(), Config.BEEHIVE_UPLAND_RARITY.get())
                 .setLifetimeGene(Gene::random5Narrow)
                 .setWeatherGene(Gene::strict)
                 .setPreferredTemperature(BiomeTemperature.WARMEST));
 
         r.register(new Specie("dune", 0xFFfbbc04)
                 .setProduce(Items.HONEYCOMB, 9, 13)
-                .addBeehive(types -> types.contains(BiomeDictionary.Type.SANDY) && types.contains(BiomeDictionary.Type.HOT), 3, 12)
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.SANDY) && types.contains(BiomeDictionary.Type.HOT),
+                        Config.BEEHIVE_DUNE_TRIES.get(), Config.BEEHIVE_DUNE_RARITY.get())
                 .setLifetimeGene(Gene::random5Narrow)
                 .setWeatherGene(Gene::strict)
                 .setPreferredTemperature(BiomeTemperature.WARMEST));
 
         r.register(new Specie("snowy", 0xFFefefef)
                 .setProduce(Items.HONEYCOMB, 9, 13, Items.SNOWBALL, 8, 16)
-                .addBeehive(types -> types.contains(BiomeDictionary.Type.SNOWY), 4, 16)
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.SNOWY),
+                        Config.BEEHIVE_SNOWY_TRIES.get(), Config.BEEHIVE_SNOWY_RARITY.get())
                 .setTemperatureGene(Gene::random3Low)
                 .setPreferredTemperature(BiomeTemperature.COLD));
 
@@ -128,7 +135,8 @@ public class Index {
 
         r.register(new Specie("fungal", 0xFF660000)
                 .setProduce(Items.HONEYCOMB, 9, 13, Items.RED_MUSHROOM, 0.5d, 0.8d)
-                .addBeehive(types -> types.contains(BiomeDictionary.Type.MUSHROOM) || types.contains(BiomeDictionary.Type.SWAMP), 3, 10)
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.MUSHROOM) || types.contains(BiomeDictionary.Type.SWAMP),
+                        Config.BEEHIVE_FUNGAL_TRIES.get(), Config.BEEHIVE_FUNGAL_RARITY.get())
                 .setTemperatureGene(Gene::random3High)
                 .setProduceGene(Gene::random5High));
 
@@ -145,7 +153,9 @@ public class Index {
 
         r.register(new Specie("dugout", 0xFF7f6000)
                 .setProduce(Items.HONEYCOMB, 9, 13)
-                .addBeehive(types -> types.contains(BiomeDictionary.Type.OVERWORLD), 3, 8, PlacementUtils.FULL_RANGE, Feature.RANDOM_PATCH, pos -> pos.getY() < 60 && pos.getY() > 30)
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.OVERWORLD),
+                        Config.BEEHIVE_DUGOUT_TRIES.get(), Config.BEEHIVE_DUGOUT_RARITY.get(), PlacementUtils.FULL_RANGE, Feature.RANDOM_PATCH,
+                        pos -> pos.getY() < Config.BEEHIVE_DUGOUT_MAX_HEIGHT.get() && pos.getY() > Config.BEEHIVE_DUGOUT_MIN_HEIGHT.get())
                 .setTemperatureGene(Gene::random3High)
                 .setLightGene(Gene::any)
                 .setPreferredTemperature(BiomeTemperature.COLD));
@@ -157,7 +167,7 @@ public class Index {
 
         r.register(new Specie("malignant", 0xFF999999)
                 .setProduce(Items.HONEYCOMB, 9, 13, Items.BONE_MEAL, 3, 7)
-                .addBeehive(types -> types.contains(BiomeDictionary.Type.MESA) || types.contains(BiomeDictionary.Type.WASTELAND), 1, 8)
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.MESA) || types.contains(BiomeDictionary.Type.WASTELAND), Config.BEEHIVE_MALIGNANT_TRIES.get(), Config.BEEHIVE_MALIGNANT_RARITY.get())
                 .setPreferredTemperature(BiomeTemperature.WARM)
                 .setDark());
 
@@ -176,7 +186,10 @@ public class Index {
 
         r.register(new Specie("scorched", 0xFFff9900)
                 .setProduce(Items.HONEYCOMB, 9, 13, Items.COAL, 3, 7)
-                .addBeehive(types -> types.contains(BiomeDictionary.Type.NETHER), 6, 6, PlacementUtils.FULL_RANGE, Feature.RANDOM_PATCH, pos -> pos.getY() < 127)
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.NETHER),
+                        Config.BEEHIVE_SCORCHED_TRIES.get(), Config.BEEHIVE_SCORCHED_RARITY.get(),
+                        PlacementUtils.FULL_RANGE, Feature.RANDOM_PATCH,
+                        pos -> pos.getY() < Config.BEEHIVE_SCORCHED_MAX_HEIGHT.get() && pos.getY() > Config.BEEHIVE_SCORCHED_MIN_HEIGHT.get())
                 .setPreferredTemperature(BiomeTemperature.WARMEST)
                 .setLightGene(Gene::any)
                 .setDark());
@@ -205,7 +218,7 @@ public class Index {
 
         r.register(new Specie("ender", 0xFF134f5c)
                 .setProduce(Items.HONEYCOMB, 9, 13, Items.ENDER_PEARL, 0.2d, 0.4d)
-                .addBeehive(types -> types.contains(BiomeDictionary.Type.END), 2, 16)
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.END), Config.BEEHIVE_ENDER_TRIES.get(), Config.BEEHIVE_ENDER_RARITY.get())
                 .setPreferredTemperature(BiomeTemperature.COLD)
                 .setLightGene(Gene::any)
                 .setDark());
