@@ -18,15 +18,17 @@ public enum BiomeTemperature {
     }
 
     public static BiomeTemperature of(float temp) {
+        BiomeTemperature r = TEMPERED;
+
+        if(temp < 0.5f)
+            r =  COLD;
         if(temp < 0f)
-            return COLDEST;
-        else if(temp < 0.5f)
-            return COLD;
-        else if(temp > 1f)
-            return WARM;
-        else if(temp > 1.5f)
-            return WARMEST;
-        return TEMPERED;
+            r = COLDEST;
+        if(temp > 1f)
+            r =  WARM;
+        if(temp > 1.5f)
+            r =  WARMEST;
+        return r;
     }
 
     public String getName() {

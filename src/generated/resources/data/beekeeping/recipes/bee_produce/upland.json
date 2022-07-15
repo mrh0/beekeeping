@@ -5,7 +5,7 @@
     "unsatisfied": {
       "common": {
         "item": "minecraft:honeycomb",
-        "count": 5
+        "count": 3
       },
       "rare": {
         "item": "minecraft:honey_block",
@@ -16,7 +16,7 @@
     "satisfied": {
       "common": {
         "item": "minecraft:honeycomb",
-        "count": 9
+        "count": 7
       },
       "rare": {
         "item": "minecraft:honey_block",

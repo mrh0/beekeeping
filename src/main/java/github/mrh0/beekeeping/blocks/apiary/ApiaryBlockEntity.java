@@ -309,7 +309,10 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
             return true;
         BeeProduceRecipe bpr = optional.get();
         ItemStack commonProduce = bpr.getCommonProduce(satisfied);
-        ItemStack rareProduce = bpr.getRolledRareProduce(satisfied, RareProduceGene.of(RareProduceGene.get(queen.getTag())).getChance());
+
+        double chance = RareProduceGene.of(RareProduceGene.get(queen.getTag())).getChance();
+        ItemStack rareProduce = bpr.getRolledRareProduce(satisfied, chance);
+        //System.out.println(rareProduce + ":" + satisfied + ":" + chance);
 
         ItemStack princess = BeeLifecycle.clone(queen, bpr.getSpecie().princessItem);
         ItemStack drone = BeeLifecycle.clone(queen, bpr.getSpecie().droneItem);

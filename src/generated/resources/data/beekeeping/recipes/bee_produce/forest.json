@@ -5,13 +5,13 @@
     "unsatisfied": {
       "common": {
         "item": "minecraft:honeycomb",
-        "count": 5
+        "count": 3
       }
     },
     "satisfied": {
       "common": {
         "item": "minecraft:honeycomb",
-        "count": 9
+        "count": 5
       }
     }
   }
