@@ -4,22 +4,17 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import github.mrh0.beekeeping.Beekeeping;
 import github.mrh0.beekeeping.bee.Satisfaction;
-import github.mrh0.beekeeping.bee.Specie;
 import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.blocks.apiary.ApiaryBlockEntity;
 import github.mrh0.beekeeping.network.TogglePacket;
 import github.mrh0.beekeeping.screen.BeeScreen;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,17 +93,17 @@ public class ApiaryScreen extends BeeScreen<ApiaryMenu, ApiaryBlockEntity> {
     private static List<Component> toggleOffTip = new ArrayList<>();
 
     static {
-        toggleOnTip.add(new TranslatableComponent("tooltip.beekeeping.apiary.continuous"));
-        toggleOnTip.add(new TextComponent("On").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
-        toggleOffTip.add(new TranslatableComponent("tooltip.beekeeping.apiary.continuous"));
-        toggleOffTip.add(new TextComponent("Off").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+        toggleOnTip.add(Component.translatable("tooltip.beekeeping.apiary.continuous"));
+        toggleOnTip.add(Component.literal("On").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+        toggleOffTip.add(Component.translatable("tooltip.beekeeping.apiary.continuous"));
+        toggleOffTip.add(Component.literal("Off").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
     }
 
     private static MutableComponent checkExcCross(Satisfaction satisfaction) {
         return switch (satisfaction) {
-            case SATISFIED -> new TextComponent("✔ ").withStyle(ChatFormatting.GREEN);
-            case UNSATISFIED -> new TextComponent(" ! ").withStyle(ChatFormatting.YELLOW);
-            default -> new TextComponent("✘ ").withStyle(ChatFormatting.RED);
+            case SATISFIED -> Component.literal("✔ ").withStyle(ChatFormatting.GREEN);
+            case UNSATISFIED -> Component.literal(" ! ").withStyle(ChatFormatting.YELLOW);
+            default -> Component.literal("✘ ").withStyle(ChatFormatting.RED);
         };
     }
 
@@ -121,9 +116,9 @@ public class ApiaryScreen extends BeeScreen<ApiaryMenu, ApiaryBlockEntity> {
 
         Satisfaction satisfaction = Satisfaction.calc(weatherSatisfaction, temperatureSatisfaction, lightSatisfaction);
         tip.add(checkExcCross(satisfaction).append(satisfaction.component).withStyle(ChatFormatting.BOLD));
-        tip.add(checkExcCross(weatherSatisfaction).append(new TranslatableComponent("tooltip.beekeeping.apiary.weather")));
-        tip.add(checkExcCross(temperatureSatisfaction).append(new TranslatableComponent("tooltip.beekeeping.apiary.temperature")));
-        tip.add(checkExcCross(lightSatisfaction).append(new TranslatableComponent("tooltip.beekeeping.apiary.light")));
+        tip.add(checkExcCross(weatherSatisfaction).append(Component.translatable("tooltip.beekeeping.apiary.weather")));
+        tip.add(checkExcCross(temperatureSatisfaction).append(Component.translatable("tooltip.beekeeping.apiary.temperature")));
+        tip.add(checkExcCross(lightSatisfaction).append(Component.translatable("tooltip.beekeeping.apiary.light")));
 
         return tip;
     }

@@ -4,14 +4,17 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import github.mrh0.beekeeping.Beekeeping;
 import github.mrh0.beekeeping.bee.Specie;
-import github.mrh0.beekeeping.bee.genes.*;
+import github.mrh0.beekeeping.bee.genes.LifetimeGene;
+import github.mrh0.beekeeping.bee.genes.LightToleranceGene;
+import github.mrh0.beekeeping.bee.genes.RareProduceGene;
+import github.mrh0.beekeeping.bee.genes.TemperatureToleranceGene;
+import github.mrh0.beekeeping.bee.genes.WeatherToleranceGene;
 import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlockEntity;
 import github.mrh0.beekeeping.screen.BeeScreen;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.network.chat.*;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -56,14 +59,14 @@ public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity>
         this.blit(poseStack, x, y, 0, 0, imageWidth, imageHeight);
 
         if(getAnalyzed() != null && getSpecie() != null) {
-            drawText(poseStack, new TranslatableComponent("item.beekeeping.species." + getSpecie().getName()), 39, 24, 1.75f, getSpecie().getColor());
+            drawText(poseStack, Component.translatable("item.beekeeping.species." + getSpecie().getName()), 39, 24, 1.75f, getSpecie().getColor());
         }
         else
-            drawText(poseStack, new TranslatableComponent("title.beekeeping.analyzer.insert"), 39, 24, 1.75f);
+            drawText(poseStack, Component.translatable("title.beekeeping.analyzer.insert"), 39, 24, 1.75f);
         /*float temp = getLevel().getBiomeManager().getBiome(getBlockPos()).value().getBaseTemperature();
-        drawText(poseStack, new TranslatableComponent("title.beekeeping.analyzer.temp").append(": ").append(temp+""), 14, 44, 1f);
+        drawText(poseStack, Component.translatable("title.beekeeping.analyzer.temp").append(": ").append(temp+""), 14, 44, 1f);
         float rain = getLevel().getBiomeManager().getBiome(getBlockPos()).value().getDownfall();
-        drawText(poseStack, new TranslatableComponent("title.beekeeping.analyzer.rain").append(": ").append(rain+""), 14, 60, 1f);*/
+        drawText(poseStack, Component.translatable("title.beekeeping.analyzer.rain").append(": ").append(rain+""), 14, 60, 1f);*/
 
         if(getSpecie() == null)
             return;
@@ -83,20 +86,20 @@ public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity>
                 .append(" ").append(getSpecie().preferredTemperature.getComponent()), line++, 6 + temperatureImage);
         drawListItem(poseStack,
                 getSpecie().isNocturnal ?
-                lightTolerance.getComponent().append(" ").append(new TranslatableComponent("text.beekeeping.nocturnal").withStyle(ChatFormatting.DARK_BLUE)) : lightTolerance.getComponent(),
+                lightTolerance.getComponent().append(" ").append(Component.translatable("text.beekeeping.nocturnal").withStyle(ChatFormatting.DARK_BLUE)) : lightTolerance.getComponent(),
                 line++, lightToleranceImage);
         drawListItem(poseStack,
                 getSpecie().isHasRareProduce() ? rareProduceGene.getComponent().append(" ").append((rareProduceBonus >= 0 ? "+" : "") + rareProduceBonus + "%")
-                 : new TextComponent("").append(rareProduceGene.getComponent().withStyle(ChatFormatting.STRIKETHROUGH))
-                        .append(" ").append(new TranslatableComponent("text.beekeeping.none").withStyle(ChatFormatting.RED)),
+                 : Component.literal("").append(rareProduceGene.getComponent().withStyle(ChatFormatting.STRIKETHROUGH))
+                                        .append(" ").append(Component.translatable("text.beekeeping.none").withStyle(ChatFormatting.RED)),
                 line++, 5);
     }
 
-    private static List<Component> lifetimeDescription = List.of(new TranslatableComponent("tooltip.beekeeping.gene.lifetime"));
-    private static List<Component> weatherDescription = List.of(new TranslatableComponent("tooltip.beekeeping.gene.weather"));
-    private static List<Component> temperatureDescription = List.of(new TranslatableComponent("tooltip.beekeeping.gene.temperature"));
-    private static List<Component> lightDescription = List.of(new TranslatableComponent("tooltip.beekeeping.gene.light"));
-    private static List<Component> produceDescription = List.of(new TranslatableComponent("tooltip.beekeeping.gene.produce"));
+    private static List<Component> lifetimeDescription = List.of(Component.translatable("tooltip.beekeeping.gene.lifetime"));
+    private static List<Component> weatherDescription = List.of(Component.translatable("tooltip.beekeeping.gene.weather"));
+    private static List<Component> temperatureDescription = List.of(Component.translatable("tooltip.beekeeping.gene.temperature"));
+    private static List<Component> lightDescription = List.of(Component.translatable("tooltip.beekeeping.gene.light"));
+    private static List<Component> produceDescription = List.of(Component.translatable("tooltip.beekeeping.gene.produce"));
     @Override
     protected void renderTooltip(PoseStack poseStack, int mouseX, int mouseY) {
         super.renderTooltip(poseStack, mouseX, mouseY);

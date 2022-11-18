@@ -4,9 +4,9 @@ import github.mrh0.beekeeping.Beekeeping;
 import github.mrh0.beekeeping.datagen.graphics.BeeIconGenerator;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 
 import java.io.IOException;
 
@@ -19,11 +19,11 @@ public class DataGenerators {
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
         var blockTags = new BlockTagGenerator(generator, existingFileHelper);
-        generator.addProvider(new RecipeGenerator(generator));
-        generator.addProvider(new LootTableGenerator(generator));
-        generator.addProvider(new BlockStateGenerator(generator, existingFileHelper));
-        generator.addProvider(new ItemModelGenerator(generator, existingFileHelper));
-        generator.addProvider(new BlockTagGenerator(generator, existingFileHelper));
-        generator.addProvider(new ItemTagGenerator(generator, blockTags, existingFileHelper));
+        generator.addProvider(event.includeServer(), new RecipeGenerator(generator));
+        generator.addProvider(event.includeServer(), new LootTableGenerator(generator));
+        generator.addProvider(event.includeClient(), new BlockStateGenerator(generator, existingFileHelper));
+        generator.addProvider(event.includeServer(), new BlockTagGenerator(generator, existingFileHelper));
+        generator.addProvider(event.includeClient(), new ItemModelGenerator(generator, existingFileHelper));
+        generator.addProvider(event.includeServer(), new ItemTagGenerator(generator, blockTags, existingFileHelper));
     }
 }

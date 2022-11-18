@@ -45,9 +45,9 @@ public class Index {
     public static final DeferredRegister<Block> BLOCKS =
             DeferredRegister.create(ForgeRegistries.BLOCKS, Beekeeping.MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
-            DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, Beekeeping.MODID);
+            DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Beekeeping.MODID);
     public static final DeferredRegister<MenuType<?>> MENUS =
-            DeferredRegister.create(ForgeRegistries.CONTAINERS, Beekeeping.MODID);
+            DeferredRegister.create(ForgeRegistries.MENU_TYPES, Beekeeping.MODID);
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS =
             DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Beekeeping.MODID);
 

@@ -9,17 +9,16 @@ import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 
 import javax.annotation.Nonnull;
 
 public class BeeBreedingRecipeCategory implements IRecipeCategory<BeeBreedingRecipe> {
+
     public final static ResourceLocation UID = new ResourceLocation(Beekeeping.MODID, "bee_breeding");
     public final static ResourceLocation TEXTURE =
             new ResourceLocation(Beekeeping.MODID, "textures/gui/bee_breeding.png");
@@ -29,22 +28,17 @@ public class BeeBreedingRecipeCategory implements IRecipeCategory<BeeBreedingRec
 
     public BeeBreedingRecipeCategory(IGuiHelper helper) {
         this.background = helper.createDrawable(TEXTURE, 0, 0, 112, 32);
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(Index.APIARY_BLOCK.get()));
+        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Index.APIARY_BLOCK.get()));
     }
 
     @Override
-    public ResourceLocation getUid() {
-        return UID;
-    }
-
-    @Override
-    public Class<? extends BeeBreedingRecipe> getRecipeClass() {
-        return BeeBreedingRecipe.class;
+    public RecipeType<BeeBreedingRecipe> getRecipeType() {
+        return new RecipeType<>(UID, BeeBreedingRecipe.class);
     }
 
     @Override
     public Component getTitle() {
-        return new TranslatableComponent("title.beekeeping.recipe.bee_breeding");
+        return Component.translatable("title.beekeeping.recipe.bee_breeding");
     }
 
     @Override

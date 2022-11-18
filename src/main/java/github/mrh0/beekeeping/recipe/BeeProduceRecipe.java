@@ -16,8 +16,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nullable;
-
 public class BeeProduceRecipe implements Recipe<SimpleContainer> {
     private final ResourceLocation id;
     private final Specie specie;
@@ -196,27 +194,6 @@ public class BeeProduceRecipe implements Recipe<SimpleContainer> {
             buf.writeItemStack(recipe.commonProduceSatisfied, false);
             buf.writeItemStack(recipe.rareProduceSatisfied, false);
             buf.writeDouble(recipe.rareChanceSatisfied);
-        }
-
-        @Override
-        public RecipeSerializer<?> setRegistryName(ResourceLocation name) {
-            return INSTANCE;
-        }
-
-        @Nullable
-        @Override
-        public ResourceLocation getRegistryName() {
-            return ID;
-        }
-
-        @Override
-        public Class<RecipeSerializer<?>> getRegistryType() {
-            return Serializer.castClass(RecipeSerializer.class);
-        }
-
-        @SuppressWarnings("unchecked")
-        private static <G> Class<G> castClass(Class<?> cls) {
-            return (Class<G>)cls;
         }
     }
 }

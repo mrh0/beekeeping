@@ -1,20 +1,18 @@
 package github.mrh0.beekeeping.screen.apiary;
 
 import github.mrh0.beekeeping.Index;
-import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlockEntity;
 import github.mrh0.beekeeping.blocks.apiary.ApiaryBlockEntity;
 import github.mrh0.beekeeping.screen.BeeMenu;
 import github.mrh0.beekeeping.screen.slot.TagSlot;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -37,7 +35,7 @@ public class ApiaryMenu extends BeeMenu<ApiaryBlockEntity> {
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
 
-        this.blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP).ifPresent(handler -> {
+        this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).ifPresent(handler -> {
             this.addSlot(new TagSlot(handler, 0, 15, 60, Index.DRONE_BEES_TAG));
             this.addSlot(new TagSlot(handler, 1, 15, 23, Index.PRINCESS_BEES_TAG));
             this.addSlot(new TagSlot(handler, 2, 52, 42, Index.QUEEN_BEES_TAG));
@@ -45,7 +43,7 @@ public class ApiaryMenu extends BeeMenu<ApiaryBlockEntity> {
 
         });
 
-        this.blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).ifPresent(handler -> {
+        this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN).ifPresent(handler -> {
             addOutputInventory(handler);
         });
 

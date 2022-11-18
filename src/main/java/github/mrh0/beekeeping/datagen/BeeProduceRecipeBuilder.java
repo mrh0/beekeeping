@@ -13,6 +13,7 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
@@ -103,16 +104,17 @@ public class BeeProduceRecipeBuilder implements RecipeBuilder {
             JsonObject rare = new JsonObject();
 
             if(commonProduce != null && !commonProduce.isEmpty()) {
+                var resourceLocation = ForgeRegistries.ITEMS.getKey(commonProduce.getItem());
                 obj.add("common", common);
-
-                common.addProperty("item", commonProduce.getItem().getRegistryName().toString());
+                common.addProperty("item", resourceLocation.toString());
                 common.addProperty("count", commonProduce.getCount());
             }
 
             if(rareProduce != null && rareChance > 0d) {
+                var resourceLocation = ForgeRegistries.ITEMS.getKey(rareProduce.getItem());
                 obj.add("rare", rare);
 
-                rare.addProperty("item", rareProduce.getItem().getRegistryName().toString());
+                rare.addProperty("item", resourceLocation.toString());
                 rare.addProperty("chance", rareChance);
                 rare.addProperty("count", rareProduce.getCount());
             }

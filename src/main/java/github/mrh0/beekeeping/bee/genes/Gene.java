@@ -1,15 +1,14 @@
 package github.mrh0.beekeeping.bee.genes;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 
 import java.util.Random;
 
 public interface Gene {
-    static Random random = new Random();
+    Random random = new Random();
 
     static int get(CompoundTag tag, String key) {
         if(tag == null)
@@ -84,6 +83,6 @@ public interface Gene {
     };
 
     default MutableComponent getComponent() {
-        return new TranslatableComponent("text.beekeeping.gene.type." + getName()).withStyle(formatting[getIndex()]);
+        return Component.translatable("text.beekeeping.gene.type." + getName()).withStyle(formatting[getIndex()]);
     }
 }

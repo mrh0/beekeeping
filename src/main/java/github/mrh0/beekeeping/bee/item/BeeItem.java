@@ -6,8 +6,6 @@ import github.mrh0.beekeeping.group.ItemGroup;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -145,23 +143,23 @@ public abstract class BeeItem extends Item {
         if(!(stack.getItem() instanceof BeeItem))
             return;
         if(stack.getTag() == null || !isAnalyzed(stack)) {
-            list.add(new TranslatableComponent("tooltip.beekeeping.gene.not_analyzed").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+            list.add(Component.translatable("tooltip.beekeeping.gene.not_analyzed").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
             return;
         }
 
         CompoundTag tag = stack.getTag();
-        list.add(new TranslatableComponent("tooltip.beekeeping.gene.lifetime")
+        list.add(Component.translatable("tooltip.beekeeping.gene.lifetime")
                 .append(": ").append(LifetimeGene.of(LifetimeGene.get(tag)).getComponent()));
-        list.add(new TranslatableComponent("tooltip.beekeeping.gene.weather")
+        list.add(Component.translatable("tooltip.beekeeping.gene.weather")
                 .append(": ").append(WeatherToleranceGene.of(WeatherToleranceGene.get(tag)).getComponent()));
-        list.add(new TranslatableComponent("tooltip.beekeeping.gene.temperature")
+        list.add(Component.translatable("tooltip.beekeeping.gene.temperature")
                 .append(": ").append(TemperatureToleranceGene.of(TemperatureToleranceGene.get(tag)).getComponent()));
-        list.add(new TranslatableComponent("tooltip.beekeeping.gene.light")
+        list.add(Component.translatable("tooltip.beekeeping.gene.light")
                 .append(": ").append(LightToleranceGene.of(LightToleranceGene.get(tag)).getComponent()));
-        list.add(new TranslatableComponent("tooltip.beekeeping.gene.produce")
+        list.add(Component.translatable("tooltip.beekeeping.gene.produce")
                 .append(": ").append(RareProduceGene.of(RareProduceGene.get(tag)).getComponent()));
 
-        //list.add(new TextComponent("health: " + getHealth(stack.getTag())));
+        //list.add(Component.literal("health: " + getHealth(stack.getTag())));
     }
 
     public static Specie of(ItemStack stack) {

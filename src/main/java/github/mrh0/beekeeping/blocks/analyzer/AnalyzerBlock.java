@@ -74,7 +74,7 @@ public class AnalyzerBlock extends BaseEntityBlock {
         if (!level.isClientSide()) {
             BlockEntity entity = level.getBlockEntity(pos);
             if(entity instanceof AnalyzerBlockEntity) {
-                NetworkHooks.openGui(((ServerPlayer)player), (AnalyzerBlockEntity)entity, pos);
+                NetworkHooks.openScreen(((ServerPlayer)player), (AnalyzerBlockEntity)entity, pos);
             } else {
                 throw new IllegalStateException("Our Container provider is missing!");
             }

@@ -93,7 +93,7 @@ public class ApiaryBlock extends BaseEntityBlock {
             BlockEntity entity = level.getBlockEntity(pos);
             if(entity instanceof ApiaryBlockEntity) {
                 ApiaryBlockEntity abe = (ApiaryBlockEntity)entity;
-                NetworkHooks.openGui(((ServerPlayer)player), abe, pos);
+                NetworkHooks.openScreen(((ServerPlayer)player), abe, pos);
                 TogglePacket.sync(pos, level, 0, abe.continuous);
             } else {
                 throw new IllegalStateException("Our Container provider is missing!");
