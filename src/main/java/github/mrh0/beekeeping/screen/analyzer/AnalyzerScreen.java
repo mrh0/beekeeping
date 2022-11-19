@@ -22,6 +22,7 @@ public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity>
     private static final ResourceLocation TEXTURE =
             new ResourceLocation(Beekeeping.MODID, "textures/gui/analyzer.png");
 
+    int lx = 14, ly = 45;
     public AnalyzerScreen(AnalyzerMenu menu, Inventory playerInv, Component title) {
         super(menu, playerInv, title);
         imageHeight = 211;
@@ -38,7 +39,6 @@ public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity>
         blit(poseStack, lx + getXOffset(), ly + 14*index + getYOffset(), imageWidth, 8*image, 8, 8);
     }
 
-    int lx = 14, ly = 45;
     private Bounds lifetimeBounds = getListBounds(0);
     private Bounds weatherBounds = getListBounds(1);
     private Bounds temperatureBounds = getListBounds(2);
