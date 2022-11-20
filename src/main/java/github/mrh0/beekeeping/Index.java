@@ -224,8 +224,12 @@ public class Index {
                 .setDark());
     }
 
+    public static 
+
     //  ITEM
     public static void items() {
+        ITEMS.register("", () -> new );
+
         for(Specie specie : SpeciesRegistry.instance.getAll()) {
             ITEMS.register(specie.getName() + "_drone", () -> specie.buildDroneItem());
             ITEMS.register(specie.getName() + "_princess", () -> specie.buildPrincessItem());

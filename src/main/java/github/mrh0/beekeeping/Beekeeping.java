@@ -2,7 +2,6 @@ package github.mrh0.beekeeping;
 
 import com.mojang.logging.LogUtils;
 import github.mrh0.beekeeping.config.Config;
-import github.mrh0.beekeeping.event.ClientEvents;
 import github.mrh0.beekeeping.group.ItemGroup;
 import github.mrh0.beekeeping.network.TogglePacket;
 import github.mrh0.beekeeping.screen.analyzer.AnalyzerScreen;

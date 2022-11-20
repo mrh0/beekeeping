@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,10 +19,11 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 @Mod.EventBusSubscriber(modid = Beekeeping.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
-public class ClientEvents {
+public class ClientOverlay {
     private static final ResourceLocation TEXTURE =
             new ResourceLocation(Beekeeping.MODID, "textures/gui/analyzer.png");
     static int lx = 16, ly = 16;
+    static ItemStack thermometer = new ItemStack();
 
     @SubscribeEvent
     public static void renderOverlay(final RenderGameOverlayEvent.Pre event) {
@@ -31,8 +33,14 @@ public class ClientEvents {
         RenderSystem.setShaderTexture(0, TEXTURE);
 
         var player = Minecraft.getInstance().player;
+        if(player == null)
+            return;
         if(player.level == null)
             return;
+
+        if(!player.getInventory().contains(thermometer))
+            return;
+
         var temp = BiomeTemperature.of(player.level.getBiome(Minecraft.getInstance().player.getOnPos()).value().getBaseTemperature());
 
         //drawTextShadowed(stack, new TextComponent("Test"), 10, 10, 1f);
