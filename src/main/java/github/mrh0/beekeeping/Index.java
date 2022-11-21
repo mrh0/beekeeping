@@ -11,6 +11,7 @@ import github.mrh0.beekeeping.blocks.apiary.ApiaryBlockEntity;
 import github.mrh0.beekeeping.blocks.beehive.BeehiveBlock;
 import github.mrh0.beekeeping.config.Config;
 import github.mrh0.beekeeping.group.ItemGroup;
+import github.mrh0.beekeeping.item.Thermometer;
 import github.mrh0.beekeeping.recipe.BeeBreedingRecipe;
 import github.mrh0.beekeeping.recipe.BeeProduceRecipe;
 import github.mrh0.beekeeping.screen.analyzer.AnalyzerMenu;
@@ -224,16 +225,16 @@ public class Index {
                 .setDark());
     }
 
-    public static 
-
     //  ITEM
+    public static RegistryObject<Thermometer> THERMOMETER;
+
     public static void items() {
-        ITEMS.register("", () -> new );
+        THERMOMETER = ITEMS.register("thermometer", Thermometer::new);
 
         for(Specie specie : SpeciesRegistry.instance.getAll()) {
-            ITEMS.register(specie.getName() + "_drone", () -> specie.buildDroneItem());
-            ITEMS.register(specie.getName() + "_princess", () -> specie.buildPrincessItem());
-            ITEMS.register(specie.getName() + "_queen", () -> specie.buildQueenItem());
+            ITEMS.register(specie.getName() + "_drone", specie::buildDroneItem);
+            ITEMS.register(specie.getName() + "_princess", specie::buildPrincessItem);
+            ITEMS.register(specie.getName() + "_queen", specie::buildQueenItem);
         }
     }
 
@@ -242,9 +243,9 @@ public class Index {
     public static RegistryObject<ApiaryBlock> APIARY_BLOCK;
 
     public static void blocks() {
-        ANALYZER_BLOCK = BLOCKS.register("analyzer", () -> new AnalyzerBlock());
+        ANALYZER_BLOCK = BLOCKS.register("analyzer", AnalyzerBlock::new);
         ITEMS.register("analyzer", () -> new BlockItem(ANALYZER_BLOCK.get(), new Item.Properties().tab(ItemGroup.BEES)));
-        APIARY_BLOCK = BLOCKS.register("apiary", () -> new ApiaryBlock());
+        APIARY_BLOCK = BLOCKS.register("apiary", ApiaryBlock::new);
         ITEMS.register("apiary", () -> new BlockItem(APIARY_BLOCK.get(), new Item.Properties().tab(ItemGroup.BEES)));
 
         for(Specie specie : SpeciesRegistry.instance.getAll()) {

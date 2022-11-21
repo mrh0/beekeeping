@@ -3,6 +3,7 @@ package github.mrh0.beekeeping.event;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import github.mrh0.beekeeping.Beekeeping;
+import github.mrh0.beekeeping.Index;
 import github.mrh0.beekeeping.bee.genes.LifetimeGene;
 import github.mrh0.beekeeping.biome.BiomeTemperature;
 import net.minecraft.client.Minecraft;
@@ -22,8 +23,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 public class ClientOverlay {
     private static final ResourceLocation TEXTURE =
             new ResourceLocation(Beekeeping.MODID, "textures/gui/analyzer.png");
-    static int lx = 16, ly = 16;
-    static ItemStack thermometer = new ItemStack();
+    static int lx = 8, ly = 8;
 
     @SubscribeEvent
     public static void renderOverlay(final RenderGameOverlayEvent.Pre event) {
@@ -38,7 +38,7 @@ public class ClientOverlay {
         if(player.level == null)
             return;
 
-        if(!player.getInventory().contains(thermometer))
+        if(!player.getInventory().contains(new ItemStack(Index.THERMOMETER.get())))
             return;
 
         var temp = BiomeTemperature.of(player.level.getBiome(Minecraft.getInstance().player.getOnPos()).value().getBaseTemperature());
