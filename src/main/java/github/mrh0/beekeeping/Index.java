@@ -11,7 +11,7 @@ import github.mrh0.beekeeping.blocks.apiary.ApiaryBlockEntity;
 import github.mrh0.beekeeping.blocks.beehive.BeehiveBlock;
 import github.mrh0.beekeeping.config.Config;
 import github.mrh0.beekeeping.group.ItemGroup;
-import github.mrh0.beekeeping.item.Thermometer;
+import github.mrh0.beekeeping.item.ThermometerItem;
 import github.mrh0.beekeeping.recipe.BeeBreedingRecipe;
 import github.mrh0.beekeeping.recipe.BeeProduceRecipe;
 import github.mrh0.beekeeping.screen.analyzer.AnalyzerMenu;
@@ -226,10 +226,10 @@ public class Index {
     }
 
     //  ITEM
-    public static RegistryObject<Thermometer> THERMOMETER;
+    public static RegistryObject<ThermometerItem> THERMOMETER;
 
     public static void items() {
-        THERMOMETER = ITEMS.register("thermometer", Thermometer::new);
+        THERMOMETER = ITEMS.register("thermometer", ThermometerItem::new);
 
         for(Specie specie : SpeciesRegistry.instance.getAll()) {
             ITEMS.register(specie.getName() + "_drone", specie::buildDroneItem);
@@ -285,6 +285,7 @@ public class Index {
     public static TagKey<Item> DRONE_BEES_TAG;
     public static TagKey<Item> PRINCESS_BEES_TAG;
     public static TagKey<Item> QUEEN_BEES_TAG;
+    public static TagKey<Item> FRAME_TAG;
     public static TagKey<Block> BEEHIVE_TAG;
 
     public static void tags() {
@@ -292,6 +293,7 @@ public class Index {
         DRONE_BEES_TAG = ItemTags.create(new ResourceLocation("beekeeping", "drone_bees"));
         PRINCESS_BEES_TAG = ItemTags.create(new ResourceLocation("beekeeping", "princess_bees"));
         QUEEN_BEES_TAG = ItemTags.create(new ResourceLocation("beekeeping", "queen_bees"));
+        FRAME_TAG = ItemTags.create(new ResourceLocation("beekeeping", "frames"));
         BEEHIVE_TAG = BlockTags.create(new ResourceLocation("beekeeping", "beehives"));
     }
 

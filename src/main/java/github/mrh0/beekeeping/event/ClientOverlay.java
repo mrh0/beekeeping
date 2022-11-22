@@ -4,20 +4,17 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import github.mrh0.beekeeping.Beekeeping;
 import github.mrh0.beekeeping.Index;
-import github.mrh0.beekeeping.bee.genes.LifetimeGene;
 import github.mrh0.beekeeping.biome.BiomeTemperature;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 @Mod.EventBusSubscriber(modid = Beekeeping.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ClientOverlay {
@@ -44,8 +41,7 @@ public class ClientOverlay {
         var temp = BiomeTemperature.of(player.level.getBiome(Minecraft.getInstance().player.getOnPos()).value().getBaseTemperature());
 
         //drawTextShadowed(stack, new TextComponent("Test"), 10, 10, 1f);
-        int line = 0;
-        drawListItem(stack, temp.getComponent(), line++, 6 + temp.ordinal());
+        drawListItem(stack, temp.getComponent(), 0, 6 + temp.ordinal());
     }
 
     public static void drawTextShadowed(PoseStack poseStack, Component text, int x, int y, float scale) {

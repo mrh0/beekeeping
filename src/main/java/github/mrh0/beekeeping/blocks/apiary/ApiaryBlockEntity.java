@@ -98,7 +98,11 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
         return inputItemHandler.getStackInSlot(2);
     }
 
-    private final ItemStackHandler inputItemHandler = new ItemStackHandler(9) {
+    public ItemStack getFrame() {
+        return inputItemHandler.getStackInSlot(3);
+    }
+
+    private final ItemStackHandler inputItemHandler = new ItemStackHandler(4) {
         @Override
         protected void onContentsChanged(int slot) {
             checkLock = false;
@@ -118,6 +122,8 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
             if(stack.is(Index.PRINCESS_BEES_TAG) && slot == 1)
                 return super.insertItem(slot, stack, simulate);
             if(stack.is(Index.QUEEN_BEES_TAG) && slot == 2)
+                return super.insertItem(slot, stack, simulate);
+            if(stack.is(Index.FRAME_TAG) && slot == 9)
                 return super.insertItem(slot, stack, simulate);
             return stack;
         }
