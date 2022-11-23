@@ -123,7 +123,7 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
                 return super.insertItem(slot, stack, simulate);
             if(stack.is(Index.QUEEN_BEES_TAG) && slot == 2)
                 return super.insertItem(slot, stack, simulate);
-            if(stack.is(Index.FRAME_TAG) && slot == 9)
+            if(stack.is(Index.FRAME_TAG) && slot == 3)
                 return super.insertItem(slot, stack, simulate);
             return stack;
         }
@@ -162,6 +162,7 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
 
         ItemStack offspringQueen = new ItemStack(offspringCache.queenItem);
         offspringQueen.setTag(BeeLifecycle.getOffspringItemStack(getDrone(), getPrincess(), offspringCache));
+
         inputItemHandler.setStackInSlot(0, ItemStack.EMPTY);
         inputItemHandler.setStackInSlot(1, ItemStack.EMPTY);
         inputItemHandler.setStackInSlot(2, offspringQueen);
@@ -190,13 +191,13 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
     private LazyOptional<IItemHandler> lazyOutputItemHandler = LazyOptional.empty();
 
     @Override
-    public Component getDisplayName() {
+    public @NotNull Component getDisplayName() {
         return new TranslatableComponent("block.beekeeping.apiary");
     }
 
     @Nullable
     @Override
-    public AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {
+    public AbstractContainerMenu createMenu(int id, @NotNull Inventory inv, @NotNull Player player) {
         return new ApiaryMenu(id, inv, this, this.data);
     }
 
