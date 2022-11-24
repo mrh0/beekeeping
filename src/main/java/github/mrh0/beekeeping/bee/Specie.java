@@ -17,12 +17,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
-import net.minecraftforge.common.BiomeDictionary;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Function;
 
 public class Specie {
@@ -169,12 +168,12 @@ public class Specie {
         };
     }
 
-    public Specie addBeehive(Function<Set<BiomeDictionary.Type>, Boolean> biomeType, int tries, int rarity) {
+    public Specie addBeehive(TagKey<Biome> biomeType, int tries, int rarity) {
         this.beehive = new Beehive(this, biomeType, tries, rarity);
         return this;
     }
 
-    public Specie addBeehive(Function<Set<BiomeDictionary.Type>, Boolean> biomeType, int tries, int rarity, PlacementModifier modifier, Feature feature, Function<BlockPos, Boolean> blockPlaceAllow) {
+    public Specie addBeehive(TagKey<Biome> biomeType, int tries, int rarity, PlacementModifier modifier, Feature<RandomPatchConfiguration> feature, Function<BlockPos, Boolean> blockPlaceAllow) {
         this.beehive = new Beehive(this, biomeType, tries, rarity, modifier, feature, blockPlaceAllow);
         return this;
     }

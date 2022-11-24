@@ -4,7 +4,6 @@ import github.mrh0.beekeeping.Beekeeping;
 import github.mrh0.beekeeping.Util;
 import github.mrh0.beekeeping.bee.Specie;
 import github.mrh0.beekeeping.bee.SpeciesRegistry;
-import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -39,12 +38,6 @@ public class ItemModelGenerator extends ItemModelProvider {
     private ItemModelBuilder simpleItem(Item item) {
         return withExistingParent(ForgeRegistries.ITEMS.getKey(item).getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(Beekeeping.MODID,"item/" + item));
-    }
-
-    private ItemModelBuilder handheldItem(Item item) {
-        return withExistingParent(ForgeRegistries.ITEMS.getKey(item).getPath(),
-                new ResourceLocation("item/handheld")).texture("layer0",
                 new ResourceLocation(Beekeeping.MODID,"item/" + item));
     }
 

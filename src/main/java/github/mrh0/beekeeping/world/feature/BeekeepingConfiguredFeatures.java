@@ -13,8 +13,8 @@ import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
 import net.minecraft.world.level.levelgen.placement.HeightmapPlacement;
 
 public class BeekeepingConfiguredFeatures {
-    public static Holder<ConfiguredFeature<RandomPatchConfiguration, ?>> getConfiguredFeatures(Beehive beehive, Feature feature) {
-        return FeatureUtils.register(beehive.getName() + "_configured", feature, //Feature.FLOWER
+    public static Holder<ConfiguredFeature<RandomPatchConfiguration, ?>> getConfiguredFeatures(Beehive beehive, Feature<RandomPatchConfiguration> feature) {
+        return FeatureUtils.register(beehive.getName() + "_configured", feature,
                 new RandomPatchConfiguration(beehive.tries, 16, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                         new SimpleBlockConfiguration(BlockStateProvider.simple(beehive.specie.beehive.block.get())))));
     }
