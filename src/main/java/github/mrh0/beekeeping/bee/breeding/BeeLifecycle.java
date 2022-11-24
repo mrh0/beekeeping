@@ -8,7 +8,6 @@ import github.mrh0.beekeeping.recipe.BeeBreedingRecipe;
 import github.mrh0.beekeeping.recipe.BeeProduceRecipe;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
@@ -23,7 +22,7 @@ public class BeeLifecycle {
         Optional<BeeBreedingRecipe> match = level.getRecipeManager()
                 .getRecipeFor(BeeBreedingRecipe.Type.INSTANCE, inv, level);
         if(match.isEmpty())
-            return Util.selectRandom(BeeItem.of(drone), BeeItem.of(princess));
+            return Util.selectRandom(BeeItem.speciesOf(drone), BeeItem.speciesOf(princess));
         return match.get().getOffspring();
     }
 

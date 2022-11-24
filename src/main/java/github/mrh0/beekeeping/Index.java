@@ -1,5 +1,6 @@
 package github.mrh0.beekeeping;
 
+import github.mrh0.beekeeping.bee.Satisfaction;
 import github.mrh0.beekeeping.bee.Specie;
 import github.mrh0.beekeeping.bee.SpeciesRegistry;
 import github.mrh0.beekeeping.bee.genes.Gene;
@@ -12,6 +13,8 @@ import github.mrh0.beekeeping.blocks.beehive.BeehiveBlock;
 import github.mrh0.beekeeping.config.Config;
 import github.mrh0.beekeeping.group.ItemGroup;
 import github.mrh0.beekeeping.item.ThermometerItem;
+import github.mrh0.beekeeping.item.frame.FrameItem;
+import github.mrh0.beekeeping.item.frame.IFrameSatisfactionEvent;
 import github.mrh0.beekeeping.recipe.BeeBreedingRecipe;
 import github.mrh0.beekeeping.recipe.BeeProduceRecipe;
 import github.mrh0.beekeeping.screen.analyzer.AnalyzerMenu;
@@ -230,6 +233,11 @@ public class Index {
 
     public static void items() {
         THERMOMETER = ITEMS.register("thermometer", ThermometerItem::new);
+
+        ITEMS.register("basic_frame", () -> new FrameItem("basic"));
+        ITEMS.register("glowing_frame", () -> new FrameItem("glowing")
+                .addSatisfactionEvent(((level, pos, type, queen, satisfaction) ->
+                        type == IFrameSatisfactionEvent.SatisfactionType.LIGHT ? satisfaction.up() : satisfaction)));
 
         for(Specie specie : SpeciesRegistry.instance.getAll()) {
             ITEMS.register(specie.getName() + "_drone", specie::buildDroneItem);

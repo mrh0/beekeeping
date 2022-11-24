@@ -163,5 +163,6 @@ ca7f49badcfb8c5ee12e1f726d32561c7e8c9b0b data/beekeeping/recipes/bee_produce/wic
 ac9f20ac8d914308f537e6da2e1094617c35f342 data/beekeeping/tags/blocks/beehives.json
 426116af292dcb1d870127f24c1fd48bda9db3e8 data/beekeeping/tags/items/bees.json
 1b13d1d056ad2307fe0dd0dabbc92547bcd3b087 data/beekeeping/tags/items/drone_bees.json
+c65f5b3eb6a06dc03fcc732bbfcf84af3c2f645f data/beekeeping/tags/items/frames.json
 bd001cd83360b2220658b8db50108c43f57fc71e data/beekeeping/tags/items/princess_bees.json
 ee5891b3dcfe43c1d953e39eaf2aae5d8feef937 data/beekeeping/tags/items/queen_bees.json

@@ -9,7 +9,6 @@ import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlockEntity;
 import github.mrh0.beekeeping.screen.BeeScreen;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;
@@ -124,6 +123,6 @@ public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity>
     }
 
     public Specie getSpecie() {
-        return BeeItem.of(getAnalyzed());
+        return BeeItem.speciesOf(getAnalyzed());
     }
 }
