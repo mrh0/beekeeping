@@ -238,6 +238,12 @@ public class Index {
         ITEMS.register("glowing_frame", () -> new FrameItem("glowing")
                 .addSatisfactionEvent(((level, pos, type, queen, satisfaction) ->
                         type == IFrameSatisfactionEvent.SatisfactionType.LIGHT ? satisfaction.up() : satisfaction)));
+        ITEMS.register("water_proof_frame", () -> new FrameItem("water_proof")
+                .addSatisfactionEvent(((level, pos, type, queen, satisfaction) ->
+                        type == IFrameSatisfactionEvent.SatisfactionType.WEATHER ? satisfaction.up() : satisfaction)));
+        ITEMS.register("insulated_frame", () -> new FrameItem("insulated")
+                .addSatisfactionEvent(((level, pos, type, queen, satisfaction) ->
+                        type == IFrameSatisfactionEvent.SatisfactionType.TEMPERATURE ? satisfaction.up() : satisfaction)));
 
         for(Specie specie : SpeciesRegistry.instance.getAll()) {
             ITEMS.register(specie.getName() + "_drone", specie::buildDroneItem);

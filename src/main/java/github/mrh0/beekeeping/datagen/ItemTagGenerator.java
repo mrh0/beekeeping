@@ -2,6 +2,7 @@ package github.mrh0.beekeeping.datagen;
 
 import github.mrh0.beekeeping.Beekeeping;
 import github.mrh0.beekeeping.Index;
+import github.mrh0.beekeeping.Util;
 import github.mrh0.beekeeping.bee.Specie;
 import github.mrh0.beekeeping.bee.SpeciesRegistry;
 import github.mrh0.beekeeping.item.frame.FrameItem;

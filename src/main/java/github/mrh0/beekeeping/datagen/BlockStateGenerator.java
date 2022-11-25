@@ -23,7 +23,7 @@ public class BlockStateGenerator extends BlockStateProvider {
                         Beekeeping.get("block/beehives/" + specie.getName() + "_bottom"),
                         Beekeeping.get("block/beehives/" + specie.getName() + "_top")
                 ));
-                System.out.println("\"block.beekeeping." + specie.getName() + "_beehive\":\"" + Util.capitalize(specie.getName()) + " Beehive\",");
+                System.out.println("\"block.beekeeping." + specie.getName() + "_beehive\": \"" + Util.capitalize(specie.getName()) + " Beehive\",");
             }
         }
     }

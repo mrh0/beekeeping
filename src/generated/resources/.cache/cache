@@ -20,6 +20,7 @@ ddec1acd4d19e585a37e79b25d0320514c928ec4 assets/beekeeping/models/block/fungal_b
 7090cb89584beb08bcf1bc568fc7505ca3d7ca5c assets/beekeeping/models/block/snowy_beehive.json
 18c666aaae7039b010706128875448fc76b18be9 assets/beekeeping/models/block/tropical_beehive.json
 3dc52343a8dbb662454bf6094bbd72d852b56761 assets/beekeeping/models/block/upland_beehive.json
+cc5bf1f85d6b5ba4e6e7e1c1574cf2c0df795af5 assets/beekeeping/models/item/basic_frame.json
 f2709140ca1b9ab7a94e87b1624265562c532e19 assets/beekeeping/models/item/coco_drone.json
 0cdca1c19ff77c24c1f4111a736e8447b7e3e3dc assets/beekeeping/models/item/coco_princess.json
 0dcd7be170dbf93a970fea1adf6c4e6c36ccb651 assets/beekeeping/models/item/coco_queen.json
@@ -59,9 +60,11 @@ f6a5bd25cb4af13864e18c92494f203fa3d8d214 assets/beekeeping/models/item/fungal_qu
 167e14936af0296fe2454a4d362c0bf318d74853 assets/beekeeping/models/item/glacial_drone.json
 f8c90dc63e871ce5458899940504f3a39a2f6d63 assets/beekeeping/models/item/glacial_princess.json
 9c0650ec14aebd3a53b8616e400105592d57df93 assets/beekeeping/models/item/glacial_queen.json
+31904aa0ff66805d7f4348a97f320eb347e436db assets/beekeeping/models/item/glowing_frame.json
 eb6508f42fb3658a68ab710491048cbf0d84c514 assets/beekeeping/models/item/infernal_drone.json
 4a3ddc7f7f10797bb3b209ddd216bb1e20176d1c assets/beekeeping/models/item/infernal_princess.json
 cace3bc67a8588845150246d3fb64b2c95e38002 assets/beekeeping/models/item/infernal_queen.json
+0b4c6ffd44c889e65c6d9fee865afe85121ca4fb assets/beekeeping/models/item/insulated_frame.json
 5d1e04ec3905af8a0d34602bafc639e61c114978 assets/beekeeping/models/item/magmatic_drone.json
 2d3b501e8b1f120244aa19319b09450956879ff0 assets/beekeeping/models/item/magmatic_princess.json
 3870da559807ecdd9d0d12864b8f8ccf619786a4 assets/beekeeping/models/item/magmatic_queen.json
@@ -94,6 +97,7 @@ c1c4b9ee3db8d3c125a9f3c252554bdc610f2590 assets/beekeeping/models/item/tropical_
 f7461031700484fdf1bb41704262917229abb67f assets/beekeeping/models/item/upland_drone.json
 e7c66bf32bcf22e0d79e38c87e294ba94361d5af assets/beekeeping/models/item/upland_princess.json
 90f5884887e7db19500bfded19f2ae6d0ff59e79 assets/beekeeping/models/item/upland_queen.json
+095e0de95b29aa8911e89c744b912894445569d0 assets/beekeeping/models/item/water_proof_frame.json
 a3ab15451dad65cae5a235935a0d666a348822de assets/beekeeping/models/item/wicked_drone.json
 440ca48f83fe2a9110c58a628e4bd15d7f16bb2a assets/beekeeping/models/item/wicked_princess.json
 d33aba73db7ee1cc823a05814c7b5b8f82a76dfc assets/beekeeping/models/item/wicked_queen.json
@@ -163,6 +167,6 @@ ca7f49badcfb8c5ee12e1f726d32561c7e8c9b0b data/beekeeping/recipes/bee_produce/wic
 ac9f20ac8d914308f537e6da2e1094617c35f342 data/beekeeping/tags/blocks/beehives.json
 426116af292dcb1d870127f24c1fd48bda9db3e8 data/beekeeping/tags/items/bees.json
 1b13d1d056ad2307fe0dd0dabbc92547bcd3b087 data/beekeeping/tags/items/drone_bees.json
-c65f5b3eb6a06dc03fcc732bbfcf84af3c2f645f data/beekeeping/tags/items/frames.json
+09cda1908ff985ca9eb2d156e1b24d94bc4ccbe3 data/beekeeping/tags/items/frames.json
 bd001cd83360b2220658b8db50108c43f57fc71e data/beekeeping/tags/items/princess_bees.json
 ee5891b3dcfe43c1d953e39eaf2aae5d8feef937 data/beekeeping/tags/items/queen_bees.json

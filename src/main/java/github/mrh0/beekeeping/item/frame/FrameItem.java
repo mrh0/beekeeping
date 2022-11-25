@@ -20,7 +20,7 @@ public class FrameItem extends Item {
     private IFrameBreedingEvent breedingEvent = (level, pos, queen) -> queen;
     private IFrameProduceEvent produceEvent = (level, pos, produceType, produce) -> produce;
     private IFrameSatisfactionEvent satisfactionEvent = (level, pos, satisfactionType, queen, satisfaction) -> satisfaction;
-    private String name;
+    public final String name;
 
     public FrameItem(String name) {
         super(new Properties().stacksTo(16).tab(ItemGroup.BEES));
