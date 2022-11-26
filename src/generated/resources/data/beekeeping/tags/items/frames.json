@@ -4,6 +4,7 @@
     "beekeeping:basic_frame",
     "beekeeping:glowing_frame",
     "beekeeping:water_proof_frame",
-    "beekeeping:insulated_frame"
+    "beekeeping:insulated_frame",
+    "beekeeping:cursed_frame"
   ]
 }

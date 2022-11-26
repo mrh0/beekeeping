@@ -26,14 +26,14 @@ public class BeeLifecycle {
         return match.get().getOffspring();
     }
 
-    public static CompoundTag getOffspringItemStack(ItemStack drone, ItemStack princess, Specie offspring) {
+    public static CompoundTag getOffspringTag(ItemStack drone, ItemStack princess, Specie offspring, SelectFunction fn) {
         CompoundTag tag = new CompoundTag();
         BeeItem.init(tag, offspring.queenItem,
-                Gene.select(LifetimeGene.get(drone.getTag()), LifetimeGene.get(princess.getTag())),
-                Gene.select(WeatherToleranceGene.get(drone.getTag()), WeatherToleranceGene.get(princess.getTag())),
-                Gene.select(TemperatureToleranceGene.get(drone.getTag()), TemperatureToleranceGene.get(princess.getTag())),
-                Gene.select(LightToleranceGene.get(drone.getTag()), LightToleranceGene.get(princess.getTag())),
-                Gene.select(RareProduceGene.get(drone.getTag()), RareProduceGene.get(princess.getTag()))
+                fn.select(LifetimeGene.get(drone.getTag()), LifetimeGene.get(princess.getTag())),
+                fn.select(WeatherToleranceGene.get(drone.getTag()), WeatherToleranceGene.get(princess.getTag())),
+                fn.select(TemperatureToleranceGene.get(drone.getTag()), TemperatureToleranceGene.get(princess.getTag())),
+                fn.select(LightToleranceGene.get(drone.getTag()), LightToleranceGene.get(princess.getTag())),
+                fn.select(RareProduceGene.get(drone.getTag()), RareProduceGene.get(princess.getTag()))
         );
         return tag;
     }
@@ -58,5 +58,9 @@ public class BeeLifecycle {
         ItemStack r = new ItemStack(type);
         r.setTag(tag);
         return r;
+    }
+
+    public interface SelectFunction {
+        int select(int a, int b);
     }
 }

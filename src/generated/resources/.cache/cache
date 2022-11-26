@@ -28,6 +28,7 @@ b99e0ddec15e5aecb470f907729a5b01f75a992e assets/beekeeping/models/item/common_be
 99949ce25f0dede7e2d170f8b7a932359e275fec assets/beekeeping/models/item/common_drone.json
 895c585515f28fc106b7d8552976cfd0555a3d64 assets/beekeeping/models/item/common_princess.json
 dc480b926be5801f40c830e3a22b0a18d9b8d420 assets/beekeeping/models/item/common_queen.json
+101f292a8d59fc139e5b8be5777444c593a1a435 assets/beekeeping/models/item/cursed_frame.json
 5e9964c2f3af5e43a468e58977cce2aa317f5659 assets/beekeeping/models/item/demonic_drone.json
 77c9878241c044edf1770306bb98b35adda37abb assets/beekeeping/models/item/demonic_princess.json
 ceb070ab2b7a388fa745f74d77a797c3b83fd81e assets/beekeeping/models/item/demonic_queen.json
@@ -167,6 +168,6 @@ ca7f49badcfb8c5ee12e1f726d32561c7e8c9b0b data/beekeeping/recipes/bee_produce/wic
 ac9f20ac8d914308f537e6da2e1094617c35f342 data/beekeeping/tags/blocks/beehives.json
 426116af292dcb1d870127f24c1fd48bda9db3e8 data/beekeeping/tags/items/bees.json
 1b13d1d056ad2307fe0dd0dabbc92547bcd3b087 data/beekeeping/tags/items/drone_bees.json
-09cda1908ff985ca9eb2d156e1b24d94bc4ccbe3 data/beekeeping/tags/items/frames.json
+760b95e3ccd4ad181feb8ac5ed5746a9de7979c7 data/beekeeping/tags/items/frames.json
 bd001cd83360b2220658b8db50108c43f57fc71e data/beekeeping/tags/items/princess_bees.json
 ee5891b3dcfe43c1d953e39eaf2aae5d8feef937 data/beekeeping/tags/items/queen_bees.json

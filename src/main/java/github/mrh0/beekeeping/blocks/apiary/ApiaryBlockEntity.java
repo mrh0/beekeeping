@@ -4,6 +4,7 @@ import github.mrh0.beekeeping.Index;
 import github.mrh0.beekeeping.bee.Satisfaction;
 import github.mrh0.beekeeping.bee.Specie;
 import github.mrh0.beekeeping.bee.breeding.BeeLifecycle;
+import github.mrh0.beekeeping.bee.genes.Gene;
 import github.mrh0.beekeeping.bee.genes.RareProduceGene;
 import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.config.Config;
@@ -164,8 +165,8 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
             return;
 
         ItemStack offspringQueen = new ItemStack(offspringCache.queenItem);
-        offspringQueen.setTag(BeeLifecycle.getOffspringItemStack(getDrone(), getPrincess(), offspringCache));
-        offspringQueen = FrameItem.onBreed(getFrame(), getLevel(), getBlockPos(), offspringQueen);
+        offspringQueen.setTag(BeeLifecycle.getOffspringTag(getDrone(), getPrincess(), offspringCache, Gene::select));
+        offspringQueen = FrameItem.onBreed(getFrame(), getLevel(), getBlockPos(), getDrone(), getPrincess(), offspringQueen);
 
         inputItemHandler.setStackInSlot(0, ItemStack.EMPTY);
         inputItemHandler.setStackInSlot(1, ItemStack.EMPTY);

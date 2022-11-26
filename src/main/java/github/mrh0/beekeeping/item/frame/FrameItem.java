@@ -17,7 +17,7 @@ import java.util.List;
 
 public class FrameItem extends Item {
     public static List<FrameItem> frames = new ArrayList<>();
-    private IFrameBreedingEvent breedingEvent = (level, pos, queen) -> queen;
+    private IFrameBreedingEvent breedingEvent = (level, pos, drone, princess, queen) -> queen;
     private IFrameProduceEvent produceEvent = (level, pos, produceType, produce) -> produce;
     private IFrameSatisfactionEvent satisfactionEvent = (level, pos, satisfactionType, queen, satisfaction) -> satisfaction;
     public final String name;
@@ -43,14 +43,14 @@ public class FrameItem extends Item {
         return this;
     }
 
-    public static ItemStack onBreed(ItemStack frameStack, Level level, BlockPos pos, ItemStack queen) {
+    public static ItemStack onBreed(ItemStack frameStack, Level level, BlockPos pos, ItemStack drone, ItemStack princess, ItemStack queen) {
         if(frameStack == null)
             return queen;
         if(frameStack.isEmpty())
             return queen;
         if(!(frameStack.getItem() instanceof FrameItem frame))
             return queen;
-        return frame.breedingEvent.trigger(level, pos, queen);
+        return frame.breedingEvent.trigger(level, pos, drone, princess, queen);
     }
 
     public static ItemStack onProduce(ItemStack frameStack, Level level, BlockPos pos, IFrameProduceEvent.ProduceType produceType, ItemStack produce) {

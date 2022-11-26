@@ -99,6 +99,12 @@
   "item.beekeeping.water_proof_frame": "Water_proof Frame",
   "item.beekeeping.insulated_frame": "Insulated Frame",
 
+  "tooltip.beekeeping.frame.basic": "Basic accommodation for your bees.",
+  "tooltip.beekeeping.frame.glowing": "Improves you bees tolerance for darkness.",
+  "tooltip.beekeeping.frame.water_proof": "Improves you bees tolerance for wet weather.",
+  "tooltip.beekeeping.frame.insulated": "Improves you bees tolerance for extreme climates.",
+  "tooltip.beekeeping.frame.cursed": "Will reduce the lifetime of the queens offspring.",
+
   "block.beekeeping.common_beehive": "Common Beehive",
   "block.beekeeping.forest_beehive": "Forest Beehive",
   "block.beekeeping.tropical_beehive": "Tropical Beehive",

@@ -2,6 +2,7 @@ package github.mrh0.beekeeping.bee.genes;
 
 import github.mrh0.beekeeping.config.Config;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
 
 public enum LifetimeGene implements Gene {
     SHORTEST("shortest", Config.LIFETIME_GENE_SHORTEST.get()),
@@ -48,5 +49,17 @@ public enum LifetimeGene implements Gene {
             case 4 -> LONGEST;
             default -> NORMAL;
         };
+    }
+
+    public static ItemStack up(ItemStack bee) {
+        int now = get(bee.getTag());
+        set(bee.getTag(), Math.min(now+1, 4));
+        return bee;
+    }
+
+    public static ItemStack down(ItemStack bee) {
+        int now = get(bee.getTag());
+        set(bee.getTag(), Math.max(now+1, 0));
+        return bee;
     }
 }

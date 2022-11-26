@@ -164,6 +164,8 @@ public abstract class BeeItem extends Item {
     }
 
     public static Specie speciesOf(ItemStack stack) {
+        if(stack == null)
+            return null;
         if(stack.isEmpty())
             return null;
         if(!(stack.getItem() instanceof BeeItem))

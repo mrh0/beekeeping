@@ -17,7 +17,7 @@ public class Util {
     }
 
     public static String camelCase(String str) {
-        var words = str.replace('_', ' ').split(" ");
+        var words = str.replaceAll("_", " ").split(" ");
         var sb = new StringBuilder();
         for (int i = 0; i < words.length; i++) {
             sb.append(words[i]);

@@ -44,7 +44,7 @@ public class ItemModelGenerator extends ItemModelProvider {
 
         for(FrameItem frame : FrameItem.frames) {
             simpleItem(frame, "frame/");
-            System.out.println("\"item.beekeeping." + frame.name + "_frame" + "\": \"" + Util.capitalize(frame.name) + " Frame" + "\",");
+            System.out.println("\"item.beekeeping." + frame.name + "_frame" + "\": \"" + Util.capitalize(frame.name).replaceAll("_", " ") + " Frame" + "\",");
         }
     }
 

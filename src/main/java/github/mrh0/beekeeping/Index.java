@@ -3,7 +3,10 @@ package github.mrh0.beekeeping;
 import github.mrh0.beekeeping.bee.Satisfaction;
 import github.mrh0.beekeeping.bee.Specie;
 import github.mrh0.beekeeping.bee.SpeciesRegistry;
+import github.mrh0.beekeeping.bee.breeding.BeeLifecycle;
 import github.mrh0.beekeeping.bee.genes.Gene;
+import github.mrh0.beekeeping.bee.genes.LifetimeGene;
+import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.biome.BiomeTemperature;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlock;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlockEntity;
@@ -244,6 +247,11 @@ public class Index {
         ITEMS.register("insulated_frame", () -> new FrameItem("insulated")
                 .addSatisfactionEvent(((level, pos, type, queen, satisfaction) ->
                         type == IFrameSatisfactionEvent.SatisfactionType.TEMPERATURE ? satisfaction.up() : satisfaction)));
+        ITEMS.register("cursed_frame", () -> new FrameItem("cursed")
+                .addBreedEvent((level, pos, drone, princess, queen) -> {
+                    queen.setTag(BeeLifecycle.getOffspringTag(drone, princess, BeeItem.speciesOf(queen), Math::min));
+                            return queen;
+                }));
 
         for(Specie specie : SpeciesRegistry.instance.getAll()) {
             ITEMS.register(specie.getName() + "_drone", specie::buildDroneItem);
