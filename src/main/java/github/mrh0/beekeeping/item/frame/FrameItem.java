@@ -2,6 +2,7 @@ package github.mrh0.beekeeping.item.frame;
 
 import github.mrh0.beekeeping.bee.Satisfaction;
 import github.mrh0.beekeeping.group.ItemGroup;
+import github.mrh0.beekeeping.item.HItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -15,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FrameItem extends Item {
+public class FrameItem extends HItem {
     public static List<FrameItem> frames = new ArrayList<>();
     private IFrameBreedingEvent breedingEvent = (level, pos, drone, princess, queen) -> queen;
     private IFrameProduceEvent produceEvent = (level, pos, produceType, produce) -> produce;

@@ -32,6 +32,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -233,14 +234,16 @@ public class Index {
 
     //  ITEM
     public static RegistryObject<ThermometerItem> THERMOMETER;
+    public static RegistryObject<FrameItem> BASIC_FRAME;
 
     public static void items() {
         THERMOMETER = ITEMS.register("thermometer", ThermometerItem::new);
 
-        ITEMS.register("basic_frame", () -> new FrameItem("basic"));
+        BASIC_FRAME = ITEMS.register("basic_frame", () -> new FrameItem("basic"));
         ITEMS.register("glowing_frame", () -> new FrameItem("glowing")
                 .addSatisfactionEvent(((level, pos, type, queen, satisfaction) ->
-                        type == IFrameSatisfactionEvent.SatisfactionType.LIGHT ? satisfaction.up() : satisfaction)));
+                        type == IFrameSatisfactionEvent.SatisfactionType.LIGHT ? satisfaction.up() : satisfaction))
+                .shapeless(1, Ingredient.of(BASIC_FRAME.get()), Ingredient.of(Items.GLOWSTONE_DUST)));
         ITEMS.register("water_proof_frame", () -> new FrameItem("water_proof")
                 .addSatisfactionEvent(((level, pos, type, queen, satisfaction) ->
                         type == IFrameSatisfactionEvent.SatisfactionType.WEATHER ? satisfaction.up() : satisfaction)));
