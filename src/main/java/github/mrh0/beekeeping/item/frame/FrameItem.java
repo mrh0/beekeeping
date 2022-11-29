@@ -2,7 +2,6 @@ package github.mrh0.beekeeping.item.frame;
 
 import github.mrh0.beekeeping.bee.Satisfaction;
 import github.mrh0.beekeeping.group.ItemGroup;
-import github.mrh0.beekeeping.item.HItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -16,11 +15,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FrameItem extends HItem {
+public class FrameItem extends Item {
     public static List<FrameItem> frames = new ArrayList<>();
-    private IFrameBreedingEvent breedingEvent = (level, pos, drone, princess, queen) -> queen;
-    private IFrameProduceEvent produceEvent = (level, pos, produceType, produce) -> produce;
-    private IFrameSatisfactionEvent satisfactionEvent = (level, pos, satisfactionType, queen, satisfaction) -> satisfaction;
+    private BreedingEvent breedingEvent = (level, pos, drone, princess, queen) -> queen;
+    private ProduceEvent produceEvent = (level, pos, produceType, produce) -> produce;
+    private SatisfactionEvent satisfactionEvent = (level, pos, satisfactionType, queen, satisfaction) -> satisfaction;
     public final String name;
 
     public FrameItem(String name) {
@@ -29,17 +28,17 @@ public class FrameItem extends HItem {
         frames.add(this);
     }
 
-    public FrameItem addBreedEvent(IFrameBreedingEvent breedingEvent) {
+    public FrameItem addBreedEvent(BreedingEvent breedingEvent) {
         this.breedingEvent = breedingEvent;
         return this;
     }
 
-    public FrameItem addProduceEvent(IFrameProduceEvent produceEvent) {
+    public FrameItem addProduceEvent(ProduceEvent produceEvent) {
         this.produceEvent = produceEvent;
         return this;
     }
 
-    public FrameItem addSatisfactionEvent(IFrameSatisfactionEvent satisfactionEvent) {
+    public FrameItem addSatisfactionEvent(SatisfactionEvent satisfactionEvent) {
         this.satisfactionEvent = satisfactionEvent;
         return this;
     }
@@ -54,7 +53,7 @@ public class FrameItem extends HItem {
         return frame.breedingEvent.trigger(level, pos, drone, princess, queen);
     }
 
-    public static ItemStack onProduce(ItemStack frameStack, Level level, BlockPos pos, IFrameProduceEvent.ProduceType produceType, ItemStack produce) {
+    public static ItemStack onProduce(ItemStack frameStack, Level level, BlockPos pos, ProduceEvent.ProduceType produceType, ItemStack produce) {
         if(frameStack == null)
             return produce;
         if(frameStack.isEmpty())
@@ -64,7 +63,7 @@ public class FrameItem extends HItem {
         return frame.produceEvent.trigger(level, pos, produceType, produce);
     }
 
-    public static Satisfaction onSatisfaction(ItemStack frameStack, Level level, BlockPos pos, IFrameSatisfactionEvent.SatisfactionType satisfactionType, ItemStack queen, Satisfaction satisfaction) {
+    public static Satisfaction onSatisfaction(ItemStack frameStack, Level level, BlockPos pos, SatisfactionEvent.SatisfactionType satisfactionType, ItemStack queen, Satisfaction satisfaction) {
         if(frameStack == null)
             return satisfaction;
         if(frameStack.isEmpty())

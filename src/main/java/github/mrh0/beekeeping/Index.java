@@ -1,11 +1,9 @@
 package github.mrh0.beekeeping;
 
-import github.mrh0.beekeeping.bee.Satisfaction;
 import github.mrh0.beekeeping.bee.Specie;
 import github.mrh0.beekeeping.bee.SpeciesRegistry;
 import github.mrh0.beekeeping.bee.breeding.BeeLifecycle;
 import github.mrh0.beekeeping.bee.genes.Gene;
-import github.mrh0.beekeeping.bee.genes.LifetimeGene;
 import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.biome.BiomeTemperature;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlock;
@@ -15,9 +13,10 @@ import github.mrh0.beekeeping.blocks.apiary.ApiaryBlockEntity;
 import github.mrh0.beekeeping.blocks.beehive.BeehiveBlock;
 import github.mrh0.beekeeping.config.Config;
 import github.mrh0.beekeeping.group.ItemGroup;
+import github.mrh0.beekeeping.item.ItemBuilder;
 import github.mrh0.beekeeping.item.ThermometerItem;
 import github.mrh0.beekeeping.item.frame.FrameItem;
-import github.mrh0.beekeeping.item.frame.IFrameSatisfactionEvent;
+import github.mrh0.beekeeping.item.frame.SatisfactionEvent;
 import github.mrh0.beekeeping.recipe.BeeBreedingRecipe;
 import github.mrh0.beekeeping.recipe.BeeProduceRecipe;
 import github.mrh0.beekeeping.screen.analyzer.AnalyzerMenu;
@@ -239,22 +238,33 @@ public class Index {
     public static void items() {
         THERMOMETER = ITEMS.register("thermometer", ThermometerItem::new);
 
-        BASIC_FRAME = ITEMS.register("basic_frame", () -> new FrameItem("basic"));
-        ITEMS.register("glowing_frame", () -> new FrameItem("glowing")
+        BASIC_FRAME = ITEMS.register("basic_frame", () -> new FrameItem("basic"));//
+        ITEMS.register("glowing_frame", () -> new ItemBuilder<>(new FrameItem("glowing")
                 .addSatisfactionEvent(((level, pos, type, queen, satisfaction) ->
-                        type == IFrameSatisfactionEvent.SatisfactionType.LIGHT ? satisfaction.up() : satisfaction))
-                .shapeless(1, Ingredient.of(BASIC_FRAME.get()), Ingredient.of(Items.GLOWSTONE_DUST)));
-        ITEMS.register("water_proof_frame", () -> new FrameItem("water_proof")
+                    type == SatisfactionEvent.SatisfactionType.LIGHT ? satisfaction.up() : satisfaction)))
+                .shapeless(1, Ingredient.of(BASIC_FRAME.get()), Ingredient.of(Items.GLOWSTONE_DUST))
+                .shapeless(1, Ingredient.of(BASIC_FRAME.get()), Ingredient.of(Items.GLOW_BERRIES))
+                .build());
+
+        ITEMS.register("water_proof_frame", () -> new ItemBuilder<>(new FrameItem("water_proof")
                 .addSatisfactionEvent(((level, pos, type, queen, satisfaction) ->
-                        type == IFrameSatisfactionEvent.SatisfactionType.WEATHER ? satisfaction.up() : satisfaction)));
-        ITEMS.register("insulated_frame", () -> new FrameItem("insulated")
+                        type == SatisfactionEvent.SatisfactionType.WEATHER ? satisfaction.up() : satisfaction)))
+                .shapeless(1, Ingredient.of(BASIC_FRAME.get()), Ingredient.of(Items.DRIED_KELP))
+                .build());
+
+        ITEMS.register("insulated_frame", () -> new ItemBuilder<>(new FrameItem("insulated")
                 .addSatisfactionEvent(((level, pos, type, queen, satisfaction) ->
-                        type == IFrameSatisfactionEvent.SatisfactionType.TEMPERATURE ? satisfaction.up() : satisfaction)));
-        ITEMS.register("cursed_frame", () -> new FrameItem("cursed")
+                        type == SatisfactionEvent.SatisfactionType.TEMPERATURE ? satisfaction.up() : satisfaction)))
+                .shapeless(1, Ingredient.of(BASIC_FRAME.get()), Ingredient.of(ItemTags.WOOL))
+                .build());
+
+        ITEMS.register("cursed_frame", () -> new ItemBuilder<>(new FrameItem("cursed")
                 .addBreedEvent((level, pos, drone, princess, queen) -> {
                     queen.setTag(BeeLifecycle.getOffspringTag(drone, princess, BeeItem.speciesOf(queen), Math::min));
-                            return queen;
-                }));
+                    return queen;
+                }))
+                .shapeless(1, Ingredient.of(BASIC_FRAME.get()), Ingredient.of(ItemTags.SOUL_FIRE_BASE_BLOCKS))
+                .build());
 
         for(Specie specie : SpeciesRegistry.instance.getAll()) {
             ITEMS.register(specie.getName() + "_drone", specie::buildDroneItem);

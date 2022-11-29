@@ -9,8 +9,8 @@ import github.mrh0.beekeeping.bee.genes.RareProduceGene;
 import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.config.Config;
 import github.mrh0.beekeeping.item.frame.FrameItem;
-import github.mrh0.beekeeping.item.frame.IFrameProduceEvent;
-import github.mrh0.beekeeping.item.frame.IFrameSatisfactionEvent;
+import github.mrh0.beekeeping.item.frame.ProduceEvent;
+import github.mrh0.beekeeping.item.frame.SatisfactionEvent;
 import github.mrh0.beekeeping.network.IHasToggleOption;
 import github.mrh0.beekeeping.network.TogglePacket;
 import github.mrh0.beekeeping.recipe.BeeProduceRecipe;
@@ -189,12 +189,12 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
         weatherSatisfactionCache = specie.getWeatherSatisfaction(getQueen(), getLevel(), getBlockPos());
         temperatureSatisfactionCache = specie.getTemperatureSatisfaction(getQueen(), getLevel(), getBlockPos());
 
-        lightSatisfactionCache = FrameItem.onSatisfaction(getFrame(), getLevel(), getBlockPos(), IFrameSatisfactionEvent.SatisfactionType.LIGHT, getQueen(), lightSatisfactionCache);
-        weatherSatisfactionCache = FrameItem.onSatisfaction(getFrame(), getLevel(), getBlockPos(), IFrameSatisfactionEvent.SatisfactionType.WEATHER, getQueen(), weatherSatisfactionCache);
-        temperatureSatisfactionCache = FrameItem.onSatisfaction(getFrame(), getLevel(), getBlockPos(), IFrameSatisfactionEvent.SatisfactionType.TEMPERATURE, getQueen(), temperatureSatisfactionCache);
+        lightSatisfactionCache = FrameItem.onSatisfaction(getFrame(), getLevel(), getBlockPos(), SatisfactionEvent.SatisfactionType.LIGHT, getQueen(), lightSatisfactionCache);
+        weatherSatisfactionCache = FrameItem.onSatisfaction(getFrame(), getLevel(), getBlockPos(), SatisfactionEvent.SatisfactionType.WEATHER, getQueen(), weatherSatisfactionCache);
+        temperatureSatisfactionCache = FrameItem.onSatisfaction(getFrame(), getLevel(), getBlockPos(), SatisfactionEvent.SatisfactionType.TEMPERATURE, getQueen(), temperatureSatisfactionCache);
 
         satisfactionCache = Satisfaction.calc(lightSatisfactionCache, weatherSatisfactionCache, temperatureSatisfactionCache);
-        satisfactionCache = FrameItem.onSatisfaction(getFrame(), getLevel(), getBlockPos(), IFrameSatisfactionEvent.SatisfactionType.TOTAL, getQueen(), satisfactionCache);
+        satisfactionCache = FrameItem.onSatisfaction(getFrame(), getLevel(), getBlockPos(), SatisfactionEvent.SatisfactionType.TOTAL, getQueen(), satisfactionCache);
     }
 
     private LazyOptional<IItemHandler> lazyInputItemHandler = LazyOptional.empty();
@@ -327,17 +327,17 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
 
         BeeProduceRecipe bpr = optional.get();
         ItemStack commonProduce = bpr.getCommonProduce(satisfied);
-        commonProduce = FrameItem.onProduce(getFrame(), getLevel(), getBlockPos(), IFrameProduceEvent.ProduceType.COMMON, commonProduce);
+        commonProduce = FrameItem.onProduce(getFrame(), getLevel(), getBlockPos(), ProduceEvent.ProduceType.COMMON, commonProduce);
 
         double chance = RareProduceGene.of(RareProduceGene.get(queen.getTag())).getChance();
         ItemStack rareProduce = bpr.getRolledRareProduce(satisfied, chance);
-        rareProduce = FrameItem.onProduce(getFrame(), getLevel(), getBlockPos(), IFrameProduceEvent.ProduceType.RARE, rareProduce);
+        rareProduce = FrameItem.onProduce(getFrame(), getLevel(), getBlockPos(), ProduceEvent.ProduceType.RARE, rareProduce);
 
         ItemStack princess = BeeLifecycle.clone(queen, bpr.getSpecie().princessItem);
-        princess = FrameItem.onProduce(getFrame(), getLevel(), getBlockPos(), IFrameProduceEvent.ProduceType.PRINCESS, princess);
+        princess = FrameItem.onProduce(getFrame(), getLevel(), getBlockPos(), ProduceEvent.ProduceType.PRINCESS, princess);
 
         ItemStack drone = BeeLifecycle.clone(queen, bpr.getSpecie().droneItem);
-        drone = FrameItem.onProduce(getFrame(), getLevel(), getBlockPos(), IFrameProduceEvent.ProduceType.DRONE, drone);
+        drone = FrameItem.onProduce(getFrame(), getLevel(), getBlockPos(), ProduceEvent.ProduceType.DRONE, drone);
 
         if(continuous) {
             if(!input.getStackInSlot(0).isEmpty())
