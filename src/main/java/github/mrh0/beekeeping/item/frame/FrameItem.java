@@ -2,6 +2,7 @@ package github.mrh0.beekeeping.item.frame;
 
 import github.mrh0.beekeeping.bee.Satisfaction;
 import github.mrh0.beekeeping.group.ItemGroup;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -75,7 +76,7 @@ public class FrameItem extends Item {
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> list, @NotNull TooltipFlag flag) {
-        list.add(new TranslatableComponent("tooltip.beekeeping.frame." + name));
+        list.add(new TranslatableComponent("tooltip.beekeeping.frame." + name).withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
         super.appendHoverText(stack, level, list, flag);
     }
 }

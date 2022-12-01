@@ -20,13 +20,15 @@ public class Util {
         var words = str.replaceAll("_", " ").split(" ");
         var sb = new StringBuilder();
         for (int i = 0; i < words.length; i++) {
-            sb.append(words[i]);
+            String w = words[i];
+            sb.append(w.substring(0, 1).toUpperCase()).append(w.substring(1));
             if(i+1 < words.length)
                 sb.append(" ");
         }
         return sb.toString();
     }
 
+    @SafeVarargs
     public static <T> T selectRandom(T...items) {
         return items[Gene.random.nextInt(items.length)];
     }

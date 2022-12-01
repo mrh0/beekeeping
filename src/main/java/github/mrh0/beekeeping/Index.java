@@ -39,6 +39,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.network.IContainerFactory;
@@ -236,26 +237,28 @@ public class Index {
     public static RegistryObject<FrameItem> BASIC_FRAME;
 
     public static void items() {
-        THERMOMETER = ITEMS.register("thermometer", ThermometerItem::new);
+        THERMOMETER = ITEMS.register("thermometer", () -> new ItemBuilder<>(new  ThermometerItem())
+                .shapeless(1, ANALYZER_BLOCK.get(), Ingredient.of(Items.SPIDER_EYE), Ingredient.of(Items.GLASS_PANE), Ingredient.of(Items.REDSTONE), Ingredient.of(Items.GLASS_PANE))
+                .build());
 
-        BASIC_FRAME = ITEMS.register("basic_frame", () -> new FrameItem("basic"));//
+        BASIC_FRAME = ITEMS.register("basic_frame", () -> new FrameItem("basic"));
         ITEMS.register("glowing_frame", () -> new ItemBuilder<>(new FrameItem("glowing")
                 .addSatisfactionEvent(((level, pos, type, queen, satisfaction) ->
                     type == SatisfactionEvent.SatisfactionType.LIGHT ? satisfaction.up() : satisfaction)))
-                .shapeless(1, Ingredient.of(BASIC_FRAME.get()), Ingredient.of(Items.GLOWSTONE_DUST))
-                .shapeless(1, Ingredient.of(BASIC_FRAME.get()), Ingredient.of(Items.GLOW_BERRIES))
+                .shapeless(1, BASIC_FRAME.get(), Ingredient.of(BASIC_FRAME.get()), Ingredient.of(Items.GLOWSTONE_DUST))
+                //.shapeless(1, BASIC_FRAME.get(), Ingredient.of(BASIC_FRAME.get()), Ingredient.of(Items.GLOW_BERRIES))
                 .build());
 
         ITEMS.register("water_proof_frame", () -> new ItemBuilder<>(new FrameItem("water_proof")
                 .addSatisfactionEvent(((level, pos, type, queen, satisfaction) ->
                         type == SatisfactionEvent.SatisfactionType.WEATHER ? satisfaction.up() : satisfaction)))
-                .shapeless(1, Ingredient.of(BASIC_FRAME.get()), Ingredient.of(Items.DRIED_KELP))
+                .shapeless(1, BASIC_FRAME.get(), Ingredient.of(BASIC_FRAME.get()), Ingredient.of(Items.DRIED_KELP))
                 .build());
 
         ITEMS.register("insulated_frame", () -> new ItemBuilder<>(new FrameItem("insulated")
                 .addSatisfactionEvent(((level, pos, type, queen, satisfaction) ->
                         type == SatisfactionEvent.SatisfactionType.TEMPERATURE ? satisfaction.up() : satisfaction)))
-                .shapeless(1, Ingredient.of(BASIC_FRAME.get()), Ingredient.of(ItemTags.WOOL))
+                .shapeless(1, BASIC_FRAME.get(), Ingredient.of(BASIC_FRAME.get()), Ingredient.of(ItemTags.WOOL))
                 .build());
 
         ITEMS.register("cursed_frame", () -> new ItemBuilder<>(new FrameItem("cursed")
@@ -263,7 +266,15 @@ public class Index {
                     queen.setTag(BeeLifecycle.getOffspringTag(drone, princess, BeeItem.speciesOf(queen), Math::min));
                     return queen;
                 }))
-                .shapeless(1, Ingredient.of(BASIC_FRAME.get()), Ingredient.of(ItemTags.SOUL_FIRE_BASE_BLOCKS))
+                .shapeless(1, BASIC_FRAME.get(), Ingredient.of(BASIC_FRAME.get()), Ingredient.of(ItemTags.SOUL_FIRE_BASE_BLOCKS))
+                .build());
+
+        ITEMS.register("blessed_frame", () -> new ItemBuilder<>(new FrameItem("blessed")
+                .addBreedEvent((level, pos, drone, princess, queen) -> {
+                    queen.setTag(BeeLifecycle.getOffspringTag(drone, princess, BeeItem.speciesOf(queen), Math::max));
+                    return queen;
+                }))
+                .shapeless(1, BASIC_FRAME.get(), Ingredient.of(BASIC_FRAME.get()), Ingredient.of(Items.GLISTERING_MELON_SLICE))
                 .build());
 
         for(Specie specie : SpeciesRegistry.instance.getAll()) {

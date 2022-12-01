@@ -9,7 +9,7 @@ public class ItemGroup extends CreativeModeTab {
     public static ItemGroup BEES;
 
     public ItemGroup() {
-        super(Beekeeping.MODID+":bees");
+        super(Beekeeping.MODID);
         BEES = this;
     }
     @Override
