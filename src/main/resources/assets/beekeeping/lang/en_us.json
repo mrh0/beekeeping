@@ -1,5 +1,5 @@
 {
-  "itemGroup.beekeeping:bees": "Beekeeping",
+  "itemGroup.beekeeping": "Beekeeping",
 
   "item.beekeeping.common_drone": "Common Drone",
   "item.beekeeping.common_princess": "Common Princess",
@@ -96,14 +96,19 @@
 
   "item.beekeeping.basic_frame": "Basic Frame",
   "item.beekeeping.glowing_frame": "Glowing Frame",
-  "item.beekeeping.water_proof_frame": "Water_proof Frame",
+  "item.beekeeping.water_proof_frame": "Water Proof Frame",
   "item.beekeeping.insulated_frame": "Insulated Frame",
+  "item.beekeeping.cursed_frame": "Cursed Frame",
+  "item.beekeeping.blessed_frame": "Blessed Frame",
+
+  "item.beekeeping.thermometer": "Thermometer",
 
   "tooltip.beekeeping.frame.basic": "Basic accommodation for your bees.",
   "tooltip.beekeeping.frame.glowing": "Improves you bees tolerance for darkness.",
   "tooltip.beekeeping.frame.water_proof": "Improves you bees tolerance for wet weather.",
   "tooltip.beekeeping.frame.insulated": "Improves you bees tolerance for extreme climates.",
-  "tooltip.beekeeping.frame.cursed": "Will reduce the lifetime of the queens offspring.",
+  "tooltip.beekeeping.frame.cursed": "Will cause the queen to always have the worst genes form both parents.",
+  "tooltip.beekeeping.frame.blessed": "Will cause the queen to always have the best genes form both parents.",
 
   "block.beekeeping.common_beehive": "Common Beehive",
   "block.beekeeping.forest_beehive": "Forest Beehive",
@@ -120,8 +125,7 @@
   "block.beekeeping.apiary":"Apiary",
   "block.beekeeping.analyzer":"Bee-Analyzer",
 
-  "tooltip.beekeeping.gene.not_analyzed": "Analyzed to reveal genes.",
-
+  "tooltip.beekeeping.gene.not_analyzed": "Analyze to reveal genes.",
   "tooltip.beekeeping.gene.lifetime": "Lifetime",
   "tooltip.beekeeping.gene.light": "Light Tolerance",
   "tooltip.beekeeping.gene.weather": "Weather Tolerance",
