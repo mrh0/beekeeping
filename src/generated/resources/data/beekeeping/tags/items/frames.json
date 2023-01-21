@@ -5,7 +5,6 @@
     "beekeeping:glowing_frame",
     "beekeeping:water_proof_frame",
     "beekeeping:insulated_frame",
-    "beekeeping:cursed_frame",
-    "beekeeping:blessed_frame"
+    "beekeeping:mutation_frame"
   ]
 }

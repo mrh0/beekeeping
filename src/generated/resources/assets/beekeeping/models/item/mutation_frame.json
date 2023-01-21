@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "beekeeping:item/frame/cursed_frame"
+    "layer0": "beekeeping:item/frame/mutation_frame"
   }
 }

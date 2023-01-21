@@ -4,6 +4,7 @@ import github.mrh0.beekeeping.bee.Specie;
 import github.mrh0.beekeeping.bee.SpeciesRegistry;
 import github.mrh0.beekeeping.bee.breeding.BeeLifecycle;
 import github.mrh0.beekeeping.bee.genes.Gene;
+import github.mrh0.beekeeping.bee.genes.LifetimeGene;
 import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.biome.BiomeTemperature;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlock;
@@ -16,11 +17,13 @@ import github.mrh0.beekeeping.group.ItemGroup;
 import github.mrh0.beekeeping.item.ItemBuilder;
 import github.mrh0.beekeeping.item.ThermometerItem;
 import github.mrh0.beekeeping.item.frame.FrameItem;
+import github.mrh0.beekeeping.item.frame.ProduceEvent;
 import github.mrh0.beekeeping.item.frame.SatisfactionEvent;
 import github.mrh0.beekeeping.recipe.BeeBreedingRecipe;
 import github.mrh0.beekeeping.recipe.BeeProduceRecipe;
 import github.mrh0.beekeeping.screen.analyzer.AnalyzerMenu;
 import github.mrh0.beekeeping.screen.apiary.ApiaryMenu;
+import net.minecraft.core.Registry;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -75,6 +78,10 @@ public class Index {
         BLOCK_ENTITIES.register(eventBus);
         MENUS.register(eventBus);
         SERIALIZERS.register(eventBus);
+    }
+
+    private static TagKey<Item> bind(String key) {
+        return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(key));
     }
 
     //  SPECIE
@@ -161,7 +168,7 @@ public class Index {
 
         r.register(new Specie("dugout", 0xFF7f6000)
                 .setProduce(Items.HONEYCOMB, 5, 7)
-                .addBeehive(types -> types.contains(BiomeDictionary.Type.UNDERGROUND),
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.OVERWORLD),
                         Config.BEEHIVE_DUGOUT_TRIES.get(), Config.BEEHIVE_DUGOUT_RARITY.get(), PlacementUtils.FULL_RANGE, Feature.RANDOM_PATCH,
                         pos -> pos.getY() < Config.BEEHIVE_DUGOUT_MAX_HEIGHT.get() && pos.getY() > Config.BEEHIVE_DUGOUT_MIN_HEIGHT.get())
                 .setTemperatureGene(Gene::random3High)
@@ -261,7 +268,15 @@ public class Index {
                 .shapeless(1, BASIC_FRAME.get(), Ingredient.of(BASIC_FRAME.get()), Ingredient.of(ItemTags.WOOL))
                 .build());
 
-        ITEMS.register("cursed_frame", () -> new ItemBuilder<>(new FrameItem("cursed")
+        ITEMS.register("mutation_frame", () -> new ItemBuilder<>(new FrameItem("mutation")
+                .addProduceEvent((level, pos, type, stack) ->
+                        type == ProduceEvent.ProduceType.DRONE || type == ProduceEvent.ProduceType.PRINCESS
+                                ? BeeLifecycle.mutateRandom(stack)
+                                : stack))
+                .shapeless(1, BASIC_FRAME.get(), Ingredient.of(BASIC_FRAME.get()), Ingredient.of(bind("forge:raw_materials/uranium")))
+                .build());
+
+        /*ITEMS.register("cursed_frame", () -> new ItemBuilder<>(new FrameItem("cursed")
                 .addBreedEvent((level, pos, drone, princess, queen) -> {
                     queen.setTag(BeeLifecycle.getOffspringTag(drone, princess, BeeItem.speciesOf(queen), Math::min));
                     return queen;
@@ -276,7 +291,7 @@ public class Index {
                 }))
                 .shapeless(1, BASIC_FRAME.get(), Ingredient.of(BASIC_FRAME.get()), Ingredient.of(Items.GLISTERING_MELON_SLICE))
                 .build());
-
+        */
         for(Specie specie : SpeciesRegistry.instance.getAll()) {
             ITEMS.register(specie.getName() + "_drone", specie::buildDroneItem);
             ITEMS.register(specie.getName() + "_princess", specie::buildPrincessItem);

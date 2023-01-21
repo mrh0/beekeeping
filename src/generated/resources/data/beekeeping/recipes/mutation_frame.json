@@ -5,10 +5,10 @@
       "item": "beekeeping:basic_frame"
     },
     {
-      "item": "minecraft:glistering_melon_slice"
+      "tag": "forge:raw_materials/uranium"
     }
   ],
   "result": {
-    "item": "beekeeping:blessed_frame"
+    "item": "beekeeping:mutation_frame"
   }
 }

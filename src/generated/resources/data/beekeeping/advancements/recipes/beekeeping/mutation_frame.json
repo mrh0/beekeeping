@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "beekeeping:blessed_frame"
+      "beekeeping:mutation_frame"
     ]
   },
   "criteria": {
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "beekeeping:blessed_frame"
+        "recipe": "beekeeping:mutation_frame"
       }
     }
   },

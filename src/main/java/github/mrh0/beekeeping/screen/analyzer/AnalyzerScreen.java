@@ -96,9 +96,11 @@ public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity>
     private static List<Component> temperatureDescription = List.of(new TranslatableComponent("tooltip.beekeeping.gene.temperature"));
     private static List<Component> lightDescription = List.of(new TranslatableComponent("tooltip.beekeeping.gene.light"));
     private static List<Component> produceDescription = List.of(new TranslatableComponent("tooltip.beekeeping.gene.produce"));
+
     @Override
     protected void renderTooltip(PoseStack poseStack, int mouseX, int mouseY) {
         super.renderTooltip(poseStack, mouseX, mouseY);
+        if(getSpecie() == null) return;
         if(lifetimeBounds.in(mouseX, mouseY))
             renderComponentTooltip(poseStack, lifetimeDescription, mouseX, mouseY);
         else if(weatherBounds.in(mouseX, mouseY))

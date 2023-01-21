@@ -100,6 +100,7 @@
   "item.beekeeping.insulated_frame": "Insulated Frame",
   "item.beekeeping.cursed_frame": "Cursed Frame",
   "item.beekeeping.blessed_frame": "Blessed Frame",
+  "item.beekeeping.mutation_frame": "Mutation Frame",
 
   "item.beekeeping.thermometer": "Thermometer",
 
@@ -109,6 +110,7 @@
   "tooltip.beekeeping.frame.insulated": "Improves you bees tolerance for extreme climates.",
   "tooltip.beekeeping.frame.cursed": "Will cause the queen to always have the worst genes form both parents.",
   "tooltip.beekeeping.frame.blessed": "Will cause the queen to always have the best genes form both parents.",
+  "tooltip.beekeeping.frame.mutation": "Will occasionally cause the offspring to have mutated genes.",
 
   "block.beekeeping.common_beehive": "Common Beehive",
   "block.beekeeping.forest_beehive": "Forest Beehive",
