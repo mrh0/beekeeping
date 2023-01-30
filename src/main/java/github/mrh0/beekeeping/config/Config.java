@@ -162,9 +162,9 @@ public class Config {
                 .defineInRange("beehive_scorched_tries", 6, 0, Integer.MAX_VALUE);
         BEEHIVE_SCORCHED_RARITY = COMMON_BUILDER.comment("Rarity, 1 in every.")
                 .defineInRange("beehive_scorched_rarity", 6, 0, Integer.MAX_VALUE);
-        BEEHIVE_SCORCHED_MIN_HEIGHT = COMMON_BUILDER.comment("Number of place tries.")
+        BEEHIVE_SCORCHED_MIN_HEIGHT = COMMON_BUILDER.comment("Min spawn height.")
                 .defineInRange("beehive_scorched_min_height", 0, -127, 255);
-        BEEHIVE_SCORCHED_MAX_HEIGHT = COMMON_BUILDER.comment("Rarity, 1 in every.")
+        BEEHIVE_SCORCHED_MAX_HEIGHT = COMMON_BUILDER.comment("Max spawn height.")
                 .defineInRange("beehive_scorched_max_height", 127, -127, 255);
 
         BEEHIVE_ENDER_TRIES = COMMON_BUILDER.comment("Number of place tries.")
