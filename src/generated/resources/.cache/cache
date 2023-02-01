@@ -181,3 +181,5 @@ ac9f20ac8d914308f537e6da2e1094617c35f342 data/beekeeping/tags/blocks/beehives.js
 f540c12f4f46e78ba35f5a4d0879c73a295da8a8 data/beekeeping/tags/items/frames.json
 bd001cd83360b2220658b8db50108c43f57fc71e data/beekeeping/tags/items/princess_bees.json
 ee5891b3dcfe43c1d953e39eaf2aae5d8feef937 data/beekeeping/tags/items/queen_bees.json
+fccf9678d3d315c838c61609d82642344034df2d data/minecraft/tags/blocks/mineable/axe.json
+1cb99e30a651becea3cc541aad1125508a0602b4 data/minecraft/tags/blocks/mineable/pickaxe.json
