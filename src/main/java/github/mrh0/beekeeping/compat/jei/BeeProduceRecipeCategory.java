@@ -12,10 +12,9 @@ import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -31,22 +30,17 @@ public class BeeProduceRecipeCategory implements IRecipeCategory<BeeProduceRecip
 
     public BeeProduceRecipeCategory(IGuiHelper helper) {
         this.background = helper.createDrawable(TEXTURE, 0, 0, 118, 53);
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(Index.APIARY_BLOCK.get()));
+        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(Index.APIARY_BLOCK.get()));
     }
 
     @Override
-    public ResourceLocation getUid() {
-        return UID;
-    }
-
-    @Override
-    public Class<? extends BeeProduceRecipe> getRecipeClass() {
-        return BeeProduceRecipe.class;
+    public RecipeType<BeeProduceRecipe> getRecipeType() {
+        return new RecipeType<>(UID, BeeProduceRecipe.class);
     }
 
     @Override
     public Component getTitle() {
-        return new TranslatableComponent("title.beekeeping.recipe.bee_produce");
+        return Component.translatable("title.beekeeping.recipe.bee_produce");
     }
 
     @Override

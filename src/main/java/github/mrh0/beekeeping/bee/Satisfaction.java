@@ -1,16 +1,16 @@
 package github.mrh0.beekeeping.bee;
 
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 
 public enum Satisfaction {
     SATISFIED("tooltip.beekeeping.apiary.satisfied"),
     UNSATISFIED("tooltip.beekeeping.apiary.unsatisfied"),
     NOT_WORKING("tooltip.beekeeping.apiary.not_working");
 
-    public final TranslatableComponent component;
+    public final Component component;
 
     Satisfaction(String key) {
-        this.component = new TranslatableComponent(key);
+        this.component = Component.translatable(key);
     }
 
     public static Satisfaction calc(Satisfaction...list) {

@@ -1,14 +1,18 @@
 package github.mrh0.beekeeping;
 
 import com.mojang.logging.LogUtils;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import github.mrh0.beekeeping.config.Config;
 import github.mrh0.beekeeping.group.ItemGroup;
 import github.mrh0.beekeeping.network.TogglePacket;
 import github.mrh0.beekeeping.screen.analyzer.AnalyzerScreen;
 import github.mrh0.beekeeping.screen.apiary.ApiaryScreen;
+import github.mrh0.beekeeping.world.gen.BeehiveBiomeModifier;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -20,6 +24,9 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
 @Mod(Beekeeping.MODID)
@@ -38,7 +45,6 @@ public class Beekeeping {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         new ItemGroup();
-        Index.register(eventBus);
 
         eventBus.addListener(this::setup);
         eventBus.addListener(this::clientSetup);
@@ -47,6 +53,8 @@ public class Beekeeping {
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
         Config.loadConfig(Config.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve("beekeeping-common.toml"));
+
+        Index.register(eventBus);
     }
 
     private void setup(final FMLCommonSetupEvent event) {

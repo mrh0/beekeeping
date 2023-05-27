@@ -13,8 +13,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nullable;
-
 public class BeeBreedingRecipe implements Recipe<SimpleContainer> {
     private final ResourceLocation id;
     private final Specie drone, princess, offspring;
@@ -114,27 +112,6 @@ public class BeeBreedingRecipe implements Recipe<SimpleContainer> {
             buf.writeUtf(recipe.drone.getName());
             buf.writeUtf(recipe.princess.getName());
             buf.writeUtf(recipe.offspring.getName());
-        }
-
-        @Override
-        public RecipeSerializer<?> setRegistryName(ResourceLocation name) {
-            return INSTANCE;
-        }
-
-        @Nullable
-        @Override
-        public ResourceLocation getRegistryName() {
-            return ID;
-        }
-
-        @Override
-        public Class<RecipeSerializer<?>> getRegistryType() {
-            return Serializer.castClass(RecipeSerializer.class);
-        }
-
-        @SuppressWarnings("unchecked")
-        private static <G> Class<G> castClass(Class<?> cls) {
-            return (Class<G>)cls;
         }
     }
 }
