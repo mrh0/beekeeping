@@ -201,7 +201,7 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
 
     @Override
     public @NotNull Component getDisplayName() {
-        return new TranslatableComponent("block.beekeeping.apiary");
+        return Component.translatable("block.beekeeping.apiary");
     }
 
     @Nullable

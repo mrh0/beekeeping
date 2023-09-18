@@ -6,8 +6,6 @@ import github.mrh0.beekeeping.bee.Specie;
 import github.mrh0.beekeeping.bee.SpeciesRegistry;
 import github.mrh0.beekeeping.bee.breeding.BeeLifecycle;
 import github.mrh0.beekeeping.bee.genes.Gene;
-import github.mrh0.beekeeping.bee.genes.LifetimeGene;
-import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.biome.BiomeTemperature;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlock;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlockEntity;
@@ -26,6 +24,7 @@ import github.mrh0.beekeeping.recipe.BeeProduceRecipe;
 import github.mrh0.beekeeping.screen.analyzer.AnalyzerMenu;
 import github.mrh0.beekeeping.screen.apiary.ApiaryMenu;
 import github.mrh0.beekeeping.world.gen.BeehiveBiomeModifier;
+import net.minecraft.core.Registry;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
@@ -45,8 +44,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraftforge.common.Tags.Biomes;
-import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -169,7 +166,7 @@ public class Index {
 
         r.register(new Specie("dugout", 0xFF7f6000)
                 .setProduce(Items.HONEYCOMB, 5, 7)
-                .addBeehive(types -> types.contains(BiomeDictionary.Type.OVERWORLD),
+                .addBeehive(BiomeTags.IS_OVERWORLD,
                         Config.BEEHIVE_DUGOUT_TRIES.get(), Config.BEEHIVE_DUGOUT_RARITY.get(), PlacementUtils.FULL_RANGE, Feature.RANDOM_PATCH,
                         pos -> pos.getY() < Config.BEEHIVE_DUGOUT_MAX_HEIGHT.get() && pos.getY() > Config.BEEHIVE_DUGOUT_MIN_HEIGHT.get())
                 .setTemperatureGene(Gene::random3High)

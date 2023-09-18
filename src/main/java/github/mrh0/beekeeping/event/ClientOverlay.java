@@ -12,7 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -23,8 +23,8 @@ public class ClientOverlay {
     static int lx = 8, ly = 8;
 
     @SubscribeEvent
-    public static void renderOverlay(final RenderGameOverlayEvent.Pre event) {
-        var stack = event.getMatrixStack();
+    public static void renderOverlay(final RenderGuiOverlayEvent.Pre event) {
+        var stack = event.getPoseStack();
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, TEXTURE);

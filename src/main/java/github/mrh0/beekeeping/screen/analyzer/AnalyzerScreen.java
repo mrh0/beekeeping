@@ -95,11 +95,11 @@ public class AnalyzerScreen extends BeeScreen<AnalyzerMenu, AnalyzerBlockEntity>
                 line++, 5);
     }
 
-    private static List<Component> lifetimeDescription = List.of(new TranslatableComponent("tooltip.beekeeping.gene.lifetime"));
-    private static List<Component> weatherDescription = List.of(new TranslatableComponent("tooltip.beekeeping.gene.weather"));
-    private static List<Component> temperatureDescription = List.of(new TranslatableComponent("tooltip.beekeeping.gene.temperature"));
-    private static List<Component> lightDescription = List.of(new TranslatableComponent("tooltip.beekeeping.gene.light"));
-    private static List<Component> produceDescription = List.of(new TranslatableComponent("tooltip.beekeeping.gene.produce"));
+    private static List<Component> lifetimeDescription = List.of(Component.translatable("tooltip.beekeeping.gene.lifetime"));
+    private static List<Component> weatherDescription = List.of(Component.translatable("tooltip.beekeeping.gene.weather"));
+    private static List<Component> temperatureDescription = List.of(Component.translatable("tooltip.beekeeping.gene.temperature"));
+    private static List<Component> lightDescription = List.of(Component.translatable("tooltip.beekeeping.gene.light"));
+    private static List<Component> produceDescription = List.of(Component.translatable("tooltip.beekeeping.gene.produce"));
 
     @Override
     protected void renderTooltip(PoseStack poseStack, int mouseX, int mouseY) {

@@ -49,15 +49,15 @@ public class ItemModelGenerator extends ItemModelProvider {
     }
 
     private ItemModelBuilder simpleItem(Item item, String path) {
-        return withExistingParent(item.getRegistryName().getPath(),
+        return withExistingParent(ForgeRegistries.ITEMS.getKey(item).getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(Beekeeping.MODID,"item/" + path + item.getRegistryName().getPath()));
+                new ResourceLocation(Beekeeping.MODID,"item/" + path + ForgeRegistries.ITEMS.getKey(item).getPath()));
     }
 
     private ItemModelBuilder handheldItem(Item item) {
-        return withExistingParent(item.getRegistryName().getPath(),
+        return withExistingParent(ForgeRegistries.ITEMS.getKey(item).getPath(),
                 new ResourceLocation("item/handheld")).texture("layer0",
-                new ResourceLocation(Beekeeping.MODID,"item/" + item.getRegistryName().getPath()));
+                new ResourceLocation(Beekeeping.MODID,"item/" + ForgeRegistries.ITEMS.getKey(item).getPath()));
     }
 
     private ItemModelBuilder blockItem(Block block) {

@@ -5,7 +5,6 @@ import github.mrh0.beekeeping.group.ItemGroup;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -76,7 +75,7 @@ public class FrameItem extends Item {
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> list, @NotNull TooltipFlag flag) {
-        list.add(new TranslatableComponent("tooltip.beekeeping.frame." + name).withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+        list.add(Component.translatable("tooltip.beekeeping.frame." + name).withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
         super.appendHoverText(stack, level, list, flag);
     }
 }
