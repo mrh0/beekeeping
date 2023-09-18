@@ -1,6 +1,7 @@
 package github.mrh0.beekeeping.bee.genes;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
 
 public enum WeatherToleranceGene implements Gene {
     STRICT("strict"),
@@ -37,5 +38,17 @@ public enum WeatherToleranceGene implements Gene {
             case 1 -> PICKY;
             default -> ANY;
         };
+    }
+
+    public static ItemStack up(ItemStack bee) {
+        int now = get(bee.getTag());
+        set(bee.getTag(), Math.min(now+1, 4));
+        return bee;
+    }
+
+    public static ItemStack down(ItemStack bee) {
+        int now = get(bee.getTag());
+        set(bee.getTag(), Math.max(now+1, 0));
+        return bee;
     }
 }

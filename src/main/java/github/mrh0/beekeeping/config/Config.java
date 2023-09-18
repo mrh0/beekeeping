@@ -147,11 +147,11 @@ public class Config {
         BEEHIVE_DUGOUT_TRIES = COMMON_BUILDER.comment("Number of place tries.")
                 .defineInRange("beehive_dugout_tries", 3, 0, Integer.MAX_VALUE);
         BEEHIVE_DUGOUT_RARITY = COMMON_BUILDER.comment("Rarity, 1 in every.")
-                .defineInRange("beehive_dugout_rarity", 6, 0, Integer.MAX_VALUE);
-        BEEHIVE_DUGOUT_MIN_HEIGHT = COMMON_BUILDER.comment("Number of place tries.")
-                .defineInRange("beehive_dugout_min_height", 0, -127, 255);
-        BEEHIVE_DUGOUT_MAX_HEIGHT = COMMON_BUILDER.comment("Rarity, 1 in every.")
-                .defineInRange("beehive_dugout_max_height", 60, -127, 255);
+                .defineInRange("beehive_dugout_rarity", 2, 0, Integer.MAX_VALUE);
+        BEEHIVE_DUGOUT_MIN_HEIGHT = COMMON_BUILDER.comment("Min spawn height.")
+                .defineInRange("beehive_dugout_min_height", 80, -127, 255);
+        BEEHIVE_DUGOUT_MAX_HEIGHT = COMMON_BUILDER.comment("Max spawn height.")
+                .defineInRange("beehive_dugout_max_height", 255, -127, 255);
 
         BEEHIVE_MALIGNANT_TRIES = COMMON_BUILDER.comment("Number of place tries.")
                 .defineInRange("beehive_malignant_tries", 1, 0, Integer.MAX_VALUE);
@@ -162,9 +162,9 @@ public class Config {
                 .defineInRange("beehive_scorched_tries", 6, 0, Integer.MAX_VALUE);
         BEEHIVE_SCORCHED_RARITY = COMMON_BUILDER.comment("Rarity, 1 in every.")
                 .defineInRange("beehive_scorched_rarity", 6, 0, Integer.MAX_VALUE);
-        BEEHIVE_SCORCHED_MIN_HEIGHT = COMMON_BUILDER.comment("Number of place tries.")
+        BEEHIVE_SCORCHED_MIN_HEIGHT = COMMON_BUILDER.comment("Min spawn height.")
                 .defineInRange("beehive_scorched_min_height", 0, -127, 255);
-        BEEHIVE_SCORCHED_MAX_HEIGHT = COMMON_BUILDER.comment("Rarity, 1 in every.")
+        BEEHIVE_SCORCHED_MAX_HEIGHT = COMMON_BUILDER.comment("Max spawn height.")
                 .defineInRange("beehive_scorched_max_height", 127, -127, 255);
 
         BEEHIVE_ENDER_TRIES = COMMON_BUILDER.comment("Number of place tries.")

@@ -2,8 +2,10 @@ package github.mrh0.beekeeping.datagen;
 
 import github.mrh0.beekeeping.Beekeeping;
 import github.mrh0.beekeeping.Index;
+import github.mrh0.beekeeping.Util;
 import github.mrh0.beekeeping.bee.Specie;
 import github.mrh0.beekeeping.bee.SpeciesRegistry;
+import github.mrh0.beekeeping.item.frame.FrameItem;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.HashCache;
 import net.minecraft.data.tags.BlockTagsProvider;
@@ -29,6 +31,9 @@ public class ItemTagGenerator extends ItemTagsProvider {
             tag(Index.DRONE_BEES_TAG).add(specie.droneItem);
             tag(Index.PRINCESS_BEES_TAG).add(specie.princessItem);
             tag(Index.QUEEN_BEES_TAG).add(specie.queenItem);
+        }
+        for(FrameItem frame : FrameItem.frames) {
+            tag(Index.FRAME_TAG).add(frame);
         }
     }
 }

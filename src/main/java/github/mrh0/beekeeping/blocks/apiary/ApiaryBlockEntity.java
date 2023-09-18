@@ -4,9 +4,13 @@ import github.mrh0.beekeeping.Index;
 import github.mrh0.beekeeping.bee.Satisfaction;
 import github.mrh0.beekeeping.bee.Specie;
 import github.mrh0.beekeeping.bee.breeding.BeeLifecycle;
+import github.mrh0.beekeeping.bee.genes.Gene;
 import github.mrh0.beekeeping.bee.genes.RareProduceGene;
 import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.config.Config;
+import github.mrh0.beekeeping.item.frame.FrameItem;
+import github.mrh0.beekeeping.item.frame.ProduceEvent;
+import github.mrh0.beekeeping.item.frame.SatisfactionEvent;
 import github.mrh0.beekeeping.network.IHasToggleOption;
 import github.mrh0.beekeeping.network.TogglePacket;
 import github.mrh0.beekeeping.recipe.BeeProduceRecipe;
@@ -97,7 +101,11 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
         return inputItemHandler.getStackInSlot(2);
     }
 
-    private final ItemStackHandler inputItemHandler = new ItemStackHandler(9) {
+    public ItemStack getFrame() {
+        return inputItemHandler.getStackInSlot(3);
+    }
+
+    private final ItemStackHandler inputItemHandler = new ItemStackHandler(4) {
         @Override
         protected void onContentsChanged(int slot) {
             checkLock = false;
@@ -117,6 +125,8 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
             if(stack.is(Index.PRINCESS_BEES_TAG) && slot == 1)
                 return super.insertItem(slot, stack, simulate);
             if(stack.is(Index.QUEEN_BEES_TAG) && slot == 2)
+                return super.insertItem(slot, stack, simulate);
+            if(stack.is(Index.FRAME_TAG) && slot == 3)
                 return super.insertItem(slot, stack, simulate);
             return stack;
         }
@@ -154,7 +164,9 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
             return;
 
         ItemStack offspringQueen = new ItemStack(offspringCache.queenItem);
-        offspringQueen.setTag(BeeLifecycle.getOffspringItemStack(getDrone(), getPrincess(), offspringCache));
+        offspringQueen.setTag(BeeLifecycle.getOffspringTag(getDrone(), getPrincess(), offspringCache, Gene::select));
+        offspringQueen = FrameItem.onBreed(getFrame(), getLevel(), getBlockPos(), getDrone(), getPrincess(), offspringQueen);
+
         inputItemHandler.setStackInSlot(0, ItemStack.EMPTY);
         inputItemHandler.setStackInSlot(1, ItemStack.EMPTY);
         inputItemHandler.setStackInSlot(2, offspringQueen);
@@ -166,7 +178,7 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
             return;
         }
 
-        Specie specie = BeeItem.of(getQueen());
+        Specie specie = BeeItem.speciesOf(getQueen());
         if(specie == null) {
             satisfactionCache = Satisfaction.NOT_WORKING;
             return;
@@ -176,20 +188,25 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
         weatherSatisfactionCache = specie.getWeatherSatisfaction(getQueen(), getLevel(), getBlockPos());
         temperatureSatisfactionCache = specie.getTemperatureSatisfaction(getQueen(), getLevel(), getBlockPos());
 
+        lightSatisfactionCache = FrameItem.onSatisfaction(getFrame(), getLevel(), getBlockPos(), SatisfactionEvent.SatisfactionType.LIGHT, getQueen(), lightSatisfactionCache);
+        weatherSatisfactionCache = FrameItem.onSatisfaction(getFrame(), getLevel(), getBlockPos(), SatisfactionEvent.SatisfactionType.WEATHER, getQueen(), weatherSatisfactionCache);
+        temperatureSatisfactionCache = FrameItem.onSatisfaction(getFrame(), getLevel(), getBlockPos(), SatisfactionEvent.SatisfactionType.TEMPERATURE, getQueen(), temperatureSatisfactionCache);
+
         satisfactionCache = Satisfaction.calc(lightSatisfactionCache, weatherSatisfactionCache, temperatureSatisfactionCache);
+        satisfactionCache = FrameItem.onSatisfaction(getFrame(), getLevel(), getBlockPos(), SatisfactionEvent.SatisfactionType.TOTAL, getQueen(), satisfactionCache);
     }
 
     private LazyOptional<IItemHandler> lazyInputItemHandler = LazyOptional.empty();
     private LazyOptional<IItemHandler> lazyOutputItemHandler = LazyOptional.empty();
 
     @Override
-    public Component getDisplayName() {
-        return Component.translatable("block.beekeeping.apiary");
+    public @NotNull Component getDisplayName() {
+        return new TranslatableComponent("block.beekeeping.apiary");
     }
 
     @Nullable
     @Override
-    public AbstractContainerMenu createMenu(int id, Inventory inv, Player player) {
+    public AbstractContainerMenu createMenu(int id, @NotNull Inventory inv, @NotNull Player player) {
         return new ApiaryMenu(id, inv, this, this.data);
     }
 
@@ -277,7 +294,7 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
             return;
         slowTick = 0;
         ItemStack queen = getQueen();
-        Specie specie = BeeItem.of(queen);
+        Specie specie = BeeItem.speciesOf(queen);
         if(specie == null)
             return;
         if(queen.getTag() == null)
@@ -289,7 +306,7 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
         if(hp <= 0) {
             if(checkLock)
                 return;
-            if(attemptInsert(level, queen, inputItemHandler, outputItemHandler, satisfactionCache == Satisfaction.SATISFIED, continuous)) {
+            if(attemptInsert(queen, inputItemHandler, outputItemHandler, satisfactionCache == Satisfaction.SATISFIED, continuous)) {
                 inputItemHandler.setStackInSlot(2, ItemStack.EMPTY);
                 return;
             }
@@ -300,21 +317,26 @@ public class ApiaryBlockEntity extends BlockEntity implements MenuProvider, IHas
             BeeItem.setHealth(queen.getTag(), hp-LIFETIME_STEP);
     }
 
-    public static boolean attemptInsert(Level level, ItemStack queen, ItemStackHandler input, ItemStackHandler output, boolean satisfied, boolean continuous) {
-        var optional = BeeLifecycle.getProduceRecipe(level, queen);
+    public boolean attemptInsert(ItemStack queen, ItemStackHandler input, ItemStackHandler output, boolean satisfied, boolean continuous) {
+        var optional = BeeLifecycle.getProduceRecipe(getLevel(), queen);
         if(optional.isEmpty())
             return true;
         if(queen == null || queen.isEmpty())
             return true;
+
         BeeProduceRecipe bpr = optional.get();
         ItemStack commonProduce = bpr.getCommonProduce(satisfied);
+        commonProduce = FrameItem.onProduce(getFrame(), getLevel(), getBlockPos(), ProduceEvent.ProduceType.COMMON, commonProduce);
 
         double chance = RareProduceGene.of(RareProduceGene.get(queen.getTag())).getChance();
         ItemStack rareProduce = bpr.getRolledRareProduce(satisfied, chance);
-        //System.out.println(rareProduce + ":" + satisfied + ":" + chance);
+        rareProduce = FrameItem.onProduce(getFrame(), getLevel(), getBlockPos(), ProduceEvent.ProduceType.RARE, rareProduce);
 
         ItemStack princess = BeeLifecycle.clone(queen, bpr.getSpecie().princessItem);
+        princess = FrameItem.onProduce(getFrame(), getLevel(), getBlockPos(), ProduceEvent.ProduceType.PRINCESS, princess);
+
         ItemStack drone = BeeLifecycle.clone(queen, bpr.getSpecie().droneItem);
+        drone = FrameItem.onProduce(getFrame(), getLevel(), getBlockPos(), ProduceEvent.ProduceType.DRONE, drone);
 
         if(continuous) {
             if(!input.getStackInSlot(0).isEmpty())

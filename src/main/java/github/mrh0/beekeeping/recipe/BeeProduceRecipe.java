@@ -57,7 +57,7 @@ public class BeeProduceRecipe implements Recipe<SimpleContainer> {
     }
 
     public ItemStack getRareProduce(boolean satisfied) {
-        return satisfied ? rareProduceSatisfied : rareProduceUnsatisfied;
+        return satisfied ? rareProduceSatisfied.copy() : rareProduceUnsatisfied.copy();
     }
 
     public double getRareChance(boolean satisfied) {

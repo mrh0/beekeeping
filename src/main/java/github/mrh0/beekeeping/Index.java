@@ -4,7 +4,10 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import github.mrh0.beekeeping.bee.Specie;
 import github.mrh0.beekeeping.bee.SpeciesRegistry;
+import github.mrh0.beekeeping.bee.breeding.BeeLifecycle;
 import github.mrh0.beekeeping.bee.genes.Gene;
+import github.mrh0.beekeeping.bee.genes.LifetimeGene;
+import github.mrh0.beekeeping.bee.item.BeeItem;
 import github.mrh0.beekeeping.biome.BiomeTemperature;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlock;
 import github.mrh0.beekeeping.blocks.analyzer.AnalyzerBlockEntity;
@@ -13,6 +16,11 @@ import github.mrh0.beekeeping.blocks.apiary.ApiaryBlockEntity;
 import github.mrh0.beekeeping.blocks.beehive.BeehiveBlock;
 import github.mrh0.beekeeping.config.Config;
 import github.mrh0.beekeeping.group.ItemGroup;
+import github.mrh0.beekeeping.item.ItemBuilder;
+import github.mrh0.beekeeping.item.ThermometerItem;
+import github.mrh0.beekeeping.item.frame.FrameItem;
+import github.mrh0.beekeeping.item.frame.ProduceEvent;
+import github.mrh0.beekeeping.item.frame.SatisfactionEvent;
 import github.mrh0.beekeeping.recipe.BeeBreedingRecipe;
 import github.mrh0.beekeeping.recipe.BeeProduceRecipe;
 import github.mrh0.beekeeping.screen.analyzer.AnalyzerMenu;
@@ -29,6 +37,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -36,6 +45,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraftforge.common.Tags.Biomes;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -76,6 +87,10 @@ public class Index {
         MENUS.register(eventBus);
         SERIALIZERS.register(eventBus);
         BIOME_MODIFIER_SERIALIZERS.register(eventBus);
+    }
+
+    private static TagKey<Item> bind(String key) {
+        return TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(key));
     }
 
     //  SPECIE
@@ -154,7 +169,8 @@ public class Index {
 
         r.register(new Specie("dugout", 0xFF7f6000)
                 .setProduce(Items.HONEYCOMB, 5, 7)
-                .addBeehive(Biomes.IS_UNDERGROUND, Config.BEEHIVE_DUGOUT_TRIES.get(), Config.BEEHIVE_DUGOUT_RARITY.get(), PlacementUtils.FULL_RANGE, Feature.RANDOM_PATCH,
+                .addBeehive(types -> types.contains(BiomeDictionary.Type.OVERWORLD),
+                        Config.BEEHIVE_DUGOUT_TRIES.get(), Config.BEEHIVE_DUGOUT_RARITY.get(), PlacementUtils.FULL_RANGE, Feature.RANDOM_PATCH,
                         pos -> pos.getY() < Config.BEEHIVE_DUGOUT_MAX_HEIGHT.get() && pos.getY() > Config.BEEHIVE_DUGOUT_MIN_HEIGHT.get())
                 .setTemperatureGene(Gene::random3High)
                 .setLightGene(Gene::any)
@@ -223,16 +239,63 @@ public class Index {
                 .setDark());
     }
 
-    public static 
-
     //  ITEM
-    public static void items() {
-        ITEMS.register("", () -> new );
+    public static RegistryObject<ThermometerItem> THERMOMETER;
+    public static RegistryObject<FrameItem> BASIC_FRAME;
 
+    public static void items() {
+        THERMOMETER = ITEMS.register("thermometer", () -> new ItemBuilder<>(new  ThermometerItem())
+                .shapeless(1, ANALYZER_BLOCK.get(), Ingredient.of(Items.SPIDER_EYE), Ingredient.of(Items.GLASS_PANE), Ingredient.of(Items.REDSTONE), Ingredient.of(Items.GLASS_PANE))
+                .build());
+
+        BASIC_FRAME = ITEMS.register("basic_frame", () -> new FrameItem("basic"));
+        ITEMS.register("glowing_frame", () -> new ItemBuilder<>(new FrameItem("glowing")
+                .addSatisfactionEvent(((level, pos, type, queen, satisfaction) ->
+                    type == SatisfactionEvent.SatisfactionType.LIGHT ? satisfaction.up() : satisfaction)))
+                .shapeless(1, BASIC_FRAME.get(), Ingredient.of(BASIC_FRAME.get()), Ingredient.of(Items.GLOWSTONE_DUST))
+                //.shapeless(1, BASIC_FRAME.get(), Ingredient.of(BASIC_FRAME.get()), Ingredient.of(Items.GLOW_BERRIES))
+                .build());
+
+        ITEMS.register("water_proof_frame", () -> new ItemBuilder<>(new FrameItem("water_proof")
+                .addSatisfactionEvent(((level, pos, type, queen, satisfaction) ->
+                        type == SatisfactionEvent.SatisfactionType.WEATHER ? satisfaction.up() : satisfaction)))
+                .shapeless(1, BASIC_FRAME.get(), Ingredient.of(BASIC_FRAME.get()), Ingredient.of(Items.DRIED_KELP))
+                .build());
+
+        ITEMS.register("insulated_frame", () -> new ItemBuilder<>(new FrameItem("insulated")
+                .addSatisfactionEvent(((level, pos, type, queen, satisfaction) ->
+                        type == SatisfactionEvent.SatisfactionType.TEMPERATURE ? satisfaction.up() : satisfaction)))
+                .shapeless(1, BASIC_FRAME.get(), Ingredient.of(BASIC_FRAME.get()), Ingredient.of(ItemTags.WOOL))
+                .build());
+
+        ITEMS.register("mutation_frame", () -> new ItemBuilder<>(new FrameItem("mutation")
+                .addProduceEvent((level, pos, type, stack) ->
+                        type == ProduceEvent.ProduceType.DRONE || type == ProduceEvent.ProduceType.PRINCESS
+                                ? BeeLifecycle.mutateRandom(stack)
+                                : stack))
+                .shapeless(1, BASIC_FRAME.get(), Ingredient.of(BASIC_FRAME.get()), Ingredient.of(bind("forge:raw_materials/uranium")))
+                .build());
+
+        /*ITEMS.register("cursed_frame", () -> new ItemBuilder<>(new FrameItem("cursed")
+                .addBreedEvent((level, pos, drone, princess, queen) -> {
+                    queen.setTag(BeeLifecycle.getOffspringTag(drone, princess, BeeItem.speciesOf(queen), Math::min));
+                    return queen;
+                }))
+                .shapeless(1, BASIC_FRAME.get(), Ingredient.of(BASIC_FRAME.get()), Ingredient.of(ItemTags.SOUL_FIRE_BASE_BLOCKS))
+                .build());
+
+        ITEMS.register("blessed_frame", () -> new ItemBuilder<>(new FrameItem("blessed")
+                .addBreedEvent((level, pos, drone, princess, queen) -> {
+                    queen.setTag(BeeLifecycle.getOffspringTag(drone, princess, BeeItem.speciesOf(queen), Math::max));
+                    return queen;
+                }))
+                .shapeless(1, BASIC_FRAME.get(), Ingredient.of(BASIC_FRAME.get()), Ingredient.of(Items.GLISTERING_MELON_SLICE))
+                .build());
+        */
         for(Specie specie : SpeciesRegistry.instance.getAll()) {
-            ITEMS.register(specie.getName() + "_drone", () -> specie.buildDroneItem());
-            ITEMS.register(specie.getName() + "_princess", () -> specie.buildPrincessItem());
-            ITEMS.register(specie.getName() + "_queen", () -> specie.buildQueenItem());
+            ITEMS.register(specie.getName() + "_drone", specie::buildDroneItem);
+            ITEMS.register(specie.getName() + "_princess", specie::buildPrincessItem);
+            ITEMS.register(specie.getName() + "_queen", specie::buildQueenItem);
         }
     }
 
@@ -241,9 +304,9 @@ public class Index {
     public static RegistryObject<ApiaryBlock> APIARY_BLOCK;
 
     public static void blocks() {
-        ANALYZER_BLOCK = BLOCKS.register("analyzer", () -> new AnalyzerBlock());
+        ANALYZER_BLOCK = BLOCKS.register("analyzer", AnalyzerBlock::new);
         ITEMS.register("analyzer", () -> new BlockItem(ANALYZER_BLOCK.get(), new Item.Properties().tab(ItemGroup.BEES)));
-        APIARY_BLOCK = BLOCKS.register("apiary", () -> new ApiaryBlock());
+        APIARY_BLOCK = BLOCKS.register("apiary", ApiaryBlock::new);
         ITEMS.register("apiary", () -> new BlockItem(APIARY_BLOCK.get(), new Item.Properties().tab(ItemGroup.BEES)));
 
         for(Specie specie : SpeciesRegistry.instance.getAll()) {
@@ -283,6 +346,7 @@ public class Index {
     public static TagKey<Item> DRONE_BEES_TAG;
     public static TagKey<Item> PRINCESS_BEES_TAG;
     public static TagKey<Item> QUEEN_BEES_TAG;
+    public static TagKey<Item> FRAME_TAG;
     public static TagKey<Block> BEEHIVE_TAG;
 
     public static void tags() {
@@ -290,6 +354,7 @@ public class Index {
         DRONE_BEES_TAG = ItemTags.create(new ResourceLocation("beekeeping", "drone_bees"));
         PRINCESS_BEES_TAG = ItemTags.create(new ResourceLocation("beekeeping", "princess_bees"));
         QUEEN_BEES_TAG = ItemTags.create(new ResourceLocation("beekeeping", "queen_bees"));
+        FRAME_TAG = ItemTags.create(new ResourceLocation("beekeeping", "frames"));
         BEEHIVE_TAG = BlockTags.create(new ResourceLocation("beekeeping", "beehives"));
     }
 

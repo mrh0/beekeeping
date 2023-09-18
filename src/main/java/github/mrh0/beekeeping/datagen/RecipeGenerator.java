@@ -1,15 +1,20 @@
 package github.mrh0.beekeeping.datagen;
 
 import com.mojang.datafixers.util.Pair;
+import github.mrh0.beekeeping.Index;
 import github.mrh0.beekeeping.bee.Specie;
 import github.mrh0.beekeeping.bee.SpeciesRegistry;
-import github.mrh0.beekeeping.bee.item.BeeItem;
+import github.mrh0.beekeeping.item.ItemBuilder;
+import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 
 import java.util.function.Consumer;
@@ -21,13 +26,6 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
 
     @Override
     protected void buildCraftingRecipes(Consumer<FinishedRecipe> rc) {
-        /* Redundant:
-        for(Specie specie : SpeciesRegistry.instance.getAll())
-            new BeeBreedingRecipeBuilder(specie, specie, specie)
-                .save(rc);*/
-
-        //breed(rc,"common", "forest", "tempered", true);
-
         for(Specie specie : SpeciesRegistry.instance.getAll()) {
             if(specie.produce == null)
                 continue;
@@ -39,9 +37,16 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
             }
         }
 
-        //produce(rc, "common", Items.HONEYCOMB, 9, 13, null, 0, 0);
-        //produce(rc, "forest", Items.HONEYCOMB, 9, 13, null, 0, 0);
-        //produce(rc, "tempered", Items.HONEYCOMB, 7, 14, null, 0, 0);
+        /*ShapelessRecipeBuilder.shapeless(Index.BASIC_FRAME.get())
+                .requires(Index.BASIC_FRAME.get())
+                .unlockedBy("has_item", inventoryTrigger(ItemPredicate.Builder.item()
+                        .of(Index.BASIC_FRAME.get()).build()))
+                .save(rc);*/
+
+        for(Pair<RecipeBuilder, ItemLike> pair : ItemBuilder.recipes) {
+            pair.getFirst().unlockedBy("has_item", inventoryTrigger(ItemPredicate.Builder.item()
+                    .of(pair.getSecond()).build())).save(rc);
+        }
     }
 
     private void breed(Consumer<FinishedRecipe> recipeConsumer, Specie drone, Specie princess, Specie offspring) {
@@ -57,3 +62,4 @@ public class RecipeGenerator extends RecipeProvider implements IConditionBuilder
                 .save(recipeConsumer);
     }
 }
+

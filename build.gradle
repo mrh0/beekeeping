@@ -16,7 +16,7 @@ plugins {
 apply plugin: 'net.minecraftforge.gradle'
 
 
-version = '20221118a'
+version = '20230201b'
 group = 'github.mrh0.beekeeping' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'beekeeping'
 

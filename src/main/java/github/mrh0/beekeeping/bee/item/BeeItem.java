@@ -6,6 +6,7 @@ import github.mrh0.beekeeping.group.ItemGroup;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -162,7 +163,9 @@ public abstract class BeeItem extends Item {
         //list.add(Component.literal("health: " + getHealth(stack.getTag())));
     }
 
-    public static Specie of(ItemStack stack) {
+    public static Specie speciesOf(ItemStack stack) {
+        if(stack == null)
+            return null;
         if(stack.isEmpty())
             return null;
         if(!(stack.getItem() instanceof BeeItem))
@@ -171,6 +174,6 @@ public abstract class BeeItem extends Item {
     }
 
     public static boolean is(ItemStack stack, Specie specie) {
-        return of(stack) == specie;
+        return speciesOf(stack) == specie;
     }
 }

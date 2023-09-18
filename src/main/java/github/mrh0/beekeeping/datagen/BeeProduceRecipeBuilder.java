@@ -53,7 +53,7 @@ public class BeeProduceRecipeBuilder implements RecipeBuilder {
 
     @Override
     public Item getResult() {
-        return ItemStack.EMPTY.getItem();
+        return commonProduceUnsatisfied.getItem();
     }
 
     @Override

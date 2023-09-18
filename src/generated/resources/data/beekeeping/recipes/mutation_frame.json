@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "beekeeping:basic_frame"
+    },
+    {
+      "tag": "forge:raw_materials/uranium"
+    }
+  ],
+  "result": {
+    "item": "beekeeping:mutation_frame"
+  }
+}

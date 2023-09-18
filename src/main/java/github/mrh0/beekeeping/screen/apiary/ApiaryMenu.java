@@ -27,7 +27,7 @@ public class ApiaryMenu extends BeeMenu<ApiaryBlockEntity> {
 
     public ApiaryMenu(int id, Inventory inv, BlockEntity entity, ContainerData data) {
         super(Index.APIARY_MENU.get(), id);
-        checkContainerSize(inv, 9);
+        checkContainerSize(inv, 10);
         blockEntity = ((ApiaryBlockEntity) entity);
         this.level = inv.player.level;
         this.data = data;
@@ -39,6 +39,7 @@ public class ApiaryMenu extends BeeMenu<ApiaryBlockEntity> {
             this.addSlot(new TagSlot(handler, 0, 15, 60, Index.DRONE_BEES_TAG));
             this.addSlot(new TagSlot(handler, 1, 15, 23, Index.PRINCESS_BEES_TAG));
             this.addSlot(new TagSlot(handler, 2, 52, 42, Index.QUEEN_BEES_TAG));
+            this.addSlot(new TagSlot(handler, 3, 52, 17, Index.FRAME_TAG));
 
 
         });
@@ -65,7 +66,7 @@ public class ApiaryMenu extends BeeMenu<ApiaryBlockEntity> {
     private static final int VANILLA_FIRST_SLOT_INDEX = 0;
     private static final int TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT;
 
-    private static final int TE_INVENTORY_SLOT_COUNT = 9;  // must be the number of slots you have!
+    private static final int TE_INVENTORY_SLOT_COUNT = 10;  // must be the number of slots you have!
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {

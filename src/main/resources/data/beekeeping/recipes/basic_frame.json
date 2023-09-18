@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " S ",
+    "SHS",
+    " S "
+  ],
+  "key": {
+    "H": {
+      "item": "minecraft:honeycomb"
+    },
+    "S": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "result": {
+    "item": "beekeeping:basic_frame"
+  }
+}

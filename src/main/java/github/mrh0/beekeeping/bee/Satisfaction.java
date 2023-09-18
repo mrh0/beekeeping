@@ -40,4 +40,18 @@ public enum Satisfaction {
             return Satisfaction.UNSATISFIED;
         return  Satisfaction.SATISFIED;
     }
+
+    public Satisfaction up() {
+        return switch(this) {
+            case SATISFIED, UNSATISFIED -> SATISFIED;
+            case NOT_WORKING -> UNSATISFIED;
+        };
+    }
+
+    public Satisfaction down() {
+        return switch(this) {
+            case SATISFIED -> UNSATISFIED;
+            case UNSATISFIED, NOT_WORKING -> NOT_WORKING;
+        };
+    }
 }

@@ -128,7 +128,7 @@ public class ApiaryScreen extends BeeScreen<ApiaryMenu, ApiaryBlockEntity> {
         if(toggle.in(mouseX, mouseY)) {
             renderComponentTooltip(poseStack, getToggleState() ? toggleOnTip : toggleOffTip, mouseX, mouseY);
         }
-        else if(satisfaction.in(mouseX, mouseY)) {
+        else if(satisfaction.in(mouseX, mouseY) && !getQueen().isEmpty()) {
             renderComponentTooltip(poseStack, buildSatisfactionTooltip(getQueen()), mouseX, mouseY);
         }
         else
